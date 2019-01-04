@@ -76,8 +76,7 @@ class MyApp extends connect(store)(LitElement) {
       }
 
       [main-title] {
-        font-family: 'Pacifico';
-        text-transform: lowercase;
+        font-family: 'Fondamento';
         font-size: 30px;
         margin-right: 44px;
       }
@@ -166,23 +165,23 @@ class MyApp extends connect(store)(LitElement) {
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"
         @opened-changed="${this._drawerOpenedChanged}">
       <nav class="drawer-list">
-        <a ?selected="${this._page === 'view1'}" href="/view1">View One</a>
-        <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
-        <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+        <a ?selected="${this._page === 'view-dashboard'}" href="/view-dashboard">Dashboard</a>
+        <a ?selected="${this._page === 'view-people'}" href="/view-people">People</a>
+        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships">Relationships</a>
       </nav>
     </app-drawer>
 
     <!-- Main content -->
     <main role="main" class="main-content">
-      <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
-      <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
-      <my-view3 class="page" ?active="${this._page === 'view3'}"></my-view3>
+      <my-view-dashboard class="page" ?active="${this._page === 'view-dashboard'}"></my-view-dashboard>
+      <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
+      <my-view-relationships class="page" ?active="${this._page === 'view-relationships'}"></my-view-relationships>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
-    <footer>
-      <p>Made with &hearts; by the Polymer team.</p>
-    </footer>
+    <!-- <footer>
+      <p></p>
+    </footer>-->
 
     <snack-bar ?active="${this._snackbarOpened}">
         You are now ${this._offline ? 'offline' : 'online'}.</snack-bar>
