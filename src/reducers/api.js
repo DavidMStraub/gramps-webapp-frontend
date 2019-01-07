@@ -8,28 +8,21 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html } from '@polymer/lit-element';
-import { PageViewElement } from './page-view-element.js';
+import { PEOPLE } from '../actions/api.js';
 
-// These are the shared styles needed by this element.
-import { SharedStyles } from './shared-styles.js';
+const INITIAL_STATE = {
+  people: []
+};
 
-
-class MyViewPeople extends PageViewElement {
-  render() {
-    return html`
-      ${SharedStyles}
-      <section>
-        <h2>People</h2>
-    `
+const api = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case PEOPLE:
+      return {
+        people: action.people
+      };
+    default:
+      return state;
   }
+};
 
-
-  static get properties() {
-    return {
-      people: {type: Object}
-    }
-  }
-}
-
-window.customElements.define('my-view-people', MyViewPeople);
+export default api;
