@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
+export const ACTIVE_PERSON = 'ACTIVE_PERSON';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_WIDE_LAYOUT = 'UPDATE_WIDE_LAYOUT';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
@@ -17,15 +18,34 @@ export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
 
 export const navigate = (path) => (dispatch) => {
   // Extract the page name from path.
-  const page = path === '/' ? 'view-dashboard' : path.slice(1);
+  const page_id = path === '/' ? 'view-dashboard' : path.slice(1);
+  const page = page_id.split('/')[0]
+  const id = page_id.split('/')[1]
 
   // Any other info you might want to extract from the path (like page type),
   // you can do here
-  dispatch(loadPage(page));
+  if (typeof(id) != 'undefined') {
+    dispatch(loadPageId(page, id));
+  } else {
+    dispatch(loadPage(page));
+  }
+
 
   // Close the drawer - in case the *path* change came from a link in the drawer.
   dispatch(updateDrawerState(false));
 };
+
+const loadPageId = (page, id) => (dispatch) => {
+  console.log('lpi', page, id)
+  switch(page) {
+    case 'view-relationships':
+      import('../components/my-view-relationships.js').then((module) => {
+
+      });
+  }
+  dispatch(activePerson(id));
+  dispatch(updatePage(page));
+}
 
 const loadPage = (page) => (dispatch) => {
   switch(page) {
@@ -53,6 +73,13 @@ const updatePage = (page) => {
   return {
     type: UPDATE_PAGE,
     page
+  };
+};
+
+const activePerson = (id) => {
+  return {
+    type: ACTIVE_PERSON,
+    id
   };
 };
 

@@ -113,6 +113,7 @@ class MyApp extends connect(store)(LitElement) {
         color: var(--app-drawer-text-color);
         line-height: 40px;
         padding: 0 24px;
+        outline: none;
       }
 
       .drawer-list > a[selected] {
@@ -182,8 +183,8 @@ class MyApp extends connect(store)(LitElement) {
     <!-- Main content -->
     <main role="main" class="main-content">
       <my-view-dashboard class="page" ?active="${this._page === 'view-dashboard'}"></my-view-dashboard>
-      <my-view-people class="page" ?active="${this._page === 'view-people'}" people="${this._people}"></my-view-people>
-      <my-view-relationships class="page" ?active="${this._page === 'view-relationships'}"></my-view-relationships>
+      <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
+      <my-view-relationships class="page" ?active="${this._page === 'view-relationships'}" id="my-view-relationships"></my-view-relationships>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
@@ -250,6 +251,7 @@ class MyApp extends connect(store)(LitElement) {
     this._drawerOpened = state.app.drawerOpened;
     this._wideLayout = state.app.wideLayout;
     this._people = state.api.people;
+    this._activePerson = state.app.activePerson;
   }
 }
 

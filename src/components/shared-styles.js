@@ -22,7 +22,7 @@ export const SharedStyles = css`
   }
 
   section > * {
-    max-width: 600px;
+    /* max-width: 600px; */
     margin-right: auto;
     margin-left: auto;
   }
