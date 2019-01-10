@@ -8,17 +8,24 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { PEOPLE } from '../actions/api.js';
+import { PEOPLE, STRINGS } from '../actions/api.js';
 
 const INITIAL_STATE = {
-  people: []
+  people: {},
+  strings: {}
 };
 
 const api = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case PEOPLE:
       return {
+        ...state,
         people: action.people
+      };
+    case STRINGS:
+      return {
+        ...state,
+        strings: action.strings.data
       };
     default:
       return state;

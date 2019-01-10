@@ -16,6 +16,8 @@ import { SharedStyles } from './shared-styles.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
+import { translate as _ } from '../translate.js';
+
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
@@ -44,7 +46,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
       </style>
       <section>
       Lorem
-        <vaadin-grid theme="row-dividers" multi-sort>
+        <vaadin-grid .items=${this._people} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
           <vaadin-grid-column>
             <template class="header">
@@ -72,13 +74,37 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.name_surname]]</div></a>
             </template>
           </vaadin-grid-column>
+          <vaadin-grid-column>
+            <template class="header">
+              <vaadin-grid-sorter path="birthdate">${_('Birth Date')}</vaadin-grid-sorter>
+            </template>
+            <template>
+              <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.birthdate]]</div></a>
+            </template>
+          </vaadin-grid-column>
+          <vaadin-grid-column>
+            <template class="header">
+              <vaadin-grid-sorter path="deathdate">${_('Death Date')}</vaadin-grid-sorter>
+            </template>
+            <template>
+              <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.deathdate]]</div></a>
+            </template>
+          </vaadin-grid-column>
         </vaadin-grid>
     `
   }
 
+  static get properties() { return {
+    _people: { type: Object }
+  }}
+
+  stateChanged(state) {
+    this._people = Object.values(store.getState().api.people);
+  }
+
   firstUpdated() {
-    const grid = this.shadowRoot.querySelector('vaadin-grid');
-    grid.items = store.getState().api.people;
+    // const grid = this.shadowRoot.querySelector('vaadin-grid');
+    // grid.items = Object.values(store.getState().api.people);
   }
 
 }

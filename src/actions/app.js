@@ -36,7 +36,6 @@ export const navigate = (path) => (dispatch) => {
 };
 
 const loadPageId = (page, id) => (dispatch) => {
-  console.log('lpi', page, id)
   switch(page) {
     case 'view-relationships':
       import('../components/my-view-relationships.js').then((module) => {

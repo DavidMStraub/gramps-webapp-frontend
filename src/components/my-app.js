@@ -15,7 +15,7 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadPeople } from '../actions/api.js';
+import { loadPeople, loadStrings } from '../actions/api.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
@@ -223,6 +223,7 @@ class MyApp extends connect(store)(LitElement) {
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
     store.dispatch(loadPeople());
+    store.dispatch(loadStrings());
   }
 
   updated(changedProps) {

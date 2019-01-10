@@ -16,20 +16,41 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
+import { translate as _ } from '../translate.js';
+
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
 class MyViewRelationships extends connect(store)(PageViewElement) {
   render() {
-    const gramps_id = store.getState().app.activePerson
+    if (this._person == undefined) {
+      return html`
+      <section>
+        <p>Loading ...</p>
+      </section>
+      `
+    }
     return html`
       ${SharedStyles}
       <section>
-        <h2>Relationships</h2>
-        <p>ID: ${gramps_id}</p>
+        <h2>${this._person.name_surname}, ${this._person.name_given}</h2>
+        <p>ID: ${this._gramps_id}</p>
+        <p>${_("Birth Date")}: ${this._person.birthdate} in ${this._person.birthplace}</p>
+        <p>${_("Death Date")}: ${this._person.deathdate} in ${this._person.deathplace}</p>
       </section>
     `
     }
+
+    static get properties() { return {
+      _gramps_id: { type: String },
+      _person: { type: Object }
+    }}
+
+    stateChanged(state) {
+      this._gramps_id = state.app.activePerson;
+      this._person = state.api.people[this._gramps_id];
+    }
+
 }
 
 window.customElements.define('my-view-relationships', MyViewRelationships);
