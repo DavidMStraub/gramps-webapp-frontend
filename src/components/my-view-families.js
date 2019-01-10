@@ -30,7 +30,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sort-column.js';
 import '@vaadin/vaadin-grid/vaadin-grid-selection-column.js';
 
-class MyViewPeople extends connect(store)(PageViewElement) {
+class MyViewFamilies extends connect(store)(PageViewElement) {
   render() {
     return html`
       ${SharedStyles}
@@ -45,48 +45,40 @@ class MyViewPeople extends connect(store)(PageViewElement) {
       }
       </style>
       <section>
-        <vaadin-grid .items=${this._people} theme="row-dividers" multi-sort>
+        <vaadin-grid .items=${this._families} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
           <vaadin-grid-column>
             <template class="header">
               <vaadin-grid-sorter path="gramps_id">ID</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.gramps_id]]</div></a>
+              [[item.gramps_id]]
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="name_given" direction="asc">${_('Given name')}</vaadin-grid-sorter>
-              <vaadin-grid-filter path="name_given"></vaadin-grid-filter>
+              <vaadin-grid-sorter path="father_name" direction="asc">${_('Father')}</vaadin-grid-sorter>
+              <vaadin-grid-filter path="father_name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.name_given]]</div></a>
+              <a href="/view-relationships/[[item.father_id]]"><div>[[item.father_name]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="name_surname" direction="asc">${_('Surname')}</vaadin-grid-sorter>
-              <vaadin-grid-filter path="name_surname"></vaadin-grid-filter>
+              <vaadin-grid-sorter path="mother_name">${_('Mother')}</vaadin-grid-sorter>
+              <vaadin-grid-filter path="mother_name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.name_surname]]</div></a>
+              <a href="/view-relationships/[[item.mother_id]]"><div>[[item.mother_name]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="birthdate">${_('Birth Date')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="marriagedate">${_('Marriage Date')}</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.birthdate]]</div></a>
-            </template>
-          </vaadin-grid-column>
-          <vaadin-grid-column>
-            <template class="header">
-              <vaadin-grid-sorter path="deathdate">${_('Death Date')}</vaadin-grid-sorter>
-            </template>
-            <template>
-              <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.deathdate]]</div></a>
+              [[item.marriagedate]]
             </template>
           </vaadin-grid-column>
         </vaadin-grid>
@@ -94,18 +86,18 @@ class MyViewPeople extends connect(store)(PageViewElement) {
   }
 
   static get properties() { return {
-    _people: { type: Object }
+    _families: { type: Object }
   }}
 
   stateChanged(state) {
-    this._people = Object.values(store.getState().api.people);
+    this._families = Object.values(store.getState().api.families);
   }
 
   firstUpdated() {
     // const grid = this.shadowRoot.querySelector('vaadin-grid');
-    // grid.items = Object.values(store.getState().api.people);
+    // grid.items = Object.values(store.getState().api.families);
   }
 
 }
 
-window.customElements.define('my-view-people', MyViewPeople);
+window.customElements.define('my-view-families', MyViewFamilies);

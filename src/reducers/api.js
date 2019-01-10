@@ -8,10 +8,11 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { PEOPLE, STRINGS } from '../actions/api.js';
+import { PEOPLE, FAMILIES, STRINGS } from '../actions/api.js';
 
 const INITIAL_STATE = {
   people: {},
+  families: {},
   strings: {}
 };
 
@@ -21,6 +22,11 @@ const api = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         people: action.people
+      };
+    case FAMILIES:
+      return {
+        ...state,
+        families: action.families
       };
     case STRINGS:
       return {

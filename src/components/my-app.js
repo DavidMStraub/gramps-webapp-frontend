@@ -15,10 +15,12 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadPeople, loadStrings } from '../actions/api.js';
+import { loadPeople, loadFamilies, loadStrings } from '../actions/api.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
+
+import { translate as _ } from '../translate.js';
 
 
 // We are lazy loading its reducer.
@@ -175,8 +177,9 @@ class MyApp extends connect(store)(LitElement) {
         @opened-changed="${this._drawerOpenedChanged}">
       <nav class="drawer-list">
         <a ?selected="${this._page === 'view-dashboard'}" href="/view-dashboard">Dashboard</a>
-        <a ?selected="${this._page === 'view-people'}" href="/view-people">People</a>
-        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships">Relationships</a>
+        <a ?selected="${this._page === 'view-people'}" href="/view-people">${_('People')}</a>
+        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships">${_('Relationships')}</a>
+        <a ?selected="${this._page === 'view-families'}" href="/view-families">${_('Families')}</a>
       </nav>
     </app-drawer>
 
@@ -185,6 +188,7 @@ class MyApp extends connect(store)(LitElement) {
       <my-view-dashboard class="page" ?active="${this._page === 'view-dashboard'}"></my-view-dashboard>
       <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
       <my-view-relationships class="page" ?active="${this._page === 'view-relationships'}" id="my-view-relationships"></my-view-relationships>
+      <my-view-families class="page" ?active="${this._page === 'view-families'}"></my-view-families>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
@@ -222,8 +226,9 @@ class MyApp extends connect(store)(LitElement) {
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
+        store.dispatch(loadStrings());
     store.dispatch(loadPeople());
-    store.dispatch(loadStrings());
+    store.dispatch(loadFamilies());
   }
 
   updated(changedProps) {
