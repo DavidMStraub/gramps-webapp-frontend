@@ -1,6 +1,11 @@
-import { store } from 'store.js';
+import { store } from './store.js';
 
 export const translate = (s) => {
     const strings = store.getState().api.strings
-    return strings[s];
+    if  (s in strings) {
+      return strings[s];
+    } else {
+      return  s;
+    }
+
 };
