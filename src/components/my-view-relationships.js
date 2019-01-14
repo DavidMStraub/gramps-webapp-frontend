@@ -8,8 +8,10 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html } from '@polymer/lit-element';
+import { html, LitElement } from '@polymer/lit-element';
 import { PageViewElement } from './page-view-element.js';
+import './my-family-element.js';
+import './my-events-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -34,21 +36,31 @@ class MyViewRelationships extends connect(store)(PageViewElement) {
       ${SharedStyles}
       <section>
         <h2>${this._person.name_surname}, ${this._person.name_given}</h2>
-        <p>ID: ${this._gramps_id}</p>
-        <p>${_("Birth Date")}: ${this._person.birthdate} in ${this._person.birthplace}</p>
-        <p>${_("Death Date")}: ${this._person.deathdate} in ${this._person.deathplace}</p>
+      ${this._events ?
+        html`
+      <h3>${_("Events")}</h3>
+        <my-events-element .items="${this._events}"></my-events-element>`
+        : '' }
+      <h3>${_("Parents")}</h3>
+      ${this._parents ? html`<my-family-element gramps_id="${this._parents}"></my-family-element>` : '' }
       </section>
     `
     }
 
     static get properties() { return {
       _gramps_id: { type: String },
-      _person: { type: Object }
+      _person: { type: Object },
+      _parents: { type: String },
+      _events: { type: Object }
     }}
 
     stateChanged(state) {
       this._gramps_id = state.app.activePerson;
       this._person = state.api.people[this._gramps_id];
+      if (this._person != undefined) {
+        this._parents = this._person.parents;
+        this._events = this._person.events.map((handle) => state.api.events[handle]);
+      }
     }
 
 }
