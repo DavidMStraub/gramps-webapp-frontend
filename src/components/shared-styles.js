@@ -33,7 +33,7 @@ export const SharedStyles = css`
 
   h2, h3 {
     text-align: left;
-    font-weight: 300;
+    font-weight: 400;
     color: var(--app-dark-text-color);
   }
 

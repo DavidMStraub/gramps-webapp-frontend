@@ -15,7 +15,7 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadPeople, loadFamilies, loadStrings } from '../actions/api.js';
+import { loadPeople, loadFamilies, loadEvents, loadStrings } from '../actions/api.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
@@ -168,7 +168,7 @@ class MyApp extends connect(store)(LitElement) {
     <app-header condenses reveals effects="waterfall">
       <app-toolbar class="toolbar-top">
         <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
-        <div main-title>${this.appTitle}</div>
+        <div main-title><img src="images/manifest/icon-192x192.png" style="height:1em;"></div>
       </app-toolbar>
     </app-header>
 
@@ -226,9 +226,10 @@ class MyApp extends connect(store)(LitElement) {
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
-        store.dispatch(loadStrings());
+    store.dispatch(loadStrings());
     store.dispatch(loadPeople());
     store.dispatch(loadFamilies());
+    store.dispatch(loadEvents());
   }
 
   updated(changedProps) {

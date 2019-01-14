@@ -43,6 +43,7 @@ const loadPageId = (page, id) => (dispatch) => {
   }
   dispatch(activePerson(id));
   dispatch(updatePage(page));
+  window.scrollTo(0, 0);
 }
 
 const loadPage = (page) => (dispatch) => {
