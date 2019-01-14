@@ -31,15 +31,32 @@ export const SharedStyles = css`
     background: var(--app-section-even-color);
   }
 
+  h2, h3 {
+    text-align: left;
+    font-weight: 300;
+    color: var(--app-dark-text-color);
+  }
+
   h2 {
     font-size: 24px;
-    text-align: center;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  a:link, a:visited, a:hover, a:active {
     color: var(--app-dark-text-color);
+    text-decoration:none;
+    outline: none;
   }
 
   @media (min-width: 460px) {
     h2 {
       font-size: 36px;
+    }
+    h3 {
+      font-size: 28px;
     }
   }
 
