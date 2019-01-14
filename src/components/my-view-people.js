@@ -38,16 +38,11 @@ class MyViewPeople extends connect(store)(PageViewElement) {
       vaadin-grid {
         height:70vh;
       }
-      a:link, a:visited, a:hover, a:active {
-        color:black;
-        text-decoration:none;
-        outline: none;
-      }
       </style>
       <section>
         <vaadin-grid .items=${this._people} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
-          <vaadin-grid-column>
+          <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
               <vaadin-grid-sorter path="gramps_id">ID</vaadin-grid-sorter>
             </template>
@@ -64,7 +59,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.name_given]]</div></a>
             </template>
           </vaadin-grid-column>
-          <vaadin-grid-column>
+          <vaadin-grid-column ?hidden="true">
             <template class="header">
               <vaadin-grid-sorter path="name_surname" direction="asc">${_('Surname')}</vaadin-grid-sorter>
               <vaadin-grid-filter path="name_surname"></vaadin-grid-filter>
@@ -73,7 +68,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.name_surname]]</div></a>
             </template>
           </vaadin-grid-column>
-          <vaadin-grid-column>
+          <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
               <vaadin-grid-sorter path="birthdate">${_('Birth Date')}</vaadin-grid-sorter>
             </template>
@@ -81,7 +76,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <a href="/view-relationships/[[item.gramps_id]]"><div>[[item.birthdate]]</div></a>
             </template>
           </vaadin-grid-column>
-          <vaadin-grid-column>
+          <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
               <vaadin-grid-sorter path="deathdate">${_('Death Date')}</vaadin-grid-sorter>
             </template>
@@ -93,12 +88,19 @@ class MyViewPeople extends connect(store)(PageViewElement) {
     `
   }
 
+  constructor() {
+    super();
+    this._hidden = false;
+  }
+
   static get properties() { return {
-    _people: { type: Object }
+    _people: { type: Object },
+    _hidden: { type: Boolean }
   }}
 
   stateChanged(state) {
     this._people = Object.values(store.getState().api.people);
+    this._hidden = !store.getState().app.wideLayout;
   }
 
   firstUpdated() {
