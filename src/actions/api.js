@@ -1,5 +1,6 @@
 export const PEOPLE = 'PEOPLE';
 export const FAMILIES = 'FAMILIES';
+export const EVENTS = 'EVENTS';
 export const STRINGS = 'STRINGS';
 
 export const loadPeople = () => async (dispatch) => {
@@ -13,6 +14,13 @@ export const loadFamilies = () => async (dispatch) => {
   fetch(`http://127.0.0.1:5000/families`)
     .then(resp => resp.json())
     .then(data => dispatch(getFamilies(data)))
+    .catch((error) => console.log(error));
+};
+
+export const loadEvents = () => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/events`)
+    .then(resp => resp.json())
+    .then(data => dispatch(getEvents(data)))
     .catch((error) => console.log(error));
 };
 
@@ -30,6 +38,13 @@ const getFamilies = (data) => {
   };
 };
 
+const getEvents = (data) => {
+  return {
+    type: EVENTS,
+    events: data
+  };
+};
+
 const _strings = [
   "Birth Date",
   "Death Date",
@@ -43,6 +58,14 @@ const _strings = [
   "Name",
   "Father",
   "Mother",
+  "Married",
+  "Event",
+  "Place",
+  "Description",
+  "Date",
+  "Type",
+  "Events",
+  "Parents"
 ]
 
 export const loadStrings = () => async (dispatch) => {

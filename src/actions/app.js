@@ -39,7 +39,6 @@ const loadPageId = (page, id) => (dispatch) => {
   switch(page) {
     case 'view-relationships':
       import('../components/my-view-relationships.js').then((module) => {
-
       });
   }
   dispatch(activePerson(id));
