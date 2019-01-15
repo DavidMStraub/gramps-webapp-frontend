@@ -39,7 +39,6 @@ const app = (state = INITIAL_STATE, action) => {
         activePerson: action.id
       };
     case ACTIVE_PERSON_IF_EMPTY:
-      console.log(state);
       if ('activePerson' in state) {
         return state;
       } else {

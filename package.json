@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@polymer/app-layout": "^3.0.0",
+    "@polymer/lit-element": "^0.6.2",
+    "@polymer/paper-spinner": "^3.0.1",
     "@polymer/polymer": "^3.1.0",
     "@vaadin/vaadin-grid": "^5.2.5",
     "@webcomponents/webcomponentsjs": "^2.0.0",

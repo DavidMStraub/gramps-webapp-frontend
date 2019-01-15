@@ -16,6 +16,7 @@ import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
 import { loadPeople, loadFamilies, loadEvents, loadStrings, loadDbInfo } from '../actions/api.js';
+import '@polymer/paper-spinner/paper-spinner-lite.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
@@ -47,6 +48,39 @@ import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIco
 class MyApp extends connect(store)(LitElement) {
   render() {
     // Anything that's related to rendering should be done in here.
+    if (!this._loaded) {
+      return html`
+      <style>
+      div#outer {
+        display: grid;
+        height: 100vh;
+        margin: 0;
+        place-items: center center;
+      }
+
+      div#inner {
+        text-align: center;
+      }
+
+      paper-spinner-lite {
+        width: 3em;
+        height: 3em;
+        --paper-spinner-color: #5D4037;
+      }
+
+      img#logo {
+        height: 5em;
+      }
+      </style>
+      <div id="outer">
+      <div id="inner">
+      <p><img id="logo" src="images/logo.svg"></p>
+      <p><paper-spinner-lite active></paper-spinner-lite></p>
+      <p>Loading family tree ...</p>
+      </div>
+      </div>
+      `
+    }
     return html`
     <style>
       :host {
@@ -247,7 +281,8 @@ class MyApp extends connect(store)(LitElement) {
       _offline: { type: Boolean },
       _wideLayout: { type: Boolean },
       _people: {type: Array},
-      _activePerson: {type: String}
+      _activePerson: {type: String},
+      _loaded : {type: Boolean}
     }
   }
 
@@ -256,6 +291,7 @@ class MyApp extends connect(store)(LitElement) {
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
+    this._loaded = false;
   }
 
   firstUpdated() {
@@ -290,6 +326,16 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
+    if (!this._loaded) {
+      if ('api' in state
+          && Object.keys(state.api.people).length
+          && Object.keys(state.api.families).length
+          && Object.keys(state.api.events).length
+          && Object.keys(state.api.strings).length
+          && Object.keys(state.api.dbinfo).length) {
+          this._loaded = true;
+      }
+    }
     this._page = state.app.page;
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
