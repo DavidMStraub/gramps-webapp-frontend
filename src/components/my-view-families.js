@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html } from '@polymer/lit-element';
+import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
 // These are the shared styles needed by this element.
@@ -33,7 +33,6 @@ import '@vaadin/vaadin-grid/vaadin-grid-selection-column.js';
 class MyViewFamilies extends connect(store)(PageViewElement) {
   render() {
     return html`
-      ${SharedStyles}
       <style>
       vaadin-grid {
         height:calc(100vh - 112px);
@@ -78,6 +77,12 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
           </vaadin-grid-column>
         </vaadin-grid>
     `
+  }
+
+  static get styles() {
+      return [
+        SharedStyles
+      ]
   }
 
   static get properties() { return {

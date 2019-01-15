@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html } from '@polymer/lit-element';
+import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -24,13 +24,18 @@ import { SharedStyles } from './shared-styles.js';
 class MyViewDashboard extends connect(store)(PageViewElement) {
   render() {
     return html`
-      ${SharedStyles}
       <section>
         <h2>${_('Home Page')}</h2>
         <p>${this._db_name}</p>
 
       </section>
     `
+  }
+
+  static get styles() {
+      return [
+        SharedStyles
+      ]
   }
 
   static get properties() { return {

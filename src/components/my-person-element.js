@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html, LitElement } from '@polymer/lit-element';
+import { html, LitElement } from 'lit-element';
 
 import { translate as _ } from '../translate.js';
 
@@ -19,13 +19,18 @@ import { SharedStyles } from './shared-styles.js';
 class MyPersonElement extends LitElement {
   render() {
     return html`
-      ${SharedStyles}
       <a href="/view-relationships/${this.person.gramps_id}">
       ${this.person.name_surname}${(this.person.name_surname && this.person.name_given) ? ',' : ''}
       ${this.person.name_given}</a>${this.person.birthdate ? html`&nbsp;&nbsp; ∗ ` : ''}
       ${this.person.birthdate}${this.person.deathdate ? html`&nbsp;&nbsp; † ` : ''}
       ${this.person.deathdate}
     `
+    }
+
+    static get styles() {
+        return [
+          SharedStyles
+        ]
     }
 
     static get properties() { return {

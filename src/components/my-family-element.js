@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html, LitElement } from '@polymer/lit-element';
+import { html, LitElement } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
 import './my-children-element.js';
@@ -35,7 +35,6 @@ class MyFamilyElement extends connect(store)(LitElement) {
     this._mother = state.api.people[this._family.mother_id];
     this._children = this._family.children.map((gid) => state.api.people[gid]);
     return html`
-      ${SharedStyles}
       <p>${this._father ? html`<my-person-element .person=${this._father}></my-person-element>` : 'NN'}
       <span style="display:block;padding-left:1em;">⚭ ${this._family.marriagedate ? this._family.marriagedate : ''} ${this._family.marriageplace ? _("in ") + this._family.marriageplace: ''}</span>
       <my-person-element .person=${this._mother}></my-person-element>
@@ -46,6 +45,12 @@ class MyFamilyElement extends connect(store)(LitElement) {
         <my-children-element .items="${this._children}"></my-children-element>`
         : '' }
     `
+    }
+
+    static get styles() {
+        return [
+          SharedStyles
+        ]
     }
 
     constructor() {

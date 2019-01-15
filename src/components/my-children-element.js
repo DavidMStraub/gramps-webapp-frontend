@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html, LitElement } from '@polymer/lit-element';
+import { html, LitElement } from 'lit-element';
 
 import { translate as _ } from '../translate.js';
 
@@ -27,7 +27,6 @@ import '@vaadin/vaadin-grid/vaadin-grid-selection-column.js';
 class MyChildrenElement extends LitElement {
   render() {
     return html`
-      ${SharedStyles}
       <vaadin-grid .items=${this.items} theme="row-dividers">
         <vaadin-grid-column path="name_given" header="${_('Given name')}">
           <template>
@@ -38,6 +37,12 @@ class MyChildrenElement extends LitElement {
         <vaadin-grid-column path="deathdate" header="${_('Death Date')}"></vaadin-grid-column>
       </vaadin-grid>
     `
+    }
+
+    static get styles() {
+        return [
+          SharedStyles
+        ]
     }
 
     static get properties() { return {

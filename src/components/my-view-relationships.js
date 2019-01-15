@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html, LitElement } from '@polymer/lit-element';
+import { html, LitElement } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import './my-family-element.js';
 import './my-events-element.js';
@@ -33,7 +33,6 @@ class MyViewRelationships extends connect(store)(PageViewElement) {
       `
     }
     return html`
-      ${SharedStyles}
       <section>
         <h2>${this._person.name_surname}, ${this._person.name_given}</h2>
       <h3>${_("Parents")}</h3>
@@ -56,6 +55,12 @@ class MyViewRelationships extends connect(store)(PageViewElement) {
       _parents: { type: String },
       _events: { type: Object }
     }}
+
+    static get styles() {
+        return [
+          SharedStyles
+        ]
+    }
 
     stateChanged(state) {
       this._gramps_id = state.app.activePerson;
