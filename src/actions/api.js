@@ -1,7 +1,21 @@
+
 export const PEOPLE = 'PEOPLE';
 export const FAMILIES = 'FAMILIES';
 export const EVENTS = 'EVENTS';
 export const STRINGS = 'STRINGS';
+export const DBINFO = 'DBINFO';
+
+import { activePersonIfEmpty } from './app.js'
+
+export const loadDbInfo = () => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/dbinfo`)
+    .then(resp => resp.json())
+    .then(data => {
+      dispatch(getDbInfo(data));
+      dispatch(activePersonIfEmpty(data.default_person));
+    })
+    .catch((error) => console.log(error));
+};
 
 export const loadPeople = () => async (dispatch) => {
   fetch(`http://127.0.0.1:5000/people`)
@@ -28,6 +42,13 @@ const getPeople = (data) => {
   return {
     type: PEOPLE,
     people: data
+  };
+};
+
+const getDbInfo = (data) => {
+  return {
+    type: DBINFO,
+    dbinfo: data
   };
 };
 
@@ -65,7 +86,12 @@ const _strings = [
   "Date",
   "Type",
   "Events",
-  "Parents"
+  "Parents",
+  "Siblings",
+  "Children",
+  "Home Page",
+  "Details",
+  "in"
 ]
 
 export const loadStrings = () => async (dispatch) => {

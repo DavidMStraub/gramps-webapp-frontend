@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const ACTIVE_PERSON = 'ACTIVE_PERSON';
+export const ACTIVE_PERSON_IF_EMPTY = 'ACTIVE_PERSON_IF_EMPTY';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_WIDE_LAYOUT = 'UPDATE_WIDE_LAYOUT';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
@@ -40,6 +41,9 @@ const loadPageId = (page, id) => (dispatch) => {
     case 'view-relationships':
       import('../components/my-view-relationships.js').then((module) => {
       });
+      case 'view-person':
+        import('../components/my-view-person.js').then((module) => {
+        });
   }
   dispatch(activePerson(id));
   dispatch(updatePage(page));
@@ -63,6 +67,9 @@ const loadPage = (page) => (dispatch) => {
     case 'view-relationships':
       import('../components/my-view-relationships.js');
       break;
+    case 'view-person':
+      import('../components/my-view-person.js');
+      break;
     default:
       page = 'view404';
       import('../components/my-view404.js');
@@ -78,9 +85,16 @@ const updatePage = (page) => {
   };
 };
 
-const activePerson = (id) => {
+export const activePerson = (id) => {
   return {
     type: ACTIVE_PERSON,
+    id
+  };
+};
+
+export const activePersonIfEmpty = (id) => {
+  return {
+    type: ACTIVE_PERSON_IF_EMPTY,
     id
   };
 };

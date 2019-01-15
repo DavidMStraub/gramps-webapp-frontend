@@ -26,26 +26,24 @@ import { SharedStyles } from './shared-styles.js';
 
 class MyFamilyElement extends connect(store)(LitElement) {
   render() {
-    if (this._family == undefined) {
-      return html`
-      <section>
-        <p>Loading ...</p>
-      </section>
-      `
-    }
     const state = store.getState();
+    if (!('families' in state.api)) {
+      return html`Loading...`;
+    }
     this._family = state.api.families[this.gramps_id];
     this._father = state.api.people[this._family.father_id];
     this._mother = state.api.people[this._family.mother_id];
     this._children = this._family.children.map((gid) => state.api.people[gid]);
     return html`
       ${SharedStyles}
-      <p>${this._father ? html`<my-person-element .person=${this._father}></my-person-element>` : 'NN'}</p>
-      <p><my-person-element .person=${this._mother}></my-person-element></p>
-      <p>${_("Married")}: ${this._family.marriagedate} in ${this._family.marriageplace}</p>
-      <h3>Kinder:</h3>
-      ${this._family.children ?
-        html`<my-children-element .items="${this._children}"></my-children-element>`
+      <p>${this._father ? html`<my-person-element .person=${this._father}></my-person-element>` : 'NN'}
+      <span style="display:block;padding-left:1em;">⚭ ${this._family.marriagedate ? this._family.marriagedate : ''} ${this._family.marriageplace ? _("in ") + this._family.marriageplace: ''}</span>
+      <my-person-element .person=${this._mother}></my-person-element>
+      </p>
+      ${this._family.children.length > 0 ?
+        html`
+        <h3>${this.siblings ? _("Siblings") : _("Children")}</h3>
+        <my-children-element .items="${this._children}"></my-children-element>`
         : '' }
     `
     }
@@ -59,20 +57,22 @@ class MyFamilyElement extends connect(store)(LitElement) {
 
     static get properties() { return {
       gramps_id: { type: String },
+      father: {type: Boolean},
+      mother: {type: Boolean},
+      siblings: {type: Boolean},
       _family: {type: Object},
       _father: {type: Object},
       _mother: {type: Object},
       _children: {type: Array}
     }}
-
-    stateChanged(state) {
-      this._family = state.api.families[this.gramps_id];
-      if (this._family != undefined) {
-        this._father = state.api.people[this._family.father_id];
-        this._mother = state.api.people[this._family.mother_id];
-        this._children = this._family.children.map((gid) => state.api.people[gid]);
-      }
-    }
+    //
+    // stateChanged(state) {
+    //   if (this._family != undefined) {
+    //     this._father = state.api.people[this._family.father_id];
+    //     this._mother = state.api.people[this._family.mother_id];
+    //     this._children = this._family.children.map((gid) => state.api.people[gid]);
+    //   }
+    // }
 
 }
 

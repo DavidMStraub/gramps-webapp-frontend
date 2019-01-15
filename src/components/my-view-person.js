@@ -23,7 +23,7 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-class MyViewRelationships extends connect(store)(PageViewElement) {
+class MyViewPerson extends connect(store)(PageViewElement) {
   render() {
     if (this._person == undefined) {
       return html`
@@ -36,16 +36,11 @@ class MyViewRelationships extends connect(store)(PageViewElement) {
       ${SharedStyles}
       <section>
         <h2>${this._person.name_surname}, ${this._person.name_given}</h2>
-      <h3>${_("Parents")}</h3>
-      ${this._parents ? html`<my-family-element
-        gramps_id="${this._parents}"
-        siblings father mother></my-family-element>` : '' }
-      ${this._person.families ? this._person.families.map((f) => html`
-        <h3>${_("Partner")}</h3>
-        <my-family-element
-        gramps_id="${f}"
-        father
-        mother></my-family-element>`) : '' }
+      ${this._events ?
+        html`
+      <h3>${_("Events")}</h3>
+        <my-events-element .items="${this._events}"></my-events-element>`
+        : '' }
       </section>
     `
     }
@@ -68,4 +63,4 @@ class MyViewRelationships extends connect(store)(PageViewElement) {
 
 }
 
-window.customElements.define('my-view-relationships', MyViewRelationships);
+window.customElements.define('my-view-person', MyViewPerson);

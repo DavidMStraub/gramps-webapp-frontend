@@ -58,7 +58,18 @@
       "type": "script",
       "weight": 1
     },
+  "/view-person": {
+    "src/components/my-app.js": {
+      "crossorigin": "anonymous",
+      "type": "script",
+      "weight": 1
+    },
     "src/components/my-view-relationships.js": {
+      "crossorigin": "anonymous",
+      "type": "script",
+      "weight": 1
+    },
+    "src/components/my-view-person.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1

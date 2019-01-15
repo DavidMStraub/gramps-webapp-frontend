@@ -15,13 +15,12 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadPeople, loadFamilies, loadEvents, loadStrings } from '../actions/api.js';
+import { loadPeople, loadFamilies, loadEvents, loadStrings, loadDbInfo } from '../actions/api.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
 import { translate as _ } from '../translate.js';
-
 
 // We are lazy loading its reducer.
 import api from '../reducers/api.js';
@@ -42,8 +41,8 @@ import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
-import { menuIcon } from './my-icons.js';
 import './snack-bar.js';
+import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIcon } from './my-icons.js';
 
 class MyApp extends connect(store)(LitElement) {
   render() {
@@ -66,8 +65,8 @@ class MyApp extends connect(store)(LitElement) {
         --app-header-selected-color: var(--app-primary-color);
 
         --app-drawer-background-color: var(--app-secondary-color);
-        --app-drawer-text-color: var(--app-light-text-color);
-        --app-drawer-selected-color: #BCAAA4;
+        --app-drawer-text-color: #BCAAA4;
+        --app-drawer-selected-color: var(--app-light-text-color);
       }
 
       app-header {
@@ -118,6 +117,20 @@ class MyApp extends connect(store)(LitElement) {
         outline: none;
       }
 
+      .drawer-list svg {
+        height: 1em;
+        top: .125em;
+        position: relative;
+      }
+
+      .drawer-list svg path {
+        fill: var(--app-drawer-text-color);
+      }
+
+      .drawer-list a[selected] svg path {
+        fill: var(--app-drawer-selected-color);
+      }
+
       .drawer-list > a[selected] {
         color: var(--app-drawer-selected-color);
       }
@@ -147,6 +160,23 @@ class MyApp extends connect(store)(LitElement) {
         text-align: center;
       }
 
+      nav > hr {
+        border: 0.5px solid rgba(255, 255, 255, 0.1);
+        margin-left: -24px;
+        margin-right: -24px;
+      }
+
+      span.activePerson {
+        font-weight: 200;
+        display: block;
+        text-decoration: none;
+        color: var(--app-drawer-text-color);
+        line-height: 40px;
+        outline: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
       /* Wide layout */
       @media (min-width: 768px) {
         app-header,
@@ -168,7 +198,7 @@ class MyApp extends connect(store)(LitElement) {
     <app-header condenses reveals effects="waterfall">
       <app-toolbar class="toolbar-top">
         <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
-        <div main-title><img src="images/manifest/icon-192x192.png" style="height:1em;"></div>
+        <div main-title><img src="images/logo.svg" style="height:1.5em;position:relative;top:0.125em;"></div>
       </app-toolbar>
     </app-header>
 
@@ -176,10 +206,15 @@ class MyApp extends connect(store)(LitElement) {
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"
         @opened-changed="${this._drawerOpenedChanged}">
       <nav class="drawer-list">
-        <a ?selected="${this._page === 'view-dashboard'}" href="/view-dashboard">Dashboard</a>
-        <a ?selected="${this._page === 'view-people'}" href="/view-people">${_('People')}</a>
-        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships">${_('Relationships')}</a>
-        <a ?selected="${this._page === 'view-families'}" href="/view-families">${_('Families')}</a>
+        <a ?selected="${this._page === 'view-dashboard'}" href="/view-dashboard">${homeIcon} ${_('Home Page')}</a>
+        <hr>
+        <a ?selected="${this._page === 'view-people'}" href="/view-people">${accountIcon} ${_('People')}</a>
+        <a ?selected="${this._page === 'view-families'}" href="/view-families">${familyIcon} ${_('Families')}</a>
+        <hr>
+        <span class="activePerson">${this._activePerson ? this._activePerson.name_surname +  ',': ''}
+        ${this._activePerson ? this._activePerson.name_given: ''}</span>
+        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships">${ringsIcon} ${_('Relationships')}</a>
+        <a ?selected="${this._page === 'view-person'}" href="/view-person">${personDetailIcon} ${_('Details')}</a>
       </nav>
     </app-drawer>
 
@@ -188,6 +223,7 @@ class MyApp extends connect(store)(LitElement) {
       <my-view-dashboard class="page" ?active="${this._page === 'view-dashboard'}"></my-view-dashboard>
       <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
       <my-view-relationships class="page" ?active="${this._page === 'view-relationships'}" id="my-view-relationships"></my-view-relationships>
+      <my-view-person class="page" ?active="${this._page === 'view-person'}" id="my-view-person"></my-view-person>
       <my-view-families class="page" ?active="${this._page === 'view-families'}"></my-view-families>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
@@ -210,7 +246,8 @@ class MyApp extends connect(store)(LitElement) {
       _snackbarOpened: { type: Boolean },
       _offline: { type: Boolean },
       _wideLayout: { type: Boolean },
-      _people: {type: Array}
+      _people: {type: Array},
+      _activePerson: {type: String}
     }
   }
 
@@ -226,6 +263,7 @@ class MyApp extends connect(store)(LitElement) {
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
+    store.dispatch(loadDbInfo());
     store.dispatch(loadStrings());
     store.dispatch(loadPeople());
     store.dispatch(loadFamilies());
@@ -258,7 +296,7 @@ class MyApp extends connect(store)(LitElement) {
     this._drawerOpened = state.app.drawerOpened;
     this._wideLayout = state.app.wideLayout;
     this._people = state.api.people;
-    this._activePerson = state.app.activePerson;
+    this._activePerson = state.api.people[state.app.activePerson];
   }
 }
 

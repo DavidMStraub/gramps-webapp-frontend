@@ -83,19 +83,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- Add any global styles for body, document, etc. -->
     <style>
       @font-face {
-        font-family: 'Fondamento';
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 300;
+        src: local('Roboto Light'), local('Roboto-Light'), url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmSU5fCRc4EsA.woff2) format('woff2');
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Roboto';
         font-style: normal;
         font-weight: 400;
-        src: local('Fondamento Regular'), local('Fondamento-Regular'), url(https://fonts.gstatic.com/s/fondamento/v8/4UaHrEJGsxNmFTPDnkaJ96rp5w.woff2) format('woff2');
-        /* THe browser draws the text immediately in the fallback font if the font
-           isn't loaded, then swaps it with the webfont when it eventually loads
-           See: https://developers.google.com/web/updates/2016/02/font-display
-        */
+        src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu72xKOzY.woff2) format('woff2');
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        src: local('Roboto Bold'), local('Roboto-Bold'), url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfCxc4EsA.woff2) format('woff2');
         font-display: swap;
       }
       body {
         margin: 0;
         /* This is a font-stack that tries to use the system-default sans-serifs first */
+        font-size: 16px;
         font-family: Roboto;Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         line-height: 1.5;
         min-height: 100vh;
