@@ -8,12 +8,20 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { html, LitElement } from 'lit-element';
+import { html, css, LitElement } from 'lit-element';
 
 import { translate as _ } from '../translate.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
+
+export const GridStyles = css`
+vaadin-grid-cell-content {
+    white-space: normal;
+    vertical-align: text-top;
+   }
+}
+`
 
 class MyEventsElement extends LitElement {
   render() {
@@ -25,6 +33,12 @@ class MyEventsElement extends LitElement {
       <vaadin-grid-column path="place" header="${_('Place')}"></vaadin-grid-column>
     </vaadin-grid>
     `
+  }
+
+  static get styles() {
+      return [
+        GridStyles
+      ]
   }
 
   constructor() {
