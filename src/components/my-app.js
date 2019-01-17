@@ -247,8 +247,8 @@ class MyApp extends connect(store)(LitElement) {
         <hr>
         <span class="activePerson">${this._activePerson ? this._activePerson.name_surname +  ',': ''}
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
-        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships">${ringsIcon} ${_('Relationships')}</a>
-        <a ?selected="${this._page === 'view-person'}" href="/view-person">${personDetailIcon} ${_('Details')}</a>
+        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships/${this._activePerson.gramps_id}">${ringsIcon} ${_('Relationships')}</a>
+        <a ?selected="${this._page === 'view-person'}" href="/view-person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
       </nav>
     </app-drawer>
 
