@@ -12,6 +12,7 @@ import { html, LitElement } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import './my-family-element.js';
 import './my-events-element.js';
+import './my-img-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -34,12 +35,21 @@ class MyViewPerson extends connect(store)(PageViewElement) {
     }
     return html`
       <section>
+        ${this._media.length ? html`
+        <div style="float:right;margin-top:1em;">
+          <my-img-element
+            handle="${this._media[0].ref}"
+            size="300"
+            .rect="${this._media[0].rect}">
+          </my-img-element>
+        </div>
+        ` : ''}
         <h2>${this._person.name_surname}, ${this._person.name_given}</h2>
-      ${this._events ?
-        html`
-      <h3>${_("Events")}</h3>
-        <my-events-element .items="${this._events}"></my-events-element>`
-        : '' }
+        ${this._events ?
+          html`
+        <h3 style="clear:right;">${_("Events")}</h3>
+          <my-events-element .items="${this._events}"></my-events-element>`
+          : '' }
       </section>
     `
     }
@@ -63,6 +73,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       if (this._person != undefined) {
         this._parents = this._person.parents;
         this._events = this._person.events.map((handle) => state.api.events[handle]);
+        this._media = this._person.media;
       }
     }
 
