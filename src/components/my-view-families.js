@@ -55,7 +55,7 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
               <vaadin-grid-filter path="father_name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-relationships/[[item.father_id]]"><div>[[item.father_name]]</div></a>
+              <a href="/view-person/[[item.father_id]]"><div>[[item.father_name]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
@@ -64,7 +64,7 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
               <vaadin-grid-filter path="mother_name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-relationships/[[item.mother_id]]"><div>[[item.mother_name]]</div></a>
+              <a href="/view-person/[[item.mother_id]]"><div>[[item.mother_name]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column ?hidden="${this._hidden}">

@@ -41,9 +41,9 @@ const loadPageId = (page, id) => (dispatch) => {
     case 'view-relationships':
       import('../components/my-view-relationships.js').then((module) => {
       });
-      case 'view-person':
-        import('../components/my-view-person.js').then((module) => {
-        });
+    case 'view-person':
+      import('../components/my-view-person.js').then((module) => {
+      });
   }
   dispatch(activePerson(id));
   dispatch(updatePage(page));

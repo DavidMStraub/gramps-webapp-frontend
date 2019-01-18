@@ -20,19 +20,25 @@ class MyImgElement extends LitElement {
   render() {
     if (this.rect == undefined) {
       return html`
+      <a href="http://127.0.0.1:5000/media/${this.handle}">
       <img
       srcset="http://127.0.0.1:5000/thumbnail/${this.handle}/${this.size},
       http://127.0.0.1:5000/thumbnail/${this.handle}/${1.5 * this.size} 1.5x,
       http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size} 2x"
-      src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}">
+      src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}"
+      style="border-radius:${this.circle ? '50%' : '0'}">
+      </a>
       `
     } else {
       return html`
+      <a href="http://127.0.0.1:5000/media/${this.handle}">
       <img
       srcset="http://127.0.0.1:5000/thumbnail/${this.handle}/${this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]},
       http://127.0.0.1:5000/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 1.5x,
       http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 2x"
-      src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}">
+      src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}"
+      style="border-radius:${this.circle ? '50%' : '0'}">
+      </a>
       `
     }
     }
@@ -46,7 +52,9 @@ class MyImgElement extends LitElement {
     static get properties() { return {
       handle: { type: String },
       size: { type: Number },
-      rect: { type: Array }
+      rect: { type: Array },
+      circle: { type: Boolean },
+      square: { type: Boolean }
     }}
 
 }

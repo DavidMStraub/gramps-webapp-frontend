@@ -87,11 +87,11 @@ class MyApp extends connect(store)(LitElement) {
         --app-drawer-width: 256px;
         display: block;
 
-        --app-primary-color: #E91E63;
+        --app-primary-color: #2979FF;
         --app-secondary-color: #5D4037;
         --app-dark-text-color: var(--app-secondary-color);
         --app-light-text-color: #EFEBE9;
-        --app-section-even-color: #EFEBE9;
+        --app-section-even-color: white;
         --app-section-odd-color: white;
 
         --app-header-background-color: white;
@@ -119,7 +119,7 @@ class MyApp extends connect(store)(LitElement) {
       }
 
       [main-title] {
-        font-family: 'Fondamento';
+        /* font-family: 'Fondamento'; */
         font-size: 30px;
         margin-right: 44px;
       }
@@ -247,7 +247,6 @@ class MyApp extends connect(store)(LitElement) {
         <hr>
         <span class="activePerson">${this._activePerson ? this._activePerson.name_surname +  ',': ''}
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
-        <a ?selected="${this._page === 'view-relationships'}" href="/view-relationships/${this._activePerson.gramps_id}">${ringsIcon} ${_('Relationships')}</a>
         <a ?selected="${this._page === 'view-person'}" href="/view-person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
       </nav>
     </app-drawer>
@@ -256,7 +255,6 @@ class MyApp extends connect(store)(LitElement) {
     <main role="main" class="main-content">
       <my-view-dashboard class="page" ?active="${this._page === 'view-dashboard'}"></my-view-dashboard>
       <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
-      <my-view-relationships class="page" ?active="${this._page === 'view-relationships'}" id="my-view-relationships"></my-view-relationships>
       <my-view-person class="page" ?active="${this._page === 'view-person'}" id="my-view-person"></my-view-person>
       <my-view-families class="page" ?active="${this._page === 'view-families'}"></my-view-families>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
