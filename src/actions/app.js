@@ -38,8 +38,8 @@ export const navigate = (path) => (dispatch) => {
 
 const loadPageId = (page, id) => (dispatch) => {
   switch(page) {
-    case 'view-relationships':
-      import('../components/my-view-relationships.js').then((module) => {
+    case 'view-tree':
+      import('../components/my-view-tree.js').then((module) => {
       });
     case 'view-person':
       import('../components/my-view-person.js').then((module) => {
@@ -64,8 +64,8 @@ const loadPage = (page) => (dispatch) => {
     case 'view-families':
       import('../components/my-view-families.js');
       break;
-    case 'view-relationships':
-      import('../components/my-view-relationships.js');
+    case 'view-tree':
+      import('../components/my-view-tree.js');
       break;
     case 'view-person':
       import('../components/my-view-person.js');

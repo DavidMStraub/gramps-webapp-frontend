@@ -52,7 +52,7 @@
       "weight": 1
     }
   },
-  "/view-relationships": {
+  "/view-tree": {
     "src/components/my-app.js": {
       "crossorigin": "anonymous",
       "type": "script",
@@ -64,7 +64,7 @@
       "type": "script",
       "weight": 1
     },
-    "src/components/my-view-relationships.js": {
+    "src/components/my-view-tree.js": {
       "crossorigin": "anonymous",
       "type": "script",
       "weight": 1

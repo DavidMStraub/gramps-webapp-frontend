@@ -92,7 +92,8 @@ const _strings = [
   "Home Page",
   "Details",
   "in",
-  "Spouses"
+  "Spouses",
+  "Family Tree"
 ]
 
 export const loadStrings = () => async (dispatch) => {
