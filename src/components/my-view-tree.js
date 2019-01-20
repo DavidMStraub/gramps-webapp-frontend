@@ -36,7 +36,7 @@ class MyViewTree extends connect(store)(PageViewElement) {
     return html`
       <section>
         <my-pedigree-element
-          depth="3">
+          depth="4">
         </my-pedigree-element>
       </section>
     `

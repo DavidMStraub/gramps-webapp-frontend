@@ -15,18 +15,38 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
+import './my-img-element.js';
+
 
 class MyPedigreeCard extends LitElement {
   render() {
       return html`
       <style>
       .card {
-        width: 220px;
-        height: 60px;
+        width: 164px;
+        height: 70px;
         padding: 10px;
-        border: 1px solid #ccc;
         border-radius: 10px;
-        font-size: 14px;
+        font-size: 13px;
+        line-height: 17.5px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      }
+      .card.female {
+        border-left: 6px solid #F48FB1;
+      }
+      .card.male {
+        border-left: 6px solid #90CAF9;
+      }
+      .photo {
+        height: 70px;
+        float:left;
+        margin-right: 10px;
+      }
+      .name {
+        font-weight: 500;
       }
       </style>
       ${(!Object.keys(this.person).length) ? html`
@@ -34,8 +54,28 @@ class MyPedigreeCard extends LitElement {
         NN
         </div>
         ` : html`
-        <div class="card">
-        <a @click="${this._personSelected}" href="/view-tree">${this.person.name_surname}, ${this.person.name_given}</a>
+        <div class="card ${this.person.gender === 1 ? 'male' : 'female'}">
+        <div class="photo">
+          ${ this.person.media.length ? html`
+          <my-img-element
+            handle="${this.person.media[0].ref}"
+            size="70"
+            circle square
+            .rect="${this.person.media[0].rect}">
+          </my-img-element>
+          ` : ''}
+        </div>
+        <a @click="${this._personSelected}" href="/view-tree">
+        <span class="name">${this.person.name_surname},
+        <br>
+        ${this.person.name_given}</span>
+        <br>
+        <span class="dates">
+        ${this.person.birthdate ? '*' : ''} ${this.person.birthdate}
+        <br>
+        ${this.person.deathdate ? '†' : ''} ${this.person.deathdate}
+        </span>
+        </a>
         </div>
       `}
       `

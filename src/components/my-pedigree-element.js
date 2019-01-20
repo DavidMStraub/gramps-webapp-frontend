@@ -28,15 +28,80 @@ import { activePerson } from '../actions/app.js';
 class MyPedigreeElement extends connect(store)(LitElement) {
   render() {
       return html`
-      ${this._people.map((g) => html`
-        <hr> ${g.map((p) => html`
-          <my-pedigree-card
-            .person=${p}
-            @person-selected="${this._personSelected}"
-          >
-          </my-pedigree-card>
-        `)}
+      <style>
+      div#container {
+        position: relative;
+        overflow-x: auto;
+        overflow-y: visible;
+        height: ${2**(this.depth - 1) * 100}px;
+      }
+      div.card {
+        position: absolute;
+      }
+      div.branch-right, div.branch-left {
+        position: absolute;
+        border-color: #aaa;
+        border-style: solid;
+        border-width: 0px;
+      }
+      div.branch-right.male {
+        border-top-left-radius: 15px;
+        border-left-width: 1px;
+        border-top-width: 1px;
+      }
+      div.branch-right.female {
+        border-bottom-left-radius: 15px;
+        border-left-width: 1px;
+        border-bottom-width: 1px;
+      }
+      div.branch-left.male {
+        border-bottom-width: 1px;
+      }
+      div.branch-left.female {
+        border-bottom-left-radius: 15px;
+        border-top-width: 1px;
+      }
+      </style>
+      <div id="container">
+      ${this._people.map((g, i) => html`
+        ${g.map((p, j) => Object.keys(p).length ? html`
+          <div
+          class="card"
+          style="
+            left: ${i * 230}px;
+            top: ${((2**(this.depth - i - 1) ) * (j + 0.5) - 0.5) * 100}px;
+          ">
+            <my-pedigree-card
+              .person=${p}
+              @person-selected="${this._personSelected}"
+            >
+            </my-pedigree-card>
+            <div
+            class="branch-right ${p.gender === 1 ? 'male' : 'female'}"
+            style="
+            left: 0px;
+            top: ${p.gender === 1 ? 45 : -(2**(this.depth - i - 2) ) * 100 + 45}px;
+            margin-left:-20px;
+            width: 20px;
+            height: ${(2**(this.depth - i - 2) ) * 100}px;
+            "
+            >
+            </div>
+            <div
+            class="branch-left ${p.gender === 1 ? 'male' : 'female'}"
+            style="
+            left: 0px;
+            top: ${p.gender === 1 ?  45 : -(2**(this.depth - i - 2) ) * 100 + 45}px;
+            margin-left:-40px;
+            width: 20px;
+            height: ${(2**(this.depth - i - 2) ) * 100}px;
+            "
+            >
+            </div>
+          </div>
+        ` : '')}
       `)}
+      </div>
       `
     }
 
