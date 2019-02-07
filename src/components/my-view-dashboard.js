@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
+import '@polymer/paper-card/paper-card.js';
+
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
 // This element is connected to the Redux store.
@@ -24,10 +26,55 @@ import { SharedStyles } from './shared-styles.js';
 class MyViewDashboard extends connect(store)(PageViewElement) {
   render() {
     return html`
+      <style>
+      paper-card {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+      .card-content h3 {
+        margin: 0em 0em 0.75em 0em;
+        line-height: 1em;
+        font-size: 24px;
+      }
+      .card-content table {
+        width: 100%;
+      }
+      .card-content b {
+        font-weight: 500;
+      }
+      section.cards {
+        column-count: 3;
+        column-gap: 15px;
+      }
+      </style>
       <section>
-        <h2>${_('Home Page')}</h2>
-        <p>${this._db_name}</p>
-
+      <h2>${_('Home Page')}</h2>
+      </section>
+      <section class="cards">
+      <paper-card>
+          <div class="card-content">
+            <h3>${_("Database overview")}</h3>
+            <p>${_("Name")}: ${this._dbinfo.name}</p>
+            <table>
+              <tr>
+                <td>${_("Number of individuals")}</td>
+                <td>${this._dbinfo.number_people}</td>
+              </tr>
+              <tr>
+                <td>${_("Number of families")}</td>
+                <td>${this._dbinfo.number_families}</td>
+              </tr>
+              <tr>
+                <td>${_("Number of places")}</td>
+                <td>${this._dbinfo.number_places}</td>
+              </tr>
+              <tr>
+                <td>${_("Number of events")}</td>
+                <td>${this._dbinfo.number_events}</td>
+              </tr>
+            </table>
+          </div>
+      </paper-card>
       </section>
     `
   }
@@ -39,11 +86,11 @@ class MyViewDashboard extends connect(store)(PageViewElement) {
   }
 
   static get properties() { return {
-    _db_name: { type: String },
+    _dbinfo: { type: Object },
   }}
 
   stateChanged(state) {
-    this._db_name = state.api.dbinfo.name;
+    this._dbinfo = state.api.dbinfo;
   }
 }
 
