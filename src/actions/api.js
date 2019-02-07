@@ -4,11 +4,35 @@ export const FAMILIES = 'FAMILIES';
 export const EVENTS = 'EVENTS';
 export const STRINGS = 'STRINGS';
 export const DBINFO = 'DBINFO';
+export const TOKEN = 'TOKEN';
 
 import { activePersonIfEmpty } from './app.js'
 
-export const loadDbInfo = () => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/dbinfo`)
+export const getAuthToken = (password) => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/login`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'password': password})
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      dispatch(storeAuthToken(data.access_token));
+    })
+    .catch((error) => console.log(error));
+};
+
+export const loadDbInfo = (token) => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/dbinfo`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
     .then(resp => resp.json())
     .then(data => {
       dispatch(getDbInfo(data));
@@ -36,6 +60,13 @@ export const loadEvents = () => async (dispatch) => {
     .then(resp => resp.json())
     .then(data => dispatch(getEvents(data)))
     .catch((error) => console.log(error));
+};
+
+const storeAuthToken = (data) => {
+  return {
+    type: TOKEN,
+    token: data
+  };
 };
 
 const getPeople = (data) => {

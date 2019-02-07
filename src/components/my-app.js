@@ -15,8 +15,10 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadPeople, loadFamilies, loadEvents, loadStrings, loadDbInfo } from '../actions/api.js';
+import { loadPeople, loadFamilies, loadEvents, loadStrings, loadDbInfo, getAuthToken } from '../actions/api.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
+import '@polymer/paper-input/paper-input.js';
+import '@polymer/paper-button/paper-button.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
@@ -48,6 +50,30 @@ import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIco
 class MyApp extends connect(store)(LitElement) {
   render() {
     // Anything that's related to rendering should be done in here.
+    if (!this._token) {
+      return html`
+      <style>
+      div#outer {
+        display: grid;
+        height: 100vh;
+        margin: 0;
+        place-items: center center;
+      }
+
+      div#inner {
+        /* text-align: center; */
+      }
+      </style>
+      <div id="outer">
+      <div id="inner">
+      <form id="login-form">
+      <paper-input label="password" type="password" id="login-input"></paper-input>
+      <paper-button @click="${this._submitLogin}">login</paper-button>
+      </form>
+      </div>
+      </div>
+      `
+    }
     if (!this._loaded) {
       return html`
       <style>
@@ -282,7 +308,8 @@ class MyApp extends connect(store)(LitElement) {
       _wideLayout: { type: Boolean },
       _people: {type: Array},
       _activePerson: {type: String},
-      _loaded : {type: Boolean}
+      _loaded : {type: Boolean},
+      _token : {type: String}
     }
   }
 
@@ -292,6 +319,7 @@ class MyApp extends connect(store)(LitElement) {
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
     this._loaded = false;
+    this._token = '';
   }
 
   firstUpdated() {
@@ -299,7 +327,10 @@ class MyApp extends connect(store)(LitElement) {
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
-    store.dispatch(loadDbInfo());
+  }
+
+  _loadData(token) {
+    store.dispatch(loadDbInfo(token));
     store.dispatch(loadStrings());
     store.dispatch(loadPeople());
     store.dispatch(loadFamilies());
@@ -325,7 +356,16 @@ class MyApp extends connect(store)(LitElement) {
     store.dispatch(updateDrawerState(e.target.opened));
   }
 
+  _submitLogin(e) {
+    const input = this.shadowRoot.querySelector('#login-input');
+    store.dispatch(getAuthToken(input.value));
+  }
+
   stateChanged(state) {
+    if (state.api.token && !this._token) {
+      this._loadData(state.api.token);
+    }
+    this._token = state.api.token;
     if (!this._loaded) {
       if ('api' in state
           && Object.keys(state.api.people).length
