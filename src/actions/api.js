@@ -4,6 +4,7 @@ export const FAMILIES = 'FAMILIES';
 export const EVENTS = 'EVENTS';
 export const STRINGS = 'STRINGS';
 export const DBINFO = 'DBINFO';
+export const PLACES = 'PLACES';
 export const TOKEN = 'TOKEN';
 
 import { activePersonIfEmpty } from './app.js'
@@ -41,22 +42,57 @@ export const loadDbInfo = (token) => async (dispatch) => {
     .catch((error) => console.log(error));
 };
 
-export const loadPeople = () => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/people`)
+export const loadPeople = (token) => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/people`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
     .then(resp => resp.json())
     .then(data => dispatch(getPeople(data)))
     .catch((error) => console.log(error));
 };
 
-export const loadFamilies = () => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/families`)
+export const loadPlaces = (token) => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/places`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+    .then(resp => resp.json())
+    .then(data => dispatch(getPlaces(data)))
+    .catch((error) => console.log(error));
+};
+
+export const loadFamilies = (token) => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/families`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
     .then(resp => resp.json())
     .then(data => dispatch(getFamilies(data)))
     .catch((error) => console.log(error));
 };
 
-export const loadEvents = () => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/events`)
+export const loadEvents = (token) => async (dispatch) => {
+  fetch(`http://127.0.0.1:5000/events`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
     .then(resp => resp.json())
     .then(data => dispatch(getEvents(data)))
     .catch((error) => console.log(error));
@@ -73,6 +109,13 @@ const getPeople = (data) => {
   return {
     type: PEOPLE,
     people: data
+  };
+};
+
+const getPlaces = (data) => {
+  return {
+    type: PLACES,
+    places: data
   };
 };
 
@@ -129,7 +172,8 @@ const _strings = [
   "Number of individuals",
   "Number of families",
   "Number of events",
-  "Number of places"
+  "Number of places",
+  "Places"
 ]
 
 export const loadStrings = () => async (dispatch) => {

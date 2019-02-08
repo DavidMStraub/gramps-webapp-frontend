@@ -15,7 +15,7 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadPeople, loadFamilies, loadEvents, loadStrings, loadDbInfo, getAuthToken } from '../actions/api.js';
+import { loadPeople, loadFamilies, loadEvents, loadStrings, loadPlaces, loadDbInfo, getAuthToken } from '../actions/api.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -45,7 +45,7 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import './snack-bar.js';
-import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIcon, pedigreeIcon } from './my-icons.js';
+import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIcon, pedigreeIcon, placeIcon } from './my-icons.js';
 
 class MyApp extends connect(store)(LitElement) {
   render() {
@@ -270,6 +270,7 @@ class MyApp extends connect(store)(LitElement) {
         <hr>
         <a ?selected="${this._page === 'view-people'}" href="/view-people">${accountIcon} ${_('People')}</a>
         <a ?selected="${this._page === 'view-families'}" href="/view-families">${familyIcon} ${_('Families')}</a>
+        <a ?selected="${this._page === 'view-places'}" href="/view-places">${placeIcon} ${_('Places')}</a>
         <hr>
         <span class="activePerson">${this._activePerson ? this._activePerson.name_surname +  ',': ''}
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
@@ -284,6 +285,7 @@ class MyApp extends connect(store)(LitElement) {
       <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
       <my-view-person class="page" ?active="${this._page === 'view-person'}" id="my-view-person"></my-view-person>
       <my-view-families class="page" ?active="${this._page === 'view-families'}"></my-view-families>
+      <my-view-places class="page" ?active="${this._page === 'view-places'}"></my-view-places>
       <my-view-tree class="page" ?active="${this._page === 'view-tree'}"></my-view-tree>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
@@ -332,9 +334,10 @@ class MyApp extends connect(store)(LitElement) {
   _loadData(token) {
     store.dispatch(loadDbInfo(token));
     store.dispatch(loadStrings());
-    store.dispatch(loadPeople());
-    store.dispatch(loadFamilies());
-    store.dispatch(loadEvents());
+    store.dispatch(loadPeople(token));
+    store.dispatch(loadFamilies(token));
+    store.dispatch(loadEvents(token));
+    store.dispatch(loadPlaces(token));
   }
 
   updated(changedProps) {

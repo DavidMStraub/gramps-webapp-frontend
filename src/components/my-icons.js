@@ -20,3 +20,4 @@ export const asteriskIcon = html`<svg height="24" width="24" viewBox="0 0 24 24"
 export const crossIcon = html`<svg height="24" width="24" viewBox="0 0 24 24"><path fill="#000000" d="M10.5,2H13.5V8H19V11H13.5V22H10.5V11H5V8H10.5V2Z" /></svg>`
 export const pedigreeIcon = html`<svg height="24" width="24" viewBox="0 0 24 24"><path d="m17.201 6v4h4.8223v-4h-4.8223zm-5.9102 1.1582v3.9922h-3.5996v1.6992h3.5996v3.9922h4.9219v-1.7012h-3.2227v-6.2812h3.2227v-1.7012h-4.9219zm-9.3828 2.8418v4h4.8223v-4h-4.8223zm15.293 4v4h4.8223v-4h-4.8223z"/> </svg>`
 export const arrowRightIcon = html`<svg height="24" width="24" viewBox="0 0 24 24"><path fill="#000000" d="M10,17L15,12L10,7V17Z" /></svg>`
+export const placeIcon = html`<svg height="24" width="24" viewBox="0 0 24 24"><path fill="#000000" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" /></svg>`
