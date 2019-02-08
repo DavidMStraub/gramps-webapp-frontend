@@ -32,7 +32,7 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
 import '@vaadin/vaadin-grid/vaadin-grid-sort-column.js';
 import '@vaadin/vaadin-grid/vaadin-grid-selection-column.js';
 
-class MyViewPlaces extends connect(store)(PageViewElement) {
+class MyViewEvents extends connect(store)(PageViewElement) {
   render() {
     return html`
       <style>
@@ -41,7 +41,7 @@ class MyViewPlaces extends connect(store)(PageViewElement) {
       }
       </style>
       <section>
-        <vaadin-grid .items=${this._places} theme="row-dividers" multi-sort>
+        <vaadin-grid .items=${this._events} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
           <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
@@ -53,19 +53,28 @@ class MyViewPlaces extends connect(store)(PageViewElement) {
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="name" direction="asc">${_('Name')}</vaadin-grid-sorter>
-              <vaadin-grid-filter path="name"></vaadin-grid-filter>
+              <vaadin-grid-sorter path="date" direction="desc">${_('Date')}</vaadin-grid-sorter>
+              <vaadin-grid-filter path="date"></vaadin-grid-filter>
             </template>
             <template>
-              [[item.name]]
+              [[item.date]]
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="type_string">${_('Type')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="type">${_('Type')}</vaadin-grid-sorter>
             </template>
             <template>
-              [[item.type_string]]
+              [[item.type]]
+            </template>
+          </vaadin-grid-column>
+          <vaadin-grid-column>
+            <template class="header">
+              <vaadin-grid-sorter path="place">${_('Place')}</vaadin-grid-sorter>
+              <vaadin-grid-filter path="place"></vaadin-grid-filter>
+            </template>
+            <template>
+              [[item.place]]
             </template>
           </vaadin-grid-column>
         </vaadin-grid>
@@ -84,12 +93,12 @@ class MyViewPlaces extends connect(store)(PageViewElement) {
   }
 
   static get properties() { return {
-    _places: { type: Object },
+    _events: { type: Object },
     _hidden: { type: Boolean }
   }}
 
   stateChanged(state) {
-    this._places = Object.values(state.api.places);
+    this._events = Object.values(state.api.events);
     this._hidden = !store.getState().app.wideLayout;
   }
 
@@ -98,4 +107,4 @@ class MyViewPlaces extends connect(store)(PageViewElement) {
 
 }
 
-window.customElements.define('my-view-places', MyViewPlaces);
+window.customElements.define('my-view-events', MyViewEvents);

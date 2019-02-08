@@ -6,6 +6,7 @@ export const STRINGS = 'STRINGS';
 export const DBINFO = 'DBINFO';
 export const PLACES = 'PLACES';
 export const TOKEN = 'TOKEN';
+export const LOGOUT = 'LOGOUT';
 
 import { activePersonIfEmpty } from './app.js'
 
@@ -22,7 +23,9 @@ export const getAuthToken = (password) => async (dispatch) => {
     .then(data => {
       dispatch(storeAuthToken(data.access_token));
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const loadDbInfo = (token) => async (dispatch) => {
@@ -34,12 +37,23 @@ export const loadDbInfo = (token) => async (dispatch) => {
           'Authorization': 'Bearer ' + token
         }
       })
-    .then(resp => resp.json())
+    .then(resp => {
+      var respStatus = resp.status;
+      if (respStatus == 401) {
+        dispatch(logout());
+      }
+      return resp.json();
+    })
+    .then(data => {
+      return data;
+    })
     .then(data => {
       dispatch(getDbInfo(data));
       dispatch(activePersonIfEmpty(data.default_person));
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+    });
 };
 
 export const loadPeople = (token) => async (dispatch) => {
@@ -126,6 +140,12 @@ const getDbInfo = (data) => {
   };
 };
 
+const logout = () => {
+  return {
+    type: LOGOUT
+  };
+};
+
 const getFamilies = (data) => {
   return {
     type: FAMILIES,
@@ -173,7 +193,8 @@ const _strings = [
   "Number of families",
   "Number of events",
   "Number of places",
-  "Places"
+  "Places",
+  "Type"
 ]
 
 export const loadStrings = () => async (dispatch) => {

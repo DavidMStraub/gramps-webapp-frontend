@@ -28,12 +28,36 @@ const devCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // that you can dispatch async actions). See the "Redux and state management"
 // section of the wiki for more details:
 // https://github.com/Polymer/pwa-starter-kit/wiki/4.-Redux-and-state-management
+
+const MY_KEY = 'my_app'
+
+export const saveState = (state) => {
+  let stringifiedState = JSON.stringify(state);
+  localStorage.setItem(MY_KEY, stringifiedState);
+}
+export const loadState = () => {
+  let json = localStorage.getItem(MY_KEY) || '{}';
+  let state = JSON.parse(json);
+
+  if (state) {
+    return state;
+  } else {
+    return undefined;  // To use the defaults in the reducers
+  }
+}
+
 export const store = createStore(
   state => state,
-  devCompose(
-    lazyReducerEnhancer(combineReducers),
-    applyMiddleware(thunk))
+  loadState(),  // If there is local storage data, load it.
+  compose(lazyReducerEnhancer(combineReducers), applyMiddleware(thunk))
 );
+
+// This subscriber writes to local storage anytime the state updates.
+store.subscribe(() => {
+  saveState(store.getState());
+});
+
+
 
 // Initially loaded reducers.
 store.addReducers({

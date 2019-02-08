@@ -45,7 +45,7 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import './snack-bar.js';
-import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIcon, pedigreeIcon, placeIcon } from './my-icons.js';
+import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIcon, pedigreeIcon, placeIcon, calendarIcon } from './my-icons.js';
 
 class MyApp extends connect(store)(LitElement) {
   render() {
@@ -271,6 +271,7 @@ class MyApp extends connect(store)(LitElement) {
         <a ?selected="${this._page === 'view-people'}" href="/view-people">${accountIcon} ${_('People')}</a>
         <a ?selected="${this._page === 'view-families'}" href="/view-families">${familyIcon} ${_('Families')}</a>
         <a ?selected="${this._page === 'view-places'}" href="/view-places">${placeIcon} ${_('Places')}</a>
+        <a ?selected="${this._page === 'view-events'}" href="/view-events">${calendarIcon} ${_('Events')}</a>
         <hr>
         <span class="activePerson">${this._activePerson ? this._activePerson.name_surname +  ',': ''}
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
@@ -286,6 +287,7 @@ class MyApp extends connect(store)(LitElement) {
       <my-view-person class="page" ?active="${this._page === 'view-person'}" id="my-view-person"></my-view-person>
       <my-view-families class="page" ?active="${this._page === 'view-families'}"></my-view-families>
       <my-view-places class="page" ?active="${this._page === 'view-places'}"></my-view-places>
+      <my-view-events class="page" ?active="${this._page === 'view-events'}"></my-view-events>
       <my-view-tree class="page" ?active="${this._page === 'view-tree'}"></my-view-tree>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>

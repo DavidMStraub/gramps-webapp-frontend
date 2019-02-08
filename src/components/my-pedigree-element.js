@@ -12,6 +12,7 @@ import { html, LitElement } from 'lit-element';
 
 import { translate as _ } from '../translate.js';
 
+import { arrowRightIcon } from './my-icons.js';
 import './my-pedigree-card.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -58,8 +59,10 @@ class MyPedigreeElement extends connect(store)(LitElement) {
         border-bottom-width: 1px;
       }
       div.branch-left.female {
-        border-bottom-left-radius: 15px;
         border-top-width: 1px;
+      }
+      div.icon svg path {
+        fill: #ccc;
       }
       </style>
       <div id="container">
@@ -76,7 +79,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
               @person-selected="${this._personSelected}"
             >
             </my-pedigree-card>
-            <div
+              <div
             class="branch-right ${p.gender === 1 ? 'male' : 'female'}"
             style="
             left: 0px;

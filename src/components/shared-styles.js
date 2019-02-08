@@ -72,4 +72,13 @@ export const SharedStyles = css`
     font-size: 30px;
     line-height: 64px;
   }
+
+  svg {
+      height: 1em;
+      top: .125em;
+      position: relative;
+  }
+  svg path {
+      fill: #aaa;
+  }
 `;
