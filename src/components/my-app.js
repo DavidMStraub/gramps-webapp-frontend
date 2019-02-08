@@ -67,7 +67,7 @@ class MyApp extends connect(store)(LitElement) {
       <div id="outer">
       <div id="inner">
       <form id="login-form">
-      <paper-input label="password" type="password" id="login-input"></paper-input>
+      <paper-input @keypress="${this._handleInputKeypress}" label="password" type="password" id="login-input" autofocus></paper-input>
       <paper-button @click="${this._submitLogin}">login</paper-button>
       </form>
       </div>
@@ -359,6 +359,12 @@ class MyApp extends connect(store)(LitElement) {
   _submitLogin(e) {
     const input = this.shadowRoot.querySelector('#login-input');
     store.dispatch(getAuthToken(input.value));
+  }
+
+  _handleInputKeypress(e) {
+    if (e.key == 'Enter') {
+      this._submitLogin(e);
+    }
   }
 
   stateChanged(state) {
