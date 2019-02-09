@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import {
   UPDATE_PAGE,
   ACTIVE_PERSON,
+  ACTIVE_EVENT,
   ACTIVE_PERSON_IF_EMPTY,
   UPDATE_OFFLINE,
   UPDATE_WIDE_LAYOUT,
@@ -32,6 +33,11 @@ const app = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         page: action.page
+      };
+    case ACTIVE_EVENT:
+      return {
+        ...state,
+        activeEvent: action.id
       };
     case ACTIVE_PERSON:
       return {

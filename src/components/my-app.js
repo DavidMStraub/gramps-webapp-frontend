@@ -289,6 +289,8 @@ class MyApp extends connect(store)(LitElement) {
       <my-view-places class="page" ?active="${this._page === 'view-places'}"></my-view-places>
       <my-view-events class="page" ?active="${this._page === 'view-events'}"></my-view-events>
       <my-view-tree class="page" ?active="${this._page === 'view-tree'}"></my-view-tree>
+      <my-view-event class="page" ?active="${this._page === 'view-event'}" id="my-view-event"></my-view-event>
+      <my-view-place class="page" ?active="${this._page === 'view-place'}" id="my-view-place"></my-view-place>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
@@ -394,6 +396,7 @@ class MyApp extends connect(store)(LitElement) {
     this._wideLayout = state.app.wideLayout;
     this._people = state.api.people;
     this._activePerson = state.api.people[state.app.activePerson];
+    this._activeEvent = state.api.people[state.app.activeEvent];
   }
 }
 

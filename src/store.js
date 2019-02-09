@@ -48,8 +48,8 @@ export const loadState = () => {
 
 export const store = createStore(
   state => state,
-  loadState(),  // If there is local storage data, load it.
-  compose(lazyReducerEnhancer(combineReducers), applyMiddleware(thunk))
+  // loadState(),  // If there is local storage data, load it.
+  compose(lazyReducerEnhancer(combineReducers), applyMiddleware(thunk)),
 );
 
 // This subscriber writes to local storage anytime the state updates.

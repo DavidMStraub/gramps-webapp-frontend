@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const ACTIVE_PERSON = 'ACTIVE_PERSON';
+export const ACTIVE_EVENT = 'ACTIVE_EVENT';
 export const ACTIVE_PERSON_IF_EMPTY = 'ACTIVE_PERSON_IF_EMPTY';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_WIDE_LAYOUT = 'UPDATE_WIDE_LAYOUT';
@@ -42,10 +43,15 @@ const loadPageId = (page, id) => (dispatch) => {
       import('../components/my-view-tree.js').then((module) => {
       });
     case 'view-person':
+    dispatch(activePerson(id));
       import('../components/my-view-person.js').then((module) => {
       });
+      dispatch(activePerson(id));
+    case 'view-event':
+      import('../components/my-view-event.js').then((module) => {
+      });
+      dispatch(activeEvent(id));
   }
-  dispatch(activePerson(id));
   dispatch(updatePage(page));
   window.scrollTo(0, 0);
 }
@@ -94,6 +100,13 @@ const updatePage = (page) => {
 export const activePerson = (id) => {
   return {
     type: ACTIVE_PERSON,
+    id
+  };
+};
+
+export const activeEvent = (id) => {
+  return {
+    type: ACTIVE_EVENT,
     id
   };
 };

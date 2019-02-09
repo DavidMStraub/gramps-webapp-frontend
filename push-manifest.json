@@ -74,6 +74,18 @@
       "type": "script",
       "weight": 1
     },
+  "/view-event": {
+    "src/components/my-app.js": {
+      "crossorigin": "anonymous",
+      "type": "script",
+      "weight": 1
+    },
+  "/view-place": {
+    "src/components/my-app.js": {
+      "crossorigin": "anonymous",
+      "type": "script",
+      "weight": 1
+    },
     "src/components/my-view-tree.js": {
       "crossorigin": "anonymous",
       "type": "script",
