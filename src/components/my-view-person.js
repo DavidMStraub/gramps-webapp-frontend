@@ -116,7 +116,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
           <paper-tab>${_("Parents")}</paper-tab>
           <paper-tab>${_("Families")}</paper-tab>
           <paper-tab><div style="display:inline-block"><span>Galerie</span>${this._media.length ?
-            html` <paper-badge label="${this._media.length}"></div></paper-badge>
+            html` <paper-badge label="${this._media.length}"></paper-badge></div>
           ` : ''}</paper-tab>
         </paper-tabs>
         </div>

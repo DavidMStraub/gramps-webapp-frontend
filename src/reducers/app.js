@@ -12,6 +12,7 @@ import {
   UPDATE_PAGE,
   ACTIVE_PERSON,
   ACTIVE_EVENT,
+  ACTIVE_PLACE,
   ACTIVE_PERSON_IF_EMPTY,
   UPDATE_OFFLINE,
   UPDATE_WIDE_LAYOUT,
@@ -38,6 +39,11 @@ const app = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         activeEvent: action.id
+      };
+    case ACTIVE_PLACE:
+      return {
+        ...state,
+        activePlace: action.id
       };
     case ACTIVE_PERSON:
       return {

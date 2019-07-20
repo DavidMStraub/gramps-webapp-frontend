@@ -10,8 +10,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
+import '@polymer/paper-tabs/paper-tabs.js';
+import '@polymer/paper-tabs/paper-tab.js';
+import '@polymer/paper-badge/paper-badge.js';
 import './my-family-element.js';
-import './my-events-element.js';
 import './my-img-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -24,7 +26,7 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-class MyViewEvent extends connect(store)(PageViewElement) {
+class MyViewPlace extends connect(store)(PageViewElement) {
   render() {
     return html`
       <style>
@@ -48,46 +50,37 @@ class MyViewEvent extends connect(store)(PageViewElement) {
         text-align: right;
         max-width: 20em;
         padding-right: 1em;
+        padding-top:0.3em;
       }
       td {
         margin: 0;
       }
+      :host {
+        --paper-tab-ink: var(--app-secondary-color);
+        --paper-tabs-selection-bar-color: var(--app-secondary-color);
+        --paper-badge-background:  var(--app-primary-color);
+        --paper-badge-margin-left: 20px;
+      }
+      paper-tabs {
+        /* background-color: var(--app-section-even-color); */
+        color: var(--app-dark-text-color);
+        font-weight: 400;
+        font-size: 15px;
+      }
       </style>
       <section>
         <div id="title">
-          <h2>${this._event.type}
-          ${this._participants['Primär'] ? html`
-          von ${this._participants['Primär'].map((p) => this._personLink(p))}
-          ` : ''}
-          </h2>
+          <h2>${this._place.name}</h2>
         </div>
-        <p>
-          <table width="100%">
-          ${this._event.date ? html`
-            <tr>
-              <th>${_('Date')}</th>
-              <td>${this._event.date}</td>
-            </tr>
-            ` : ''}
-          ${this._event.place ? html`
-            <tr>
-              <th>${_('Place')}</th>
-              <td>${this._event.place}</td>
-            </tr>
-            ` : ''}
-          ${Object.keys(this._participants).map((role) => {
-            if (role != 'Primär') {
-              return html`
-              <tr>
-                <th>${role}</th>
-                <td>${this._participants[role].map((p, i, arr) => this._personLink(p, (i==arr.length - 1)))}</td>
-              </tr>
-              `
-            }
-          })}
-          </table>
-          </p>
-        <p>${this._event.description}</p>
+
+        <table width="100%">
+          <tr>
+            <th>${_('Type')}</th>
+            <td>${this._place.type_string}</td>
+          </tr>
+        </table>
+
+
         ${this._media.length ? html`
           <h3>Galerie</h3>
           ${this._media.map((medium) => html`
@@ -101,7 +94,9 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           </div>
           `)}
         ` : '' }
+
       </section>
+
     `
     }
 
@@ -113,14 +108,34 @@ class MyViewEvent extends connect(store)(PageViewElement) {
 
     constructor() {
       super();
+      this._selected = 0;
     }
 
+
     static get properties() { return {
-      _event: { type: Object },
-      _handle: { type: String }
+      _place: { type: Object },
+      _gramps_id: { type: String },
+      _events: { type: Object },
+      _media: { type: Object },
+      _hierarchy: { type: Object },
+      _selected: { type: Number }
     }}
 
+
+    _handleSelected(ev) {
+        this._selected = ev.detail.selected;
+        window.location.hash = this._selected;
+    }
+
+    _onHashChange(ev) {
+      this._selected = ev.newURL.split('#')[1];
+    }
+
     firstUpdated() {
+      window.addEventListener('hashchange', this._onHashChange);
+      if (window.location.hash.split('#')[1] != undefined) {
+        this._selected = window.location.hash.split('#')[1];
+      }
     }
 
     _personLink(p, lastItem) {
@@ -134,17 +149,16 @@ class MyViewEvent extends connect(store)(PageViewElement) {
     }
 
     stateChanged(state) {
-      this._handle = state.app.activeEvent;
-      this._event = state.api.events[this._handle];
-      if (this._event != undefined) {
-        this._media = this._event.media;
-        this._participants = Object.assign({}, this._event.participants);
-        Object.keys(this._participants).map((role, ids) => {
-          this._participants[role] = this._participants[role].map((id) => state.api.people[id])
-        });
+      this._gramps_id = state.app.activePlace;
+      console.log(this._gramps_id);
+      console.log(state.app.activePlace);
+      this._place = state.api.places[this._gramps_id];
+      if (this._place != undefined) {
+        this._media = this._place.media;
+        this._hierarchy = this._place._hierarchy;
       }
     }
 
 }
 
-window.customElements.define('my-view-event', MyViewEvent);
+window.customElements.define('my-view-place', MyViewPlace);

@@ -1,4 +1,4 @@
-/**
+/*
 @license
 Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
@@ -48,7 +48,7 @@ export const loadState = () => {
 
 export const store = createStore(
   state => state,
-  // loadState(),  // If there is local storage data, load it.
+  loadState(),  // If there is local storage data, load it.
   compose(lazyReducerEnhancer(combineReducers), applyMiddleware(thunk)),
 );
 
