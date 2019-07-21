@@ -23,7 +23,7 @@ class MyPedigreeCard extends LitElement {
       return html`
       <style>
       .card {
-        width: 164px;
+        width: ${this.width};
         height: 70px;
         padding: 10px;
         border-radius: 10px;
@@ -65,7 +65,7 @@ class MyPedigreeCard extends LitElement {
           </my-img-element>
           ` : ''}
         </div>
-        <a @click="${this._personSelected}" href="/view-tree">
+        <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'view-tree' : 'view-person/' + this.person.gramps_id}">
         <span class="name">${this.person.name_surname},
         <br>
         ${this.person.name_given}</span>
@@ -87,6 +87,12 @@ class MyPedigreeCard extends LitElement {
         ]
     }
 
+    constructor() {
+      super();
+      this.width = '164px';
+      this.link = 'pedigree';
+    }
+
     _personSelected() {
       this.dispatchEvent(new CustomEvent('person-selected', {detail: {gramps_id: this.person.gramps_id}}));
     }
@@ -94,6 +100,8 @@ class MyPedigreeCard extends LitElement {
 
     static get properties() { return {
       person: { type: Object },
+      width: {type: String },
+      link: {type: String}
     }}
 
 }

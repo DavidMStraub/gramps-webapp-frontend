@@ -11,8 +11,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { html, LitElement } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
+import './my-pedigree-card.js';
 import './my-children-element.js';
 import './my-person-element.js';
+
+import { ringsIcon } from './my-icons.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -31,14 +34,25 @@ class MyFamilyElement extends connect(store)(LitElement) {
       return html`Loading...`;
     }
     this._family = state.api.families[this.gramps_id];
+    if (this._family.marriageplace  != 'undefined' && this._family.marriageplace != '') {
+        this._marriageplace_name = state.api.places[this._family.marriageplace].name;
+    }
     this._father = state.api.people[this._family.father_id];
     this._mother = state.api.people[this._family.mother_id];
     this._children = this._family.children.map((gid) => state.api.people[gid]);
     return html`
-      <p>${this._father ? html`<my-person-element .person=${this._father}></my-person-element>` : 'NN'}
-      <span style="display:block;padding-left:1em;">⚭ ${this._family.marriagedate ? this._family.marriagedate : ''} ${this._family.marriageplace ? _("in ") + this._family.marriageplace: ''}</span>
-      <my-person-element .person=${this._mother}></my-person-element>
+      <div style="float:left;">
+        <my-pedigree-card .person=${this._father} width="200px" link="person"></my-pedigree-card>
+      </div>
+      <span style="display:block;float:left;padding:0.8em 2em;text-align:center;">
+      ${this._family.marriagedate ? html`${ringsIcon} ${this._family.marriagedate}` : ''} ${this._family.marriageplace ? html`<br>${_('in')} <a href="/view-place/${this._family.marriageplace}">${this._marriageplace_name}</a>`: ''}
+      </span>
+      <div style="float:left;">
+        <my-pedigree-card .person=${this._mother} width="200px" link="person"></my-pedigree-card>
+      </div>
       </p>
+      <div style="clear:left;">
+      </div>
       ${this._family.children.length > 0 ?
         html`
         <h3>${this.siblings ? _("Siblings") : _("Children")}</h3>
