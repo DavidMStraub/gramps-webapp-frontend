@@ -112,6 +112,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
         style="
           height:20px;
           left:0px;
+          ${p.families.length ? 'font-weight:bold;' : 'font-weight:normal;'}
           font-size:0.8em;
           position: absolute;
           top: ${((2**(this.depth - 0 - 1) ) * (0 + 0.5) - 0.5 + 1) * 100 + i * 20}px;
