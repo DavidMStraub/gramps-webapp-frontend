@@ -96,14 +96,14 @@ class MyViewPerson extends connect(store)(PageViewElement) {
             ${asteriskIcon} ${this._person.birthdate}
             ` : ''}
             ${this._person.birthplace ? html`
-              ${_("in")} ${this._person.birthplace}
+              ${_("in")} <a href="view-place/${this._person.birthplace}">${this._person.birthplace_name}</a>
               ` : ''}
           </p>
           <p>${this._person.deathdate ? html`
             ${crossIcon} ${this._person.deathdate}
             ` : ''}
             ${this._person.deathplace ? html`
-              ${_("in")} ${this._person.deathplace}
+              ${_("in")} <a href="view-place/${this._person.daethplace}">${this._person.deathplace_name}</a>
               ` : ''}
           </p>
           </div>
@@ -193,12 +193,27 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       }
     }
 
+    _get_place_name(state, event) {
+      if (event.place != undefined && event.place != '') {
+        event.place_name = state.api.places[event.place].name;
+      };
+      return event;
+    }
+
     stateChanged(state) {
       this._gramps_id = state.app.activePerson;
       this._person = state.api.people[this._gramps_id];
       if (this._person != undefined) {
         this._parents = this._person.parents;
         this._events = this._person.events.map((handle) => state.api.events[handle]);
+        this._events = this._events.map((e) => this._get_place_name(state, e));
+        if (this._person.birthplace != '') {
+          this._person.birthplace_name = state.api.places[this._person.birthplace].name;
+        }
+        if (this._person.deathplace != '') {
+          console.log('d undefined');
+          this._person.deathplace_name = state.api.places[this._person.deathplace].name;
+        }
         this._media = this._person.media;
       }
     }

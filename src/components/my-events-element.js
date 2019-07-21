@@ -30,14 +30,23 @@ class MyEventsElement extends LitElement {
       <vaadin-grid-column path="date" header="${_('Date')}"></vaadin-grid-column>
       <vaadin-grid-column path="type" header="${_('Type')}"></vaadin-grid-column>
       <vaadin-grid-column path="description" header="${_('Description')}"></vaadin-grid-column>
-      <vaadin-grid-column path="place" header="${_('Place')}"></vaadin-grid-column>
+      <vaadin-grid-column>
+        <template class="header">
+          <vaadin-grid-sorter path="place_name">${_('Place')}</vaadin-grid-sorter>
+          <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
+        </template>
+        <template>
+          <a href="/view-place/[[item.place]]"><div>[[item.place_name]]</div></a>
+        </template>
+      </vaadin-grid-column>
     </vaadin-grid>
     `
   }
 
   static get styles() {
       return [
-        GridStyles
+        GridStyles,
+        SharedStyles
       ]
   }
 

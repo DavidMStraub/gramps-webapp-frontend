@@ -70,11 +70,11 @@ class MyViewEvents extends connect(store)(PageViewElement) {
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="place">${_('Place')}</vaadin-grid-sorter>
-              <vaadin-grid-filter path="place"></vaadin-grid-filter>
+              <vaadin-grid-sorter path="place_name">${_('Place')}</vaadin-grid-sorter>
+              <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
             </template>
             <template>
-              [[item.place]]
+              <a href="/view-place/[[item.place]]"><div>[[item.place_name]]</div></a>
             </template>
           </vaadin-grid-column>
         </vaadin-grid>
@@ -97,8 +97,15 @@ class MyViewEvents extends connect(store)(PageViewElement) {
     _hidden: { type: Boolean }
   }}
 
+  _get_place_name(state, event) {
+    if (event.place != undefined && event.place != '') {
+      event.place_name = state.api.places[event.place].name;
+    };
+    return event;
+  }
+
   stateChanged(state) {
-    this._events = Object.values(state.api.events);
+    this._events = Object.values(state.api.events).map((e) => this._get_place_name(state, e));
     this._hidden = !store.getState().app.wideLayout;
   }
 

@@ -72,7 +72,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           ${this._event.place ? html`
             <tr>
               <th>${_('Place')}</th>
-              <td>${this._event.place}</td>
+              <td><a href="/view-place/${this._event.place}">${this._event.place_name}</a></td>
             </tr>
             ` : ''}
           ${Object.keys(this._participants).map((role) => {
@@ -136,7 +136,11 @@ class MyViewEvent extends connect(store)(PageViewElement) {
     stateChanged(state) {
       this._handle = state.app.activeEvent;
       this._event = state.api.events[this._handle];
+
       if (this._event != undefined) {
+        if (this._event.place != '') {
+          this._event.place_name = state.api.places[this._event.place].name;
+        }
         this._media = this._event.media;
         this._participants = Object.assign({}, this._event.participants);
         Object.keys(this._participants).map((role, ids) => {
