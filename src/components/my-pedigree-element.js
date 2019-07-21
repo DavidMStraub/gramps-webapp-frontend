@@ -64,6 +64,9 @@ class MyPedigreeElement extends connect(store)(LitElement) {
       div.icon svg path {
         fill: #ccc;
       }
+      .gray {
+        color: #aaa;
+      }
       </style>
       <div id="container">
       ${this._people.map((g, i) => html`
@@ -104,6 +107,18 @@ class MyPedigreeElement extends connect(store)(LitElement) {
           </div>
         ` : '')}
       `)}
+      ${this._children.map((p, i) => Object.keys(p).length ? html`
+        <div
+        style="
+          height:20px;
+          left:0px;
+          font-size:0.8em;
+          position: absolute;
+          top: ${((2**(this.depth - 0 - 1) ) * (0 + 0.5) - 0.5 + 1) * 100 + i * 20}px;
+        ">
+        <a @click="${() => this._selectPerson(p.gramps_id)}" href="view-tree"><span class="gray">└</span>&nbsp; ${p.name_given}</a>
+        </div>
+      ` : '')}
       </div>
       `
     }
@@ -116,15 +131,21 @@ class MyPedigreeElement extends connect(store)(LitElement) {
 
     static get properties() { return {
       _people: { type: Array },
+      _children: { type: Array },
       depth:  { type: Number }
     }}
 
     stateChanged(state) {
       this._people = this._getTree(state, state.app.activePerson, this.depth);
+      this._children = this._getChildren(state, state.app.activePerson);
     }
 
     _personSelected(e) {
       store.dispatch(activePerson(e.detail.gramps_id));
+    }
+
+    _selectPerson(gramps_id) {
+      store.dispatch(activePerson(gramps_id));
     }
 
     _getTree(state, start_id, depth) {
@@ -170,6 +191,20 @@ class MyPedigreeElement extends connect(store)(LitElement) {
         var _mother = {};
       }
       return [_father, _mother];
+    }
+
+
+    _getChildren(state, gramps_id) {
+      if (gramps_id == undefined) {
+        return [];
+      }
+      const _person = state.api.people[gramps_id];
+      if (_person.families == []) {
+        return [];
+      }
+      var _children = _person.families.flatMap((f) => state.api.families[f].children);
+      _children = _children.map((id) => state.api.people[id])
+      return _children;
     }
     //
     //   var _person = state.api.people[state.app.activePerson];
