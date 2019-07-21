@@ -28,6 +28,13 @@ import { SharedStyles } from './shared-styles.js';
 
 class MyViewPlace extends connect(store)(PageViewElement) {
   render() {
+    if (this._place == undefined) {
+      return html`
+      <section>
+        <p>Loading ...</p>
+      </section>
+      `
+    }
     return html`
       <style>
       h2 {
@@ -150,8 +157,6 @@ class MyViewPlace extends connect(store)(PageViewElement) {
 
     stateChanged(state) {
       this._gramps_id = state.app.activePlace;
-      console.log(this._gramps_id);
-      console.log(state.app.activePlace);
       this._place = state.api.places[this._gramps_id];
       if (this._place != undefined) {
         this._media = this._place.media;

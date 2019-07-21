@@ -211,7 +211,6 @@ class MyViewPerson extends connect(store)(PageViewElement) {
           this._person.birthplace_name = state.api.places[this._person.birthplace].name;
         }
         if (this._person.deathplace != '') {
-          console.log('d undefined');
           this._person.deathplace_name = state.api.places[this._person.deathplace].name;
         }
         this._media = this._person.media;
