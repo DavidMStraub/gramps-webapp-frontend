@@ -11,6 +11,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
+import { updateLightboxState } from '../actions/app.js';
+
+
 import '@polymer/paper-card/paper-card.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -75,8 +78,13 @@ class MyViewDashboard extends connect(store)(PageViewElement) {
             </table>
           </div>
       </paper-card>
+      <a @click="${this._openLightbox}" href="#">Open lightbox</a>
       </section>
     `
+  }
+
+  _openLightbox() {
+    store.dispatch(updateLightboxState(true));
   }
 
   static get styles() {

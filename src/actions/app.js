@@ -16,6 +16,7 @@ export const ACTIVE_PERSON_IF_EMPTY = 'ACTIVE_PERSON_IF_EMPTY';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_WIDE_LAYOUT = 'UPDATE_WIDE_LAYOUT';
 export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
+export const UPDATE_LIGHTBOX_STATE = 'UPDATE_LIGHTBOX_STATE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
 
@@ -168,6 +169,16 @@ export const updateDrawerState = (opened) => (dispatch, getState) => {
   if (app.drawerOpened !== opened && (!app.wideLayout || opened)) {
     dispatch({
       type: UPDATE_DRAWER_STATE,
+      opened
+    });
+  }
+};
+
+export const updateLightboxState = (opened) => (dispatch, getState) => {
+  const app = getState().app;
+  if (app.lightboxOpened !== opened) {
+    dispatch({
+      type: UPDATE_LIGHTBOX_STATE,
       opened
     });
   }

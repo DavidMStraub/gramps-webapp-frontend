@@ -18,13 +18,15 @@ import {
   UPDATE_WIDE_LAYOUT,
   OPEN_SNACKBAR,
   CLOSE_SNACKBAR,
-  UPDATE_DRAWER_STATE
+  UPDATE_DRAWER_STATE,
+  UPDATE_LIGHTBOX_STATE
 } from '../actions/app.js';
 
 const INITIAL_STATE = {
   page: '',
   offline: false,
   drawerOpened: false,
+  lightboxOpened: false,
   snackbarOpened: false,
 };
 
@@ -73,6 +75,11 @@ const app = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         drawerOpened: action.opened
+      };
+    case UPDATE_LIGHTBOX_STATE:
+      return {
+        ...state,
+        lightboxOpened: action.opened
       };
     case OPEN_SNACKBAR:
       return {

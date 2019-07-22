@@ -20,6 +20,8 @@ import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 
+import './my-lightbox-element.js';
+
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
@@ -36,6 +38,7 @@ import {
   navigate,
   updateOffline,
   updateDrawerState,
+  updateLightboxState,
   updateLayout
 } from '../actions/app.js';
 
@@ -294,6 +297,9 @@ class MyApp extends connect(store)(LitElement) {
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
+    <my-lightbox-element .opened="${this._lightboxOpened}">
+    </my-lightbox-element>
+
 
     <!-- <footer>
       <p></p>
@@ -309,6 +315,7 @@ class MyApp extends connect(store)(LitElement) {
       appTitle: { type: String },
       _page: { type: String },
       _drawerOpened: { type: Boolean },
+      _lightboxOpened: { type: Boolean },
       _snackbarOpened: { type: Boolean },
       _offline: { type: Boolean },
       _wideLayout: { type: Boolean },
@@ -325,6 +332,7 @@ class MyApp extends connect(store)(LitElement) {
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
     this._loaded = false;
+    this._lightboxOpened = false;
     this._token = '';
   }
 
@@ -333,6 +341,7 @@ class MyApp extends connect(store)(LitElement) {
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
+    this.addEventListener('lightbox-opened-changed', (e) => this._lightboxOpenedChanged(e));
   }
 
   _loadData(token) {
@@ -361,6 +370,10 @@ class MyApp extends connect(store)(LitElement) {
 
   _drawerOpenedChanged(e) {
     store.dispatch(updateDrawerState(e.target.opened));
+  }
+
+  _lightboxOpenedChanged(e) {
+    store.dispatch(updateLightboxState(e.target.opened));
   }
 
   _submitLogin(e) {
@@ -393,6 +406,7 @@ class MyApp extends connect(store)(LitElement) {
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
     this._drawerOpened = state.app.drawerOpened;
+    this._lightboxOpened = state.app.lightboxOpened;
     this._wideLayout = state.app.wideLayout;
     this._people = state.api.people;
     this._activePerson = state.api.people[state.app.activePerson];
