@@ -55,17 +55,18 @@ class MyPedigreeCard extends LitElement {
         </div>
         ` : html`
         <div class="card ${this.person.gender === 1 ? 'male' : 'female'}">
+        <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'view-tree' : 'view-person/' + this.person.gramps_id}">
         <div class="photo">
           ${ this.person.media.length ? html`
           <my-img-element
             handle="${this.person.media[0].ref}"
             size="70"
             circle square
+            nolink
             .rect="${this.person.media[0].rect}">
           </my-img-element>
           ` : ''}
         </div>
-        <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'view-tree' : 'view-person/' + this.person.gramps_id}">
         <span class="name">${this.person.name_surname},
         <br>
         ${this.person.name_given}</span>
