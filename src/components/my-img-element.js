@@ -15,7 +15,6 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-
 class MyImgElement extends LitElement {
   render() {
     if (this.rect == undefined) {
@@ -25,7 +24,7 @@ class MyImgElement extends LitElement {
       http://127.0.0.1:5000/thumbnail/${this.handle}/${1.5 * this.size} 1.5x,
       http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size} 2x"
       src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}"
-      style="border-radius:${this.circle ? '50%' : '0'}">
+      style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       `
     } else {
       var img = html`
@@ -34,14 +33,17 @@ class MyImgElement extends LitElement {
       http://127.0.0.1:5000/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 1.5x,
       http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 2x"
       src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}"
-      style="border-radius:${this.circle ? '50%' : '0'}">
+      style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       ${this.link ? html`</a>` : ''}
       `
     }
     if (this.nolink) {
       return img;
     } else {
-      return html`<a href="http://127.0.0.1:5000/media/${this.handle}">${img}</a>`;
+        return html`
+        <span @click="${this._lightbox_handle}" class="link">${img}</span>
+        `;
+      // return html`<a href="http://127.0.0.1:5000/media/${this.handle}">${img}</a>`;
     }
     }
 
@@ -54,6 +56,14 @@ class MyImgElement extends LitElement {
     constructor() {
       super();
       this.nolink = false;
+    }
+
+    _lightbox_handle() {
+      this.dispatchEvent(new CustomEvent('medium-selected',
+        {bubbles: true, composed: true, detail: {id: this.handle}})
+      );
+      this.dispatchEvent(new CustomEvent('lightbox-opened-changed',
+      {bubbles: true, composed: true, detail: {opened: true}}));
     }
 
     static get properties() { return {

@@ -21,6 +21,7 @@ import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 
 import './my-lightbox-element.js';
+import './my-media-element.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
@@ -39,6 +40,7 @@ import {
   updateOffline,
   updateDrawerState,
   updateLightboxState,
+  updateActiveMedium,
   updateLayout
 } from '../actions/app.js';
 
@@ -298,6 +300,8 @@ class MyApp extends connect(store)(LitElement) {
     </main>
 
     <my-lightbox-element .opened="${this._lightboxOpened}">
+      <my-media-element handle="${this._activeMedium}">
+      </my-media-element>
     </my-lightbox-element>
 
 
@@ -342,6 +346,7 @@ class MyApp extends connect(store)(LitElement) {
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
     this.addEventListener('lightbox-opened-changed', (e) => this._lightboxOpenedChanged(e));
+    this.addEventListener('medium-selected', (e) => this._mediumSelected(e));
   }
 
   _loadData(token) {
@@ -373,7 +378,11 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   _lightboxOpenedChanged(e) {
-    store.dispatch(updateLightboxState(e.target.opened));
+    store.dispatch(updateLightboxState(e.detail.opened));
+  }
+
+  _mediumSelected(e) {
+    store.dispatch(updateActiveMedium(e.detail.id));
   }
 
   _submitLogin(e) {
@@ -409,6 +418,7 @@ class MyApp extends connect(store)(LitElement) {
     this._lightboxOpened = state.app.lightboxOpened;
     this._wideLayout = state.app.wideLayout;
     this._people = state.api.people;
+    this._activeMedium = state.app.activeMedium;
     this._activePerson = state.api.people[state.app.activePerson];
     this._activeEvent = state.api.people[state.app.activeEvent];
   }

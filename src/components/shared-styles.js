@@ -81,4 +81,24 @@ export const SharedStyles = css`
   svg path {
       fill: #aaa;
   }
+  span.link {
+    cursor: pointer;
+  }
+  .arrow svg {
+    height: 2.5em;
+    width: 2.5em;
+  }
+
+  .arrow svg path {
+    fill: #ffffff;
+  }
+
+  .arrow svg path {
+    fill: #aaaaaa;
+  }
+
+  .arrow {
+    position: absolute;
+  }
+
 `;

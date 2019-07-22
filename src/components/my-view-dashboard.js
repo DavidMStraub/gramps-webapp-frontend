@@ -78,13 +78,8 @@ class MyViewDashboard extends connect(store)(PageViewElement) {
             </table>
           </div>
       </paper-card>
-      <a @click="${this._openLightbox}" href="#">Open lightbox</a>
       </section>
     `
-  }
-
-  _openLightbox() {
-    store.dispatch(updateLightboxState(true));
   }
 
   static get styles() {
