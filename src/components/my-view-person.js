@@ -16,6 +16,7 @@ import '@polymer/paper-badge/paper-badge.js';
 import './my-family-element.js';
 import './my-events-element.js';
 import './my-img-element.js';
+import './my-gallery-element.js';
 
 import { asteriskIcon, crossIcon, ringsIcon } from './my-icons.js';
 
@@ -54,9 +55,6 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       }
       div#tabs {
         margin-right: 230px;
-      }
-      div.item {
-        float:left; margin:5px;
       }
       svg {
           height: 1em;
@@ -142,18 +140,8 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         mother></my-family-element>`) : '' }
       </section>
       <section  ?hidden=${this._selected != 3}>
-        ${this._media.length ? html`
-          ${this._media.map((medium) => html`
-          <div class="item">
-            <my-img-element
-              handle="${medium.ref}"
-              size="200"
-              square
-              .rect="${medium.rect}">
-            </my-img-element>
-          </div>
-          `)}
-        ` : '' }
+      <my-gallery-element .images=${this._media}>
+      </my-gallery-element>
       </section>
     `
     }
