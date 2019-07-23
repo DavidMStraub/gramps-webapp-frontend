@@ -28,7 +28,12 @@ class MyEventsElement extends LitElement {
     return html`
     <vaadin-grid .items=${this.items} theme="row-dividers">
       <vaadin-grid-column path="date" header="${_('Date')}"></vaadin-grid-column>
-      <vaadin-grid-column path="type" header="${_('Type')}"></vaadin-grid-column>
+      <vaadin-grid-column>
+        <template class="header">${_('Type')}</template>
+        <template>
+          <a href="/view-event/[[item.handle]]"><div>[[item.type]]</div></a>
+        </template>
+      </vaadin-grid-column>
       <vaadin-grid-column path="description" header="${_('Description')}"></vaadin-grid-column>
       <vaadin-grid-column>
         <template class="header">
