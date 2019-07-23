@@ -12,7 +12,7 @@ import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 import './my-family-element.js';
 import './my-events-element.js';
-import './my-img-element.js';
+import './my-gallery-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -26,6 +26,9 @@ import { SharedStyles } from './shared-styles.js';
 
 class MyViewEvent extends connect(store)(PageViewElement) {
   render() {
+    if (this._event == undefined) {
+      return html``
+    }
     return html`
       <style>
       h2 {
@@ -88,19 +91,11 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           </table>
           </p>
         <p>${this._event.description}</p>
-        ${this._media.length ? html`
-          <h3>Galerie</h3>
-          ${this._media.map((medium) => html`
-          <div class="item">
-            <my-img-element
-              handle="${medium.ref}"
-              size="200"
-              square
-              .rect="${medium.rect}">
-            </my-img-element>
-          </div>
-          `)}
-        ` : '' }
+
+        <h3>Galerie</h3>
+        <my-gallery-element .images=${this._media}>
+        </my-gallery-element>
+
       </section>
     `
     }
