@@ -81,7 +81,7 @@ export const SharedStyles = css`
   svg path {
       fill: #aaa;
   }
-  span.link {
+  .link {
     cursor: pointer;
   }
   .arrow svg {
