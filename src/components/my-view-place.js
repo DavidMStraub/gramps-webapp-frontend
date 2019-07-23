@@ -14,7 +14,7 @@ import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-badge/paper-badge.js';
 import './my-family-element.js';
-import './my-img-element.js';
+import './my-gallery-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -87,20 +87,9 @@ class MyViewPlace extends connect(store)(PageViewElement) {
           </tr>
         </table>
 
-
-        ${this._media.length ? html`
-          <h3>Galerie</h3>
-          ${this._media.map((medium) => html`
-          <div class="item">
-            <my-img-element
-              handle="${medium.ref}"
-              size="200"
-              square
-              .rect="${medium.rect}">
-            </my-img-element>
-          </div>
-          `)}
-        ` : '' }
+        ${this._media.length ? html`<h3>Galerie</h3>` : ''}
+        <my-gallery-element .images=${this._media}>
+        </my-gallery-element>
 
       </section>
 
@@ -116,6 +105,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
     constructor() {
       super();
       this._selected = 0;
+      this._media = Array();
     }
 
 

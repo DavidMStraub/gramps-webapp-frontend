@@ -180,7 +180,7 @@ class MyMediaElement extends connect(store)(LitElement) {
         var _prev = '';
         var _next = '';
         var _handle = this.handle
-        if (this.media.length) {
+        if (this.media != undefined && this.media.length) {
           for (const [index, element] of this.media.entries()) {
             if (element == _handle) {
               if (index + 1 == this.media.length) {
