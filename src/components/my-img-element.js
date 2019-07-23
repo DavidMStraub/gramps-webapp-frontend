@@ -56,11 +56,12 @@ class MyImgElement extends LitElement {
     constructor() {
       super();
       this.nolink = false;
+      this.handles = Array();
     }
 
     _lightbox_handle() {
-      this.dispatchEvent(new CustomEvent('medium-selected',
-        {bubbles: true, composed: true, detail: {id: this.handle}})
+      this.dispatchEvent(new CustomEvent('media-selected',
+        {bubbles: true, composed: true, detail: {selected: this.handle, media: this.handles}})
       );
       this.dispatchEvent(new CustomEvent('lightbox-opened-changed',
       {bubbles: true, composed: true, detail: {opened: true}}));
@@ -68,6 +69,7 @@ class MyImgElement extends LitElement {
 
     static get properties() { return {
       handle: { type: String },
+      handles: {type: Object},
       size: { type: Number },
       rect: { type: Array },
       circle: { type: Boolean },

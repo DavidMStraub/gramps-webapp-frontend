@@ -24,7 +24,7 @@ import { chevronLeftIcon, chevronRightIcon } from './my-icons.js';
 
 class MyMediaElement extends connect(store)(LitElement) {
   render() {
-      if (this.handle) {
+      if (this.media) {
         return html`
         <style>
         div.media-container {
@@ -39,14 +39,14 @@ class MyMediaElement extends connect(store)(LitElement) {
             style="max-width:100vw;max-height:100vh;">
           </img>
         </div>
-        ${this.prev ? html`
+        ${this._prev ? html`
           <div class="arrow" style="left: 10vw;top: 50vh;">
-            <span @click="" class="link">${chevronLeftIcon}</span>
+            <span @click="${this._handle_left}" class="link">${chevronLeftIcon}</span>
           </div>
           ` : ''}
-        ${this.next ? html`
+        ${this._next ? html`
           <div class="arrow" style="right: 10vw;top: 50vh;">
-            <span @click="" class="link">${chevronRightIcon}</span>
+            <span @click="${this._handle_right}" class="link">${chevronRightIcon}</span>
           </div>
           ` : ''}
       `
@@ -55,10 +55,16 @@ class MyMediaElement extends connect(store)(LitElement) {
       }
   }
 
-    constructor() {
-      super();
-      this.next = '';
-      this.prev = '';
+    _handle_left() {
+      this.dispatchEvent(new CustomEvent('media-selected',
+        {bubbles: true, composed: true, detail: {selected: this._prev, media: this.media}})
+      );
+    }
+
+    _handle_right() {
+      this.dispatchEvent(new CustomEvent('media-selected',
+        {bubbles: true, composed: true, detail: {selected: this._next, media: this.media}})
+      );
     }
 
     static get styles() {
@@ -68,12 +74,33 @@ class MyMediaElement extends connect(store)(LitElement) {
     }
 
     static get properties() { return {
+      media: { type: Object },
       handle: { type: String },
-      next: { type: String },
-      prev: { type: String },
     }}
 
     stateChanged(state) {
+      if (state.app.activeMedia != undefined) {
+        this.media = state.app.activeMedia.media;
+        this.handle = state.app.activeMedia.selected
+        var _prev = '';
+        var _next = '';
+        var _handle = this.handle
+        if (this.media.length) {
+          for (const [index, element] of this.media.entries()) {
+            if (element == _handle) {
+              if (index + 1 == this.media.length) {
+                _next = '';
+              } else {
+                _next = this.media[index + 1];
+              }
+              break;
+            }
+            _prev = element;
+          };
+        };
+        this._prev = _prev;
+        this._next = _next;
+      }
     }
 
 

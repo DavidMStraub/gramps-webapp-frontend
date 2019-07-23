@@ -40,7 +40,7 @@ import {
   updateOffline,
   updateDrawerState,
   updateLightboxState,
-  updateActiveMedium,
+  updateActiveMedia,
   updateLayout
 } from '../actions/app.js';
 
@@ -346,7 +346,7 @@ class MyApp extends connect(store)(LitElement) {
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
     this.addEventListener('lightbox-opened-changed', (e) => this._lightboxOpenedChanged(e));
-    this.addEventListener('medium-selected', (e) => this._mediumSelected(e));
+    this.addEventListener('media-selected', (e) => this._mediaSelected(e));
   }
 
   _loadData(token) {
@@ -381,8 +381,9 @@ class MyApp extends connect(store)(LitElement) {
     store.dispatch(updateLightboxState(e.detail.opened));
   }
 
-  _mediumSelected(e) {
-    store.dispatch(updateActiveMedium(e.detail.id));
+  _mediaSelected(e) {
+    console.log('selected', e.detail)
+    store.dispatch(updateActiveMedia(e.detail));
   }
 
   _submitLogin(e) {

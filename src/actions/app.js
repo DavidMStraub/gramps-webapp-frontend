@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const ACTIVE_PERSON = 'ACTIVE_PERSON';
-export const ACTIVE_MEDIUM = 'ACTIVE_MEDIUM';
+export const ACTIVE_MEDIA = 'ACTIVE_MEDIA';
 export const ACTIVE_EVENT = 'ACTIVE_EVENT';
 export const ACTIVE_PLACE = 'ACTIVE_PLACE';
 export const ACTIVE_PERSON_IF_EMPTY = 'ACTIVE_PERSON_IF_EMPTY';
@@ -125,12 +125,12 @@ export const activePlace = (id) => {
   };
 };
 
-export const activeMedium = (id) => {
-  return {
-    type: ACTIVE_MEDIUM,
-    id
-  };
-};
+// export const activeMedia = (media) => {
+//   return {
+//     type: ACTIVE_MEDIA,
+//     media
+//   };
+// };
 
 export const activePersonIfEmpty = (id) => {
   return {
@@ -192,12 +192,9 @@ export const updateLightboxState = (opened) => (dispatch, getState) => {
   }
 };
 
-export const updateActiveMedium = (id) => (dispatch, getState) => {
-  const app = getState().app;
-  if (app.activeMedium !== id) {
-    dispatch({
-      type: ACTIVE_MEDIUM,
-      id
-    });
-  }
+export const updateActiveMedia = (media) => (dispatch) => {
+  dispatch({
+    type: ACTIVE_MEDIA,
+    media
+  });
 };

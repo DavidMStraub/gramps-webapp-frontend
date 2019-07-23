@@ -78,7 +78,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       }
       </style>
       <section>
-        ${this._media.length ? html`
+        ${this._media && this._media.length ? html`
         <div id="photo">
           <my-img-element
             handle="${this._media[0].ref}"
@@ -182,7 +182,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
     }
 
     _get_place_name(state, event) {
-      if (event.place != undefined && event.place != '') {
+      if (event.place != undefined && event.place != '' && state.api && state.api.places) {
         event.place_name = state.api.places[event.place].name;
       };
       return event;

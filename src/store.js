@@ -40,7 +40,9 @@ export const loadState = () => {
   let state = JSON.parse(json);
 
   if (state) {
-    state.app.lightboxOpened = false;
+    if  (state.app) {
+      state.app.lightboxOpened = false;
+    }
     return state;
   } else {
     return undefined;  // To use the defaults in the reducers

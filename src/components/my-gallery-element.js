@@ -30,6 +30,7 @@ class MyGalleryElement extends LitElement {
         <div class="item">
           <my-img-element
             handle="${image.ref}"
+            .handles="${this.images.map((image) => image.ref)}"
             size="200"
             square
             .rect="${image.rect}"

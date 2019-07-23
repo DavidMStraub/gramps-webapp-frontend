@@ -13,7 +13,7 @@ import {
   ACTIVE_PERSON,
   ACTIVE_EVENT,
   ACTIVE_PLACE,
-  ACTIVE_MEDIUM,
+  ACTIVE_MEDIA,
   ACTIVE_PERSON_IF_EMPTY,
   UPDATE_OFFLINE,
   UPDATE_WIDE_LAYOUT,
@@ -48,10 +48,10 @@ const app = (state = INITIAL_STATE, action) => {
         ...state,
         activePlace: action.id
       };
-    case ACTIVE_MEDIUM:
+    case ACTIVE_MEDIA:
       return {
         ...state,
-        activeMedium: action.id
+        activeMedia: action.media
       };
     case ACTIVE_PERSON:
       return {
