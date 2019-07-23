@@ -349,6 +349,7 @@ class MyApp extends connect(store)(LitElement) {
     this.addEventListener('media-selected', (e) => this._mediaSelected(e));
   }
 
+
   _loadData(token) {
     store.dispatch(loadDbInfo(token));
     store.dispatch(loadStrings());
@@ -382,7 +383,6 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   _mediaSelected(e) {
-    console.log('selected', e.detail)
     store.dispatch(updateActiveMedia(e.detail));
   }
 

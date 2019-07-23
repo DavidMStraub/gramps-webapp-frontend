@@ -67,6 +67,7 @@ class MyMediaElement extends connect(store)(LitElement) {
       );
     }
 
+
     static get styles() {
         return [
           SharedStyles
@@ -77,6 +78,21 @@ class MyMediaElement extends connect(store)(LitElement) {
       media: { type: Object },
       handle: { type: String },
     }}
+
+    firstUpdated() {
+      window.addEventListener('keydown', this._escHandler.bind(this));
+    }
+
+    _escHandler(e) {
+      if (e.key === "Escape") {
+        this.dispatchEvent(new CustomEvent('lightbox-opened-changed',
+        {bubbles: true, composed: true, detail: {opened: false}}));
+      } else if ((e.key === "ArrowRight" || e.key === "Right") && this._next != '') {
+        this._handle_right();
+      } else if ((e.key === "ArrowLeft" || e.key === "Left") && this._prev != '') {
+        this._handle_left();
+    };
+    }
 
     stateChanged(state) {
       if (state.app.activeMedia != undefined) {

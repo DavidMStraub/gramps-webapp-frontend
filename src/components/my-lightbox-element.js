@@ -56,7 +56,7 @@ class MyLightboxElement extends LitElement {
       }
       }
       </style>
-      <div id="lightbox" @keydown="${this._handleKeyPress}" tabindex="-1">
+      <div id="lightbox">
         <slot></slot>
       <div class="close-lightbox">
         <span @click="${this._closeLightbox}" class="link">${closeIcon}</span>
@@ -84,6 +84,9 @@ class MyLightboxElement extends LitElement {
       this.dispatchEvent(new CustomEvent('medium-selected',
         {bubbles: true, composed: true, detail: {id: ''}})
         );
+    }
+
+    firstUpdated() {
     }
 
     _handleKeyPress(e) {
