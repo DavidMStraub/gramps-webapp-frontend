@@ -49,7 +49,7 @@ class MyPedigreeCard extends LitElement {
         font-weight: 500;
       }
       </style>
-      ${(!Object.keys(this.person).length) ? html`
+      ${(this.person != undefined && !Object.keys(this.person).length) ? html`
         <div class="card">
         NN
         </div>

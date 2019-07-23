@@ -89,7 +89,7 @@ export const SharedStyles = css`
     width: 2.5em;
   }
 
-  .arrow svg path {
+  .arrow:hover svg path {
     fill: #ffffff;
   }
 
