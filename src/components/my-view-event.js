@@ -59,11 +59,11 @@ class MyViewEvent extends connect(store)(PageViewElement) {
       <section>
         <div id="title">
           <h2>${this._event.type}
-          ${this._participants['Primär'] ? html`
-          von ${this._participants['Primär'].map((p, i, arr) => this._participantLink(p, i==arr.length - 1))}
+          ${this._participants[_('Primary')] ? html`
+          von ${this._participants[_('Primary')].map((p, i, arr) => this._participantLink(p, i==arr.length - 1))}
           ` : ''}
-          ${this._participants['Familie'] ? html`
-          von ${this._participants['Familie'].map((p, i, arr) => this._participantLink(p, i==arr.length - 1))}
+          ${this._participants[_('Family')] ? html`
+          von ${this._participants[_('Family')].map((p, i, arr) => this._participantLink(p, i==arr.length - 1))}
           ` : ''}
           </h2>
         </div>
@@ -82,7 +82,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
             </tr>
             ` : ''}
           ${Object.keys(this._participants).map((role) => {
-            if (role != 'Primär' && role != 'Familie') {
+            if (role != _('Primary') && role != _('Family')) {
               return html`
               <tr>
                 <th>${role}</th>
@@ -96,7 +96,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           </p>
         <p>${this._event.description}</p>
 
-        ${this._media.length ? html`<h3>Galerie</h3>` : ''}
+        ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
         <my-gallery-element .images=${this._media} host=${this._host}>
         </my-gallery-element>
 

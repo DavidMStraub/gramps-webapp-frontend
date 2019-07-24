@@ -87,7 +87,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
           </tr>
         </table>
 
-        ${this._media.length ? html`<h3>Galerie</h3>` : ''}
+        ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
         <my-gallery-element .images=${this._media} host="${this._host}">
         </my-gallery-element>
 
