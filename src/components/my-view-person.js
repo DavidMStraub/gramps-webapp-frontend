@@ -81,6 +81,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         ${this._media && this._media.length ? html`
         <div id="photo">
           <my-img-element
+            host="${this._host}"
             handle="${this._media[0].ref}"
             size="200"
             circle square
@@ -140,7 +141,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         mother></my-family-element>`) : '' }
       </section>
       <section  ?hidden=${this._selected != 3}>
-      <my-gallery-element .images=${this._media}>
+      <my-gallery-element .images=${this._media} host=${this._host}>
       </my-gallery-element>
       </section>
     `
@@ -161,6 +162,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       _gramps_id: { type: String },
       _person: { type: Object },
       _parents: { type: String },
+      _host: { type: String },
       _events: { type: Object },
       _selected: { type: Number }
     }}
@@ -189,11 +191,12 @@ class MyViewPerson extends connect(store)(PageViewElement) {
     }
 
     stateChanged(state) {
+      this._host = state.app.host;
       this._gramps_id = state.app.activePerson;
       this._person = state.api.people[this._gramps_id];
       if (this._person != undefined) {
         this._parents = this._person.parents;
-        this._events = this._person.events.map((handle) => state.api.events[handle]);
+        this._events = this._person.events.map((r) => state.api.events[r.ref]);
         this._events = this._events.map((e) => this._get_place_name(state, e));
         if (this._person.birthplace != '') {
           this._person.birthplace_name = state.api.places[this._person.birthplace].name;

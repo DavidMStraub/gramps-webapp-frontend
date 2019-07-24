@@ -59,6 +59,7 @@ class MyPedigreeCard extends LitElement {
         <div class="photo">
           ${ this.person.media.length ? html`
           <my-img-element
+            host="${this.host}"
             handle="${this.person.media[0].ref}"
             size="70"
             circle square
@@ -102,7 +103,8 @@ class MyPedigreeCard extends LitElement {
     static get properties() { return {
       person: { type: Object },
       width: {type: String },
-      link: {type: String}
+      link: {type: String},
+      host: {type: String}
     }}
 
 }

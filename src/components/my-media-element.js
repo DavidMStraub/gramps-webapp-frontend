@@ -72,9 +72,12 @@ class MyMediaElement extends connect(store)(LitElement) {
         </style>
         <div class="media-container">
           <div class="inner-container">
-            <img src="http://127.0.0.1:5000/media/${this.handle}">
+            <img src="${this._host}/media/${this.handle}">
             </img>
             ${this._rect.map(function(item)  {
+              if (!item.rect) {
+                return '';
+              }
               let left = item.rect[0];
               let top = item.rect[1];
               let width = item.rect[2] - item.rect[0];
@@ -174,6 +177,7 @@ class MyMediaElement extends connect(store)(LitElement) {
     }
 
     stateChanged(state) {
+      this._host = state.app.host;
       if (state.app.activeMedia != undefined) {
         this.media = state.app.activeMedia.media;
         this.handle = state.app.activeMedia.selected

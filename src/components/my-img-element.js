@@ -20,19 +20,19 @@ class MyImgElement extends LitElement {
     if (this.rect == undefined) {
       var img = html`
       <img
-      srcset="http://127.0.0.1:5000/thumbnail/${this.handle}/${this.size},
-      http://127.0.0.1:5000/thumbnail/${this.handle}/${1.5 * this.size} 1.5x,
-      http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size} 2x"
-      src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}"
+      srcset="${this.host}/thumbnail/${this.handle}/${this.size},
+      ${this.host}/thumbnail/${this.handle}/${1.5 * this.size} 1.5x,
+      ${this.host}/thumbnail/${this.handle}/${2 * this.size} 2x"
+      src="${this.host}/thumbnail/${this.handle}/${2 * this.size}"
       style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       `
     } else {
       var img = html`
       <img
-      srcset="http://127.0.0.1:5000/thumbnail/${this.handle}/${this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]},
-      http://127.0.0.1:5000/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 1.5x,
-      http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 2x"
-      src="http://127.0.0.1:5000/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}"
+      srcset="${this.host}/thumbnail/${this.handle}/${this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]},
+      ${this.host}/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 1.5x,
+      ${this.host}/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 2x"
+      src="${this.host}/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}"
       style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       ${this.link ? html`</a>` : ''}
       `
@@ -43,7 +43,7 @@ class MyImgElement extends LitElement {
         return html`
         <span @click="${this._lightbox_handle}" class="link">${img}</span>
         `;
-      // return html`<a href="http://127.0.0.1:5000/media/${this.handle}">${img}</a>`;
+      // return html`<a href="${this.host}/media/${this.handle}">${img}</a>`;
     }
     }
 
@@ -74,7 +74,8 @@ class MyImgElement extends LitElement {
       rect: { type: Array },
       circle: { type: Boolean },
       square: { type: Boolean },
-      nolink: { type: Boolean }
+      nolink: { type: Boolean },
+      host: {type: String}
     }}
 
 }

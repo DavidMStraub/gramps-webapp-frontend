@@ -14,6 +14,7 @@ import {
   ACTIVE_EVENT,
   ACTIVE_PLACE,
   ACTIVE_MEDIA,
+  HOST,
   ACTIVE_PERSON_IF_EMPTY,
   UPDATE_OFFLINE,
   UPDATE_WIDE_LAYOUT,
@@ -25,6 +26,7 @@ import {
 
 const INITIAL_STATE = {
   page: '',
+  host: '',
   offline: false,
   drawerOpened: false,
   lightboxOpened: false,
@@ -37,6 +39,11 @@ const app = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         page: action.page
+      };
+    case HOST:
+      return {
+        ...state,
+        host: action.host
       };
     case ACTIVE_EVENT:
       return {

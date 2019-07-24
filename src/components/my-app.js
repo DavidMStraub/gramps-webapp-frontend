@@ -41,7 +41,8 @@ import {
   updateDrawerState,
   updateLightboxState,
   updateActiveMedia,
-  updateLayout
+  updateLayout,
+  storeHost
 } from '../actions/app.js';
 
 // These are the elements needed by this element.
@@ -73,6 +74,7 @@ class MyApp extends connect(store)(LitElement) {
       <div id="inner">
       <form id="login-form">
       <paper-input @keypress="${this._handleInputKeypress}" label="password" type="password" id="login-input" autofocus></paper-input>
+      <paper-input @keypress="${this._handleInputKeypress}" label="host" type="url" id="host-input" placeholder="https://example.com:1234"></paper-input>
       <paper-button @click="${this._submitLogin}">login</paper-button>
       </form>
       </div>
@@ -350,13 +352,13 @@ class MyApp extends connect(store)(LitElement) {
   }
 
 
-  _loadData(token) {
-    store.dispatch(loadDbInfo(token));
-    store.dispatch(loadStrings());
-    store.dispatch(loadPeople(token));
-    store.dispatch(loadFamilies(token));
-    store.dispatch(loadEvents(token));
-    store.dispatch(loadPlaces(token));
+  _loadData(host, token) {
+    store.dispatch(loadDbInfo(host, token));
+    store.dispatch(loadStrings(host));
+    store.dispatch(loadPeople(host, token));
+    store.dispatch(loadFamilies(host, token));
+    store.dispatch(loadEvents(host, token));
+    store.dispatch(loadPlaces(host, token));
   }
 
   updated(changedProps) {
@@ -387,8 +389,10 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   _submitLogin(e) {
-    const input = this.shadowRoot.querySelector('#login-input');
-    store.dispatch(getAuthToken(input.value));
+    const hostInput = this.shadowRoot.querySelector('#host-input');
+    store.dispatch(storeHost(hostInput.value));
+    const loginInput = this.shadowRoot.querySelector('#login-input');
+    store.dispatch(getAuthToken(hostInput.value, loginInput.value));
   }
 
   _handleInputKeypress(e) {
@@ -399,7 +403,7 @@ class MyApp extends connect(store)(LitElement) {
 
   stateChanged(state) {
     if (state.api.token && !this._token) {
-      this._loadData(state.api.token);
+      this._loadData(state.app.host, state.api.token);
     }
     this._token = state.api.token;
     if (!this._loaded) {

@@ -12,7 +12,7 @@ const puppeteer = require('puppeteer');
 const expect = require('chai').expect;
 const {startServer} = require('polyserve');
 const path = require('path');
-const appUrl = 'http://127.0.0.1:4444';
+const appUrl = '/';
 
 describe('routing tests', function() {
   let polyserve, browser, page;

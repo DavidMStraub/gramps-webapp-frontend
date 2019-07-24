@@ -29,6 +29,7 @@ class MyGalleryElement extends LitElement {
         ${this.images.map((image, i, arr) => html`
         <div class="item">
           <my-img-element
+            host="${this.host}"
             handle="${image.ref}"
             .handles="${this.images.map((image) => image.ref)}"
             size="200"
@@ -49,7 +50,8 @@ class MyGalleryElement extends LitElement {
     }
 
     static get properties() { return {
-      images: { type: Object }
+      images: { type: Object },
+      host: {type: String}
     }}
 
 }

@@ -80,6 +80,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
             <my-pedigree-card
               .person=${p}
               @person-selected="${this._personSelected}"
+              host=${this._host}
             >
             </my-pedigree-card>
               <div
@@ -133,10 +134,12 @@ class MyPedigreeElement extends connect(store)(LitElement) {
     static get properties() { return {
       _people: { type: Array },
       _children: { type: Array },
+      _host: { type: String },
       depth:  { type: Number }
     }}
 
     stateChanged(state) {
+      this._host = state.app.host;
       this._people = this._getTree(state, state.app.activePerson, this.depth);
       this._children = this._getChildren(state, state.app.activePerson);
     }

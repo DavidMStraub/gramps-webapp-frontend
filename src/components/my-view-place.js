@@ -88,7 +88,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         </table>
 
         ${this._media.length ? html`<h3>Galerie</h3>` : ''}
-        <my-gallery-element .images=${this._media}>
+        <my-gallery-element .images=${this._media} host="${this._host}">
         </my-gallery-element>
 
       </section>
@@ -112,6 +112,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
     static get properties() { return {
       _place: { type: Object },
       _gramps_id: { type: String },
+      _host: { type: String },
       _events: { type: Object },
       _media: { type: Object },
       _hierarchy: { type: Object },
@@ -146,6 +147,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
     }
 
     stateChanged(state) {
+      this._host = state.app.host;
       this._gramps_id = state.app.activePlace;
       this._place = state.api.places[this._gramps_id];
       if (this._place != undefined) {

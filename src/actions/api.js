@@ -10,8 +10,8 @@ export const LOGOUT = 'LOGOUT';
 
 import { activePersonIfEmpty } from './app.js'
 
-export const getAuthToken = (password) => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/login`, {
+export const getAuthToken = (host, password) => async (dispatch) => {
+  fetch(host + `/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -28,8 +28,8 @@ export const getAuthToken = (password) => async (dispatch) => {
     });
 };
 
-export const loadDbInfo = (token) => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/dbinfo`, {
+export const loadDbInfo = (host, token) => async (dispatch) => {
+  fetch(host + `/dbinfo`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -56,8 +56,8 @@ export const loadDbInfo = (token) => async (dispatch) => {
     });
 };
 
-export const loadPeople = (token) => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/people`, {
+export const loadPeople = (host, token) => async (dispatch) => {
+  fetch(host + `/people`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -70,8 +70,8 @@ export const loadPeople = (token) => async (dispatch) => {
     .catch((error) => console.log(error));
 };
 
-export const loadPlaces = (token) => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/places`, {
+export const loadPlaces = (host, token) => async (dispatch) => {
+  fetch(host + `/places`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -84,8 +84,8 @@ export const loadPlaces = (token) => async (dispatch) => {
     .catch((error) => console.log(error));
 };
 
-export const loadFamilies = (token) => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/families`, {
+export const loadFamilies = (host, token) => async (dispatch) => {
+  fetch(host + `/families`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -98,8 +98,8 @@ export const loadFamilies = (token) => async (dispatch) => {
     .catch((error) => console.log(error));
 };
 
-export const loadEvents = (token) => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/events`, {
+export const loadEvents = (host, token) => async (dispatch) => {
+  fetch(host + `/events`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -111,6 +111,7 @@ export const loadEvents = (token) => async (dispatch) => {
     .then(data => dispatch(getEvents(data)))
     .catch((error) => console.log(error));
 };
+
 
 const storeAuthToken = (data) => {
   return {
@@ -198,8 +199,8 @@ const _strings = [
   "and"
 ]
 
-export const loadStrings = () => async (dispatch) => {
-  fetch(`http://127.0.0.1:5000/translate?strings=` + JSON.stringify(_strings))
+export const loadStrings = (host) => async (dispatch) => {
+  fetch(host + `/translate?strings=` + JSON.stringify(_strings))
     .then(resp => resp.json())
     .then(data => dispatch(getStrings(data)))
     .catch((error) => console.log(error));
