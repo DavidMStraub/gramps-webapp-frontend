@@ -32,6 +32,9 @@ class MyEventsElement extends LitElement {
         <template class="header">${_('Type')}</template>
         <template>
           <a href="/view-event/[[item.handle]]"><div>[[item.type]]</div></a>
+          <template is="dom-if" if="[[item.role]]">
+            ([[item.role]])
+          </template>
         </template>
       </vaadin-grid-column>
       <vaadin-grid-column path="description" header="${_('Description')}"></vaadin-grid-column>

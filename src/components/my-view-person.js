@@ -196,7 +196,15 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       this._person = state.api.people[this._gramps_id];
       if (this._person != undefined) {
         this._parents = this._person.parents;
-        this._events = this._person.events.map((r) => state.api.events[r.ref]);
+        this._events = this._person.events.map(function (r) {
+          let obj = state.api.events[r.ref];
+          if (r.role == _('Primary')) {
+            obj.role = '';
+          } else {
+            obj.role = r.role;
+          }
+          return obj
+        });
         this._events = this._events.map((e) => this._get_place_name(state, e));
         if (this._person.birthplace != '') {
           this._person.birthplace_name = state.api.places[this._person.birthplace].name;
