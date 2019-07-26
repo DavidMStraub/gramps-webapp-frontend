@@ -25,12 +25,14 @@ class MyLeafletMapMarker extends LitElement {
 
     constructor() {
       super();
+      this.popup = '';
     }
 
 
     static get properties() { return {
       latitude: { type: Number },
       longitude: { type: Number },
+      popup: {type: String},
       _marker: {type: Object, attribute: false },
       _map: {type: Object, attribute: false }
     }}
@@ -43,15 +45,21 @@ class MyLeafletMapMarker extends LitElement {
     firstUpdated() {
       Icon.Default.imagePath = '/images/';
       this._map = this.parentElement._map;
+      this.addMarker();
+    }
+
+    addMarker() {
       this._marker = new Marker([this.latitude, this.longitude]);
       this._marker.addTo(this._map);
+      if (this.popup != '') {
+        this._marker.bindPopup(this.popup);
+      }
     }
 
     updateMarker() {
       if (this._marker) {
         this._map.removeLayer(this._marker);
-        this._marker = new Marker([this.latitude, this.longitude]);
-        this._marker.addTo(this._map);
+        this.addMarker();
       }
     }
 }

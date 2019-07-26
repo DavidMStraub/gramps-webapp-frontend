@@ -97,7 +97,8 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         <my-leaflet-map
           latitude=${this._place.geolocation[0]}
           longitude=${this._place.geolocation[1]}
-          zoom=15
+          zoom=13
+          mapid="map-place"
         >
           <my-leaflet-map-marker
             latitude=${this._place.geolocation[0]}

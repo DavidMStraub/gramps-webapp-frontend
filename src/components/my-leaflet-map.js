@@ -16,15 +16,20 @@ class MyLeafletMap extends LitElement {
     return html`
       <link rel="stylesheet" href="leaflet.css">
       <style>
-      #mapid {
+      .mapcontainer {
+      }
+      #${this.mapid} {
         width: ${this.width};
         height: ${this.height};
+        z-index: 0;
+      }
+      #mapcontainer{
       }
       </style>
 
 
-      <div id="mapcontainer">
-        <div id="mapid">
+      <div class="mapcontainer">
+        <div id="${this.mapid}">
           <slot>
           </slot>
         </div>
@@ -42,6 +47,7 @@ class MyLeafletMap extends LitElement {
       this.height = '500px';
       this.width = '100%';
       this.zoom = 13;
+      this.mapid = 'mapid';
     }
 
 
@@ -50,22 +56,24 @@ class MyLeafletMap extends LitElement {
       width: { type: String },
       latitude: { type: Number },
       longitude: { type: Number },
+      mapid: { type: String },
       zoom: { type: Number },
       _map: {type: Object},
     }}
 
     firstUpdated() {
-      var mapel = this.shadowRoot.querySelector('#mapid');
-      this._map = new Map(mapel).setView([this.latitude, this.longitude], 13);
+      var mapel = this.shadowRoot.querySelector('#' + this.mapid);
+      this._map = new Map(mapel).setView([this.latitude, this.longitude], this.zoom);
       new TileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
         maxZoom: 17,
-        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
       }).addTo(this._map);
     }
 
     updated() {
       if (this._map != undefined) {
         this._map.panTo(new LatLng(this.latitude, this.longitude));
+        this._map.setZoom(this.zoom);
       }
     }
 }

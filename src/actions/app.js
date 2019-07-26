@@ -81,6 +81,9 @@ const loadPage = (page) => (dispatch) => {
     case 'view-places':
       import('../components/my-view-places.js');
       break;
+    case 'view-map':
+      import('../components/my-view-map.js');
+      break;
     case 'view-events':
       import('../components/my-view-events.js');
       break;

@@ -51,7 +51,7 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import './snack-bar.js';
-import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, ringsIcon, pedigreeIcon, placeIcon, calendarIcon } from './my-icons.js';
+import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, mapIcon, pedigreeIcon, placeIcon, calendarIcon } from './my-icons.js';
 
 class MyApp extends connect(store)(LitElement) {
   render() {
@@ -208,8 +208,9 @@ class MyApp extends connect(store)(LitElement) {
       }
 
       .main-content {
-        padding-top: 64px;
+        /* padding-top: 64px; */
         min-height: 100vh;
+
       }
 
       .page {
@@ -262,12 +263,6 @@ class MyApp extends connect(store)(LitElement) {
     </style>
 
     <!-- Header -->
-    <app-header condenses reveals effects="waterfall">
-      <app-toolbar class="toolbar-top">
-        <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
-        <div main-title><img src="images/logo.svg" style="height:1.5em;position:relative;top:0.125em;"></div>
-      </app-toolbar>
-    </app-header>
 
     <!-- Drawer content -->
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"
@@ -277,8 +272,9 @@ class MyApp extends connect(store)(LitElement) {
         <hr>
         <a ?selected="${this._page === 'view-people'}" href="/view-people">${accountIcon} ${_('People')}</a>
         <a ?selected="${this._page === 'view-families'}" href="/view-families">${familyIcon} ${_('Families')}</a>
-        <a ?selected="${this._page === 'view-places'}" href="/view-places">${placeIcon} ${_('Places')}</a>
         <a ?selected="${this._page === 'view-events'}" href="/view-events">${calendarIcon} ${_('Events')}</a>
+        <a ?selected="${this._page === 'view-places'}" href="/view-places">${placeIcon} ${_('Places')}</a>
+        <a ?selected="${this._page === 'view-map'}" href="/view-map">${mapIcon} ${_('Map')}</a>
         <hr>
         <span class="activePerson">${this._activePerson ? this._activePerson.name_surname +  ',': ''}
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
@@ -293,8 +289,9 @@ class MyApp extends connect(store)(LitElement) {
       <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
       <my-view-person class="page" ?active="${this._page === 'view-person'}" id="my-view-person"></my-view-person>
       <my-view-families class="page" ?active="${this._page === 'view-families'}"></my-view-families>
-      <my-view-places class="page" ?active="${this._page === 'view-places'}"></my-view-places>
       <my-view-events class="page" ?active="${this._page === 'view-events'}"></my-view-events>
+      <my-view-places class="page" ?active="${this._page === 'view-places'}"></my-view-places>
+      <my-view-map class="page" ?active="${this._page === 'view-map'}"></my-view-map>
       <my-view-tree class="page" ?active="${this._page === 'view-tree'}"></my-view-tree>
       <my-view-event class="page" ?active="${this._page === 'view-event'}" id="my-view-event"></my-view-event>
       <my-view-place class="page" ?active="${this._page === 'view-place'}" id="my-view-place"></my-view-place>
