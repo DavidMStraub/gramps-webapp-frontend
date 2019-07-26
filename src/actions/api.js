@@ -199,7 +199,8 @@ const _strings = [
   "and",
   "Primary",
   "Family",
-  "Gallery"
+  "Gallery",
+  "Map"
 ]
 
 export const loadStrings = (host) => async (dispatch) => {

@@ -20,6 +20,9 @@ import './my-img-element.js';
 
 class MyPedigreeCard extends LitElement {
   render() {
+      if (!this.person) {
+        return html``;
+      }
       return html`
       <style>
       .card {

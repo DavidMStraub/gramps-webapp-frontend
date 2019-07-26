@@ -14,6 +14,7 @@ import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-badge/paper-badge.js';
 import './my-family-element.js';
+import './my-leaflet-map.js';
 import './my-gallery-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -90,6 +91,15 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
         <my-gallery-element .images=${this._media} host="${this._host}">
         </my-gallery-element>
+
+        ${(this._place.geolocation && this._place.geolocation[0]) ? html`<h3>${_("Map")}</h3>
+        <my-leaflet-map
+          latitude=${this._place.geolocation[0]}
+          longitude=${this._place.geolocation[1]}
+          zoom=15
+        >
+        </my-leaflet-map>
+        ` : ''}
 
       </section>
 

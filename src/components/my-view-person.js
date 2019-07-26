@@ -102,7 +102,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
             ${crossIcon} ${this._person.deathdate}
             ` : ''}
             ${this._person.deathplace ? html`
-              ${_("in")} <a href="view-place/${this._person.daethplace}">${this._person.deathplace_name}</a>
+              ${_("in")} <a href="view-place/${this._person.deathplace}">${this._person.deathplace_name}</a>
               ` : ''}
           </p>
           </div>
