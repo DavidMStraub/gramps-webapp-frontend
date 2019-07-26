@@ -15,6 +15,7 @@ import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-badge/paper-badge.js';
 import './my-family-element.js';
 import './my-leaflet-map.js';
+import './my-leaflet-map-marker.js';
 import './my-gallery-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -98,6 +99,11 @@ class MyViewPlace extends connect(store)(PageViewElement) {
           longitude=${this._place.geolocation[1]}
           zoom=15
         >
+          <my-leaflet-map-marker
+            latitude=${this._place.geolocation[0]}
+            longitude=${this._place.geolocation[1]}
+          >
+          </my-leaflet-map-marker>
         </my-leaflet-map>
         ` : ''}
 
