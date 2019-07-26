@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 import { html, LitElement } from 'lit-element';
-import { Map,  TileLayer, LatLng } from '../../node_modules/leaflet/dist/leaflet-src.esm.js';
+import { Map,  TileLayer, LatLng, control } from '../../node_modules/leaflet/dist/leaflet-src.esm.js';
 
 class MyLeafletMap extends LitElement {
   render() {
@@ -63,11 +63,13 @@ class MyLeafletMap extends LitElement {
 
     firstUpdated() {
       var mapel = this.shadowRoot.querySelector('#' + this.mapid);
-      this._map = new Map(mapel).setView([this.latitude, this.longitude], this.zoom);
+      this._map = new Map(mapel, {zoomControl: false}).setView([this.latitude, this.longitude], this.zoom);
       new TileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
         maxZoom: 17,
+        zoomControl: false,
         attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
       }).addTo(this._map);
+      this._map.addControl(control.zoom({ position: 'bottomright' }));
     }
 
     updated() {
