@@ -56,6 +56,11 @@ class MyLeafletMapMarker extends LitElement {
       }
     }
 
+    disconnectedCallback() {
+      this._map.removeLayer(this._marker);
+      super.disconnectedCallback();
+    }
+
     updateMarker() {
       if (this._marker) {
         this._map.removeLayer(this._marker);

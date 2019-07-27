@@ -21,6 +21,8 @@ import { translate as _ } from '../translate.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
+import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
+
 import './my-leaflet-map.js';
 import './my-leaflet-map-marker.js';
 
@@ -29,7 +31,32 @@ class MyViewMap extends connect(store)(PageViewElement) {
   render() {
     return html`
       <style>
+      #searchbox {
+        position: absolute;
+        top: 20px;
+        left: ${this._drawer ? html`276px` : html`20px`};
+        float: left;
+        z-index: 1;
+      }
+      :host {
+        --lumo-contrast-10pct: #ffffff;
+      }
+      :host [part="value"] {
+        color: red;
+        font-weight: normal !important;
+      }
+      :host(.mapsearch) [part="value"] {
+        color: red;
+        background-color:green;
+        font-weight: normal !important;
+      }
       </style>
+      <div id="searchbox">
+        <vaadin-combo-box id="mapsearch" class="mapsearch"
+        placeholder="Filtern" item-label-path="name"
+        @value-changed="${this._valueChange}"
+        ></vaadin-combo-box>
+      </div>
       <my-leaflet-map
         height="100vh"
         with="200px"
@@ -38,17 +65,24 @@ class MyViewMap extends connect(store)(PageViewElement) {
         zoom="6"
         mapid="map-mapview"
       >
-      ${this._places.map(function (p) {
+      ${this._selected ? html`
+        <my-leaflet-map-marker
+          latitude="${this._places[this._selected].geolocation[0]}"
+          longitude="${this._places[this._selected].geolocation[1]}"
+          popup="<a href='view-place/${this._places[this._selected].gramps_id}'>${this._places[this._selected].name}</a>"
+        >
+        </my-leaflet-map-marker>
+        ` : this.sortValues(this._places).map(function (p) {
         if (p.geolocation && p.geolocation[0]) {
-          return html`
-          <my-leaflet-map-marker
-            latitude="${p.geolocation[0]}"
-            longitude="${p.geolocation[1]}"
-            popup="<a href='view-place/${p.gramps_id}'>${p.name}</a>"
-          >
-          </my-leaflet-map-marker>
-          `
-        }
+            return html`
+            <my-leaflet-map-marker
+              latitude="${p.geolocation[0]}"
+              longitude="${p.geolocation[1]}"
+              popup="<a href='view-place/${p.gramps_id}'>${p.name}</a>"
+            >
+            </my-leaflet-map-marker>
+            `
+          }
       })}
       </my-leaflet-map>
     `
@@ -62,19 +96,38 @@ class MyViewMap extends connect(store)(PageViewElement) {
 
   constructor() {
     super();
+    this._selected = '';
   }
 
   static get properties() { return {
     _places: { type: Object },
+    _drawer: { type: Boolean },
+    _selected: {type: String},
     // _hidden: { type: Boolean }
   }}
 
+  _valueChange(e) {
+    let combobox = this.shadowRoot.querySelector('#mapsearch');
+    if (!combobox.selectedItem) {
+      this._selected = '';
+    } else {
+      this._selected = combobox.selectedItem.gramps_id;
+    }
+  }
+
+  sortValues(places) {
+    return Object.values(places).sort((a, b) => (a.name > b.name) ? 1 : -1);
+  }
 
   stateChanged(state) {
-    this._places = Object.values(state.api.places);
+    this._places = state.api.places;
+    this._drawer = state.app.drawerOpened;
   }
 
   firstUpdated() {
+    let combobox = this.shadowRoot.querySelector('#mapsearch');
+    combobox.items = this.sortValues(this._places);
+    combobox.itemValuePath = 'name';
   }
 
 }
