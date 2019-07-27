@@ -158,13 +158,20 @@ class MyApp extends connect(store)(LitElement) {
       }
 
       .menu-btn {
-        background: none;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: #ffffff;
         border: none;
+        border-radius: 5px;
         fill: var(--app-header-text-color);
         cursor: pointer;
         height: 44px;
         width: 44px;
+        z-index: 3;
+        display: ${this._drawerOpened ? 'none' : 'inline'};
       }
+
 
       .drawer-list {
         box-sizing: border-box;
@@ -173,6 +180,7 @@ class MyApp extends connect(store)(LitElement) {
         padding: 24px;
         background: var(--app-drawer-background-color);
         position: relative;
+        z-index: 4;
       }
 
       .drawer-list > a {
@@ -263,6 +271,7 @@ class MyApp extends connect(store)(LitElement) {
     </style>
 
     <!-- Header -->
+    <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
 
     <!-- Drawer content -->
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"

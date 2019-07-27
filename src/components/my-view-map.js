@@ -34,7 +34,7 @@ class MyViewMap extends connect(store)(PageViewElement) {
       #searchbox {
         position: absolute;
         top: 20px;
-        left: ${this._drawer ? html`276px` : html`20px`};
+        left: ${this._drawer ? html`276px` : html`80px`};
         float: left;
         z-index: 1;
       }
