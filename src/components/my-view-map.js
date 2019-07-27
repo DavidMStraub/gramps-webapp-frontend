@@ -116,7 +116,9 @@ class MyViewMap extends connect(store)(PageViewElement) {
   }
 
   sortValues(places) {
-    return Object.values(places).sort((a, b) => (a.name > b.name) ? 1 : -1);
+    return Object.values(places)
+      .sort((a, b) => (a.name > b.name) ? 1 : -1)
+      .filter((p) => p.geolocation[0]);
   }
 
   stateChanged(state) {
