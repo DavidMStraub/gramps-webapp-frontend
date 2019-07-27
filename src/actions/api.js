@@ -200,7 +200,29 @@ const _strings = [
   "Primary",
   "Family",
   "Gallery",
-  "Map"
+  "Map",
+  "Unknown",
+  "Custom",
+  "Country",
+  "State",
+  "County",
+  "City",
+  "Parish",
+  "Locality",
+  "Street",
+  "Province",
+  "Region",
+  "Department",
+  "Neighborhood",
+  "District",
+  "Borough",
+  "Municipality",
+  "Town",
+  "Village",
+  "Hamlet",
+  "Farm",
+  "Building",
+  "Number"
 ]
 
 export const loadStrings = (host) => async (dispatch) => {

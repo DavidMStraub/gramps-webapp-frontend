@@ -28,6 +28,31 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
+var placeType = {
+  "-1": "Unknown",
+  "0": "Custom",
+  "1": "Country",
+  "2": "State",
+  "3": "County",
+  "4": "City",
+  "5": "Parish",
+  "6": "Locality",
+  "7": "Street",
+  "8": "Province",
+  "9": "Region",
+  "10": "Department",
+  "11": "Neighborhood",
+  "12": "District",
+  "13": "Borough",
+  "14": "Municipality",
+  "15": "Town",
+  "16": "Village",
+  "17": "Hamlet",
+  "18": "Farm",
+  "19": "Building",
+  "20": "Number"
+}
+
 class MyViewPlace extends connect(store)(PageViewElement) {
   render() {
     if (this._place == undefined) {
@@ -83,10 +108,14 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         </div>
 
         <table width="100%">
-          <tr>
-            <th>${_('Type')}</th>
-            <td>${this._place.type_string}</td>
-          </tr>
+          ${Object.entries(this._place.hierarchy).sort((a, b) => b[0] > a[0] ? 1 : -1).map(function(t) {
+              return html`
+            <tr>
+              <th>${_(placeType[t[0]])}</th>
+              <td>${t[1]}</td>
+            </tr>
+          `;
+          })}
         </table>
 
         ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
