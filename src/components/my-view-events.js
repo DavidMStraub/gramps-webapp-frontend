@@ -94,7 +94,7 @@ class MyViewEvents extends connect(store)(PageViewElement) {
 
   static get properties() { return {
     _events: { type: Object },
-    _hidden: { type: Boolean }
+    _hidden: { type: Boolean },
   }}
 
   _get_place_name(state, event) {

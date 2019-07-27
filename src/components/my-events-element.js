@@ -38,6 +38,7 @@ class MyEventsElement extends LitElement {
         </template>
       </vaadin-grid-column>
       <vaadin-grid-column path="description" header="${_('Description')}"></vaadin-grid-column>
+      ${this.place ? html`
       <vaadin-grid-column>
         <template class="header">
           <vaadin-grid-sorter path="place_name">${_('Place')}</vaadin-grid-sorter>
@@ -47,6 +48,7 @@ class MyEventsElement extends LitElement {
           <a href="/view-place/[[item.place]]"><div>[[item.place_name]]</div></a>
         </template>
       </vaadin-grid-column>
+    ` : ''}
     </vaadin-grid>
     `
   }
@@ -61,6 +63,7 @@ class MyEventsElement extends LitElement {
   constructor() {
     super();
     this.items = [];
+    this.place = false;
   }
 
   firstUpdated() {
@@ -70,6 +73,7 @@ class MyEventsElement extends LitElement {
 
   static get properties() { return {
     items: { type: Array },
+    place: { type: Boolean }
   }}
 
 }

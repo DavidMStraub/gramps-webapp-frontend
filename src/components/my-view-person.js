@@ -124,7 +124,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       <section  ?hidden=${this._selected != 0} style="clear:left;">
         ${this._events ?
           html`
-          <my-events-element .items="${this._events}"></my-events-element>`
+          <my-events-element .items="${this._events}" place></my-events-element>`
           : '' }
       </section>
 

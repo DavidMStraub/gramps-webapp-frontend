@@ -16,6 +16,7 @@ import '@polymer/paper-badge/paper-badge.js';
 import './my-family-element.js';
 import './my-leaflet-map.js';
 import './my-leaflet-map-marker.js';
+import './my-events-element.js';
 import './my-gallery-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -122,6 +123,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         <my-gallery-element .images=${this._media} host="${this._host}">
         </my-gallery-element>
 
+
         ${(this._place.geolocation && this._place.geolocation[0]) ? html`<h3>${_("Map")}</h3>
         <my-leaflet-map
           latitude=${this._place.geolocation[0]}
@@ -192,6 +194,13 @@ class MyViewPlace extends connect(store)(PageViewElement) {
       `
     }
 
+    // _get_place_name(state, event) {
+    //   if (event.place != undefined && event.place != '' && state.api && state.api.places) {
+    //     event.place_name = state.api.places[event.place].name;
+    //   };
+    //   return event;
+    // }
+
     stateChanged(state) {
       this._host = state.app.host;
       this._gramps_id = state.app.activePlace;
@@ -200,6 +209,8 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         this._media = this._place.media;
         this._hierarchy = this._place._hierarchy;
       }
+      // this._events = Object.values(state.api.events).filter((e) => e.place == this._gramps_id);
+      // this._events = this._events.map((e) => this._get_place_name(state, e));
     }
 
 }
