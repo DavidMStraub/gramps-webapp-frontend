@@ -29,6 +29,10 @@ import './my-leaflet-map-marker.js';
 
 class MyViewMap extends connect(store)(PageViewElement) {
   render() {
+    if (this._places == undefined) {
+      return html``
+    }
+    var center = this._getMapCenter();
     return html`
       <style>
       #searchbox {
@@ -60,8 +64,8 @@ class MyViewMap extends connect(store)(PageViewElement) {
       <my-leaflet-map
         height="100vh"
         with="200px"
-        latitude="48"
-        longitude="9"
+        latitude="${center[0]}"
+        longitude="${center[1]}"
         zoom="6"
         mapid="map-mapview"
       >
@@ -119,6 +123,38 @@ class MyViewMap extends connect(store)(PageViewElement) {
     return Object.values(places)
       .sort((a, b) => (a.name > b.name) ? 1 : -1)
       .filter((p) => p.geolocation[0]);
+  }
+
+  _getMapCenter() {
+    if (!this._places) {
+      return [0, 0];
+    } else if (this._selected){
+      return this._places[this._selected].geolocation;
+    } else {
+      return this._getCenterOfGravity(Object.values(this._places));
+    }
+  }
+
+  _getCenterOfGravity(places) {
+    if (!places) {
+      return [0, 0];
+    }
+    var x = 0;
+    var y = 0;
+    var n = 0;
+    for (var i =0; i < places.length; i++) {
+      let p =  places[i];
+      if (!p.geolocation[0]) {
+        continue;
+      } else {
+        x += parseFloat(p.geolocation[0]);
+        y += parseFloat(p.geolocation[1]);
+        n++;
+      }
+    }
+    x = x / n;
+    y = y / n;
+    return [x, y];
   }
 
   stateChanged(state) {
