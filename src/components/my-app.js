@@ -180,7 +180,7 @@ class MyApp extends connect(store)(LitElement) {
         padding: 24px;
         background: var(--app-drawer-background-color);
         position: relative;
-        z-index: 4;
+        z-index: 1000;
       }
 
       .drawer-list > a {
@@ -216,7 +216,6 @@ class MyApp extends connect(store)(LitElement) {
       }
 
       .main-content {
-        /* padding-top: 64px; */
         min-height: 100vh;
 
       }
@@ -260,6 +259,7 @@ class MyApp extends connect(store)(LitElement) {
         footer {
           margin-left: var(--app-drawer-width);
         }
+
         .menu-btn {
           display: none;
         }
@@ -275,7 +275,7 @@ class MyApp extends connect(store)(LitElement) {
 
     <!-- Drawer content -->
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"
-        @opened-changed="${this._drawerOpenedChanged}">
+        @opened-changed="${this._drawerOpenedChanged}" style="z-index:9999;">
       <nav class="drawer-list">
         <a ?selected="${this._page === 'view-dashboard'}" href="/view-dashboard">${homeIcon} ${_('Home Page')}</a>
         <hr>
