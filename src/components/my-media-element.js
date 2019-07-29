@@ -37,7 +37,10 @@ class MyMediaElement extends connect(store)(LitElement) {
           text-align: center;
         }
         div.inner-container {
-          position: relative;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           display: inline-block;
           max-height: 100vh;
           max-width: 100vw;

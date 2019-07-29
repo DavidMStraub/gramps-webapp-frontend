@@ -37,7 +37,7 @@ class MyViewPlaces extends connect(store)(PageViewElement) {
     return html`
       <style>
       vaadin-grid {
-        height:70vh;
+        height:calc(100vh - 48px);
       }
       </style>
       <section>

@@ -74,7 +74,6 @@ class MyLeafletMap extends LitElement {
 
     updated() {
       if (this._map != undefined) {
-        console.log('panning to', this.latitude, this.longitude, this._map);
         this._map.panTo(new LatLng(this.latitude, this.longitude));
         this._map.setZoom(this.zoom);
       }

@@ -35,7 +35,7 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
     return html`
       <style>
       vaadin-grid {
-        height:calc(100vh - 112px);
+        height:calc(100vh - 48px);
       }
       </style>
       <section>
@@ -91,8 +91,8 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
   }}
 
   stateChanged(state) {
-    this._families = Object.values(store.getState().api.families);
-    this._hidden = !store.getState().app.wideLayout;
+    this._families = Object.values(state.api.families);
+    this._hidden = !state.app.wideLayout;
   }
 
   firstUpdated() {

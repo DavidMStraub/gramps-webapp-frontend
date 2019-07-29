@@ -45,16 +45,8 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         margin: 0em;
       }
       div#photo {
-        float:right;
         padding:10px 30px;
         width:230px;
-      }
-      div#title {
-        margin-right: 230px;
-        min-height: 150px;
-      }
-      div#tabs {
-        margin-right: 230px;
       }
       svg {
           height: 1em;
@@ -75,6 +67,19 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         color: var(--app-dark-text-color);
         font-weight: 400;
         font-size: 15px;
+      }
+      /* Wide layout */
+      @media (min-width: 768px) {
+        div#photo {
+          float:right;
+        }
+        div#title {
+          margin-right: 230px;
+          min-height: 150px;
+        }
+        div#tabs {
+          margin-right: 230px;
+        }
       }
       </style>
       <section>
@@ -194,6 +199,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       this._host = state.app.host;
       this._gramps_id = state.app.activePerson;
       this._person = state.api.people[this._gramps_id];
+      this._hidden = !store.getState().app.wideLayout;
       if (this._person != undefined) {
         this._parents = this._person.parents;
         this._events = this._person.events.map(function (r) {
