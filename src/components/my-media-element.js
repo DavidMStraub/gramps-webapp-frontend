@@ -62,15 +62,21 @@ class MyMediaElement extends connect(store)(LitElement) {
           overflow: hidden;
           transform: translate(-50%, 10px);
           border-radius:3px;
-          display: none;
-        }
-        div.rect:hover div.label {
           display: block;
         }
         div.media-container img {
           /* display: block; */
           max-width:100vw;
           max-height:100vh;
+        }
+        @media (hover: hover) {
+          div.rect div.label {
+            display: none;
+          }
+
+          div.rect:hover div.label {
+            display: block;
+          }
         }
         </style>
         <div class="media-container">
