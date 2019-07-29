@@ -34,6 +34,7 @@ class MyLightboxElement extends LitElement {
         top: 0;
         left: 0;
         color: #ffffff;
+        z-index: 10000;
       }
 
       .close-lightbox svg {
