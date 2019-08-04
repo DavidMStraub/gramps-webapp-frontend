@@ -20,19 +20,19 @@ class MyImgElement extends LitElement {
     if (this.rect == undefined) {
       var img = html`
       <img
-      srcset="${this.host}/thumbnail/${this.handle}/${this.size},
-      ${this.host}/thumbnail/${this.handle}/${1.5 * this.size} 1.5x,
-      ${this.host}/thumbnail/${this.handle}/${2 * this.size} 2x"
-      src="${this.host}/thumbnail/${this.handle}/${2 * this.size}"
+      srcset="${this.host}/thumbnail/${this.handle}/${this.size}?jwt=${this.token},
+      ${this.host}/thumbnail/${this.handle}/${1.5 * this.size}?jwt=${this.token} 1.5x,
+      ${this.host}/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token} 2x"
+      src="${this.host}/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token}"
       style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       `
     } else {
       var img = html`
       <img
-      srcset="${this.host}/thumbnail/${this.handle}/${this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]},
-      ${this.host}/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 1.5x,
-      ${this.host}/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]} 2x"
-      src="${this.host}/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}"
+      srcset="${this.host}/thumbnail/${this.handle}/${this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token},
+      ${this.host}/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 1.5x,
+      ${this.host}/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 2x"
+      src="${this.host}/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token}"
       style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       ${this.link ? html`</a>` : ''}
       `
@@ -69,6 +69,7 @@ class MyImgElement extends LitElement {
 
     static get properties() { return {
       handle: { type: String },
+      token: { type: String },
       handles: {type: Object},
       size: { type: Number },
       rect: { type: Array },

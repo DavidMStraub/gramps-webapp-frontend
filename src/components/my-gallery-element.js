@@ -31,6 +31,7 @@ class MyGalleryElement extends LitElement {
           <my-img-element
             host="${this.host}"
             handle="${image.ref}"
+            token="${this.token}"
             .handles="${this.images.map((image) => image.ref)}"
             size="200"
             square
@@ -51,7 +52,8 @@ class MyGalleryElement extends LitElement {
 
     static get properties() { return {
       images: { type: Object },
-      host: {type: String}
+      host: {type: String},
+      token: {type: String}
     }}
 
 }

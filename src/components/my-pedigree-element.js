@@ -81,6 +81,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
               .person=${p}
               @person-selected="${this._personSelected}"
               host=${this._host}
+              token=${this._token}
             >
             </my-pedigree-card>
               <div
@@ -135,11 +136,13 @@ class MyPedigreeElement extends connect(store)(LitElement) {
       _people: { type: Array },
       _children: { type: Array },
       _host: { type: String },
+      _token: { type: String },
       depth:  { type: Number }
     }}
 
     stateChanged(state) {
       this._host = state.app.host;
+      this._token = state.api.token;
       this._people = this._getTree(state, state.app.activePerson, this.depth);
       this._children = this._getChildren(state, state.app.activePerson);
     }

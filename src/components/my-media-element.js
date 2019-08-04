@@ -81,7 +81,7 @@ class MyMediaElement extends connect(store)(LitElement) {
         </style>
         <div class="media-container">
           <div class="inner-container">
-            <img src="${this._host}/media/${this.handle}">
+            <img src="${this._host}/media/${this.handle}?jwt=${this._token}">
             </img>
             ${this._rect.map(function(item)  {
               if (!item.rect) {
@@ -187,6 +187,7 @@ class MyMediaElement extends connect(store)(LitElement) {
 
     stateChanged(state) {
       this._host = state.app.host;
+      this._token = state.api.token;
       if (state.app.activeMedia != undefined) {
         this.media = state.app.activeMedia.media;
         this.handle = state.app.activeMedia.selected

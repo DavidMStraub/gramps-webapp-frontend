@@ -97,7 +97,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
         <p>${this._event.description}</p>
 
         ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
-        <my-gallery-element .images=${this._media} host=${this._host}>
+        <my-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
         </my-gallery-element>
 
       </section>
@@ -118,6 +118,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
     static get properties() { return {
       _event: { type: Object },
       _handle: { type: String },
+      _token: { type: String },
       _host: { type: String },
       _media: { type: Object },
     }}
@@ -145,6 +146,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
 
     stateChanged(state) {
       this._host = state.app.host;
+      this._token = state.api.token;
       this._handle = state.app.activeEvent;
       this._event = state.api.events[this._handle];
 

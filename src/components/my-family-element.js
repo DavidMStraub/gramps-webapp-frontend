@@ -42,13 +42,13 @@ class MyFamilyElement extends connect(store)(LitElement) {
     this._children = this._family.children.map((gid) => state.api.people[gid]);
     return html`
       <div style="float:left;">
-        <my-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}"></my-pedigree-card>
+        <my-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}" token="${this._token}"></my-pedigree-card>
       </div>
       <span style="display:block;float:left;padding:0.8em 2em;text-align:center;">
       ${this._family.marriagedate ? html`${ringsIcon} ${this._family.marriagedate}` : ''} ${this._family.marriageplace ? html`<br>${_('in')} <a href="/view-place/${this._family.marriageplace}">${this._marriageplace_name}</a>`: ''}
       </span>
       <div style="float:left;">
-        <my-pedigree-card .person=${this._mother} width="200px" link="person" host="${this._host}"></my-pedigree-card>
+        <my-pedigree-card .person=${this._mother} width="200px" link="person" host="${this._host}" token="${this._token}"></my-pedigree-card>
       </div>
       </p>
       <div style="clear:left;">
@@ -83,11 +83,13 @@ class MyFamilyElement extends connect(store)(LitElement) {
       _father: {type: Object},
       _mother: {type: Object},
       _children: {type: Array},
-      _host: { type: String }
+      _host: { type: String },
+      _token: { type: String }
     }}
 
     stateChanged(state) {
       this._host = state.app.host;
+      this._token = state.api.token;
     }
     //   if (this._family != undefined) {
     //     this._father = state.api.people[this._family.father_id];

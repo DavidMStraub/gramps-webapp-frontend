@@ -86,6 +86,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         ${this._media && this._media.length ? html`
         <div id="photo">
           <my-img-element
+            token="${this._token}"
             host="${this._host}"
             handle="${this._media[0].ref}"
             size="200"
@@ -146,7 +147,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         mother></my-family-element>`) : '' }
       </section>
       <section  ?hidden=${this._selected != 3}>
-      <my-gallery-element .images=${this._media} host=${this._host}>
+      <my-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
       </my-gallery-element>
       </section>
     `
@@ -168,6 +169,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       _person: { type: Object },
       _parents: { type: String },
       _host: { type: String },
+      _token: { type: String },
       _events: { type: Object },
       _selected: { type: Number }
     }}
@@ -197,6 +199,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
 
     stateChanged(state) {
       this._host = state.app.host;
+      this._token = state.api.token;
       this._gramps_id = state.app.activePerson;
       this._person = state.api.people[this._gramps_id];
       this._hidden = !store.getState().app.wideLayout;
