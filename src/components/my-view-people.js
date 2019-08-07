@@ -21,14 +21,13 @@ import { translate as _ } from '../translate.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
-import { navigate } from '../actions/app.js';
 
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid.js';
-import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sorter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
-import '@vaadin/vaadin-grid/vaadin-grid-sort-column.js';
-import '@vaadin/vaadin-grid/vaadin-grid-selection-column.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sort-column.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-selection-column.js';
 
 class MyViewPeople extends connect(store)(PageViewElement) {
   render() {
@@ -52,6 +51,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
           <vaadin-grid-column>
             <template class="header">
               <vaadin-grid-sorter path="name_given" direction="asc">${_('Given name')}</vaadin-grid-sorter>
+              <br>
               <vaadin-grid-filter path="name_given"></vaadin-grid-filter>
             </template>
             <template>
@@ -61,6 +61,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
           <vaadin-grid-column ?hidden="true">
             <template class="header">
               <vaadin-grid-sorter path="name_surname" direction="asc">${_('Surname')}</vaadin-grid-sorter>
+              <br>
               <vaadin-grid-filter path="name_surname"></vaadin-grid-filter>
             </template>
             <template>
@@ -104,8 +105,8 @@ class MyViewPeople extends connect(store)(PageViewElement) {
   }}
 
   stateChanged(state) {
-    this._people = Object.values(store.getState().api.people);
-    this._hidden = !store.getState().app.wideLayout;
+    this._people = Object.values(state.api.people);
+    this._hidden = !state.app.wideLayout;
   }
 
   firstUpdated() {

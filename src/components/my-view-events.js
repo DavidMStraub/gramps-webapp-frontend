@@ -21,16 +21,13 @@ import { translate as _ } from '../translate.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
-import { navigate } from '../actions/app.js';
-
-import { clipIcon } from './my-icons.js';
 
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid.js';
-import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sorter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
-import '@vaadin/vaadin-grid/vaadin-grid-sort-column.js';
-import '@vaadin/vaadin-grid/vaadin-grid-selection-column.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sort-column.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-selection-column.js';
 
 class MyViewEvents extends connect(store)(PageViewElement) {
   render() {
@@ -54,6 +51,7 @@ class MyViewEvents extends connect(store)(PageViewElement) {
           <vaadin-grid-column>
             <template class="header">
               <vaadin-grid-sorter path="date" direction="desc">${_('Date')}</vaadin-grid-sorter>
+              <br>
               <vaadin-grid-filter path="date"></vaadin-grid-filter>
             </template>
             <template>
@@ -71,6 +69,7 @@ class MyViewEvents extends connect(store)(PageViewElement) {
           <vaadin-grid-column>
             <template class="header">
               <vaadin-grid-sorter path="place_name">${_('Place')}</vaadin-grid-sorter>
+              <br>
               <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
             </template>
             <template>

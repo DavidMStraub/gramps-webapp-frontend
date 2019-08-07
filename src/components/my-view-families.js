@@ -21,14 +21,12 @@ import { translate as _ } from '../translate.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
-import { navigate } from '../actions/app.js';
-
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid.js';
-import '@vaadin/vaadin-grid/vaadin-grid-sorter.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sorter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
-import '@vaadin/vaadin-grid/vaadin-grid-sort-column.js';
-import '@vaadin/vaadin-grid/vaadin-grid-selection-column.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sort-column.js';
+import '@vaadin/vaadin-grid/theme/material/vaadin-grid-selection-column.js';
 
 class MyViewFamilies extends connect(store)(PageViewElement) {
   render() {
@@ -52,6 +50,7 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
           <vaadin-grid-column>
             <template class="header">
               <vaadin-grid-sorter path="father_name" direction="asc">${_('Father')}</vaadin-grid-sorter>
+              <br>
               <vaadin-grid-filter path="father_name"></vaadin-grid-filter>
             </template>
             <template>
@@ -61,6 +60,7 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
           <vaadin-grid-column>
             <template class="header">
               <vaadin-grid-sorter path="mother_name">${_('Mother')}</vaadin-grid-sorter>
+              <br>
               <vaadin-grid-filter path="mother_name"></vaadin-grid-filter>
             </template>
             <template>
