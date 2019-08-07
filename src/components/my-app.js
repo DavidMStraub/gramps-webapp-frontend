@@ -19,6 +19,7 @@ import { loadPeople, loadFamilies, loadEvents, loadStrings, loadPlaces, loadDbIn
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
+import '@polymer/iron-collapse/iron-collapse.js';
 
 import './my-lightbox-element.js';
 import './my-media-element.js';
@@ -74,8 +75,11 @@ class MyApp extends connect(store)(LitElement) {
       <div id="inner">
       <form id="login-form">
       <paper-input @keypress="${this._handleInputKeypress}" label="password" type="password" id="login-input" autofocus></paper-input>
-      <paper-input @keypress="${this._handleInputKeypress}" label="host" type="url" id="host-input" placeholder="https://example.com:1234"></paper-input>
-      <paper-button @click="${this._submitLogin}">login</paper-button>
+      <paper-button @click="${this._toggleCollapse}" id="more-options">More options</paper-button>
+      <iron-collapse id="collapse-advanced">
+        <paper-input @keypress="${this._handleInputKeypress}" label="API base url" type="url" id="host-input" placeholder="https://example.com:1234"></paper-input>
+      </iron-collapse>
+      <paper-button raised @click="${this._submitLogin}">login</paper-button>
       </form>
       </div>
       </div>
@@ -392,6 +396,13 @@ class MyApp extends connect(store)(LitElement) {
 
   _mediaSelected(e) {
     store.dispatch(updateActiveMedia(e.detail));
+  }
+
+  _toggleCollapse(e) {
+    const ironToggle = this.shadowRoot.querySelector('#collapse-advanced');
+    ironToggle.show();
+    const moreButton = this.shadowRoot.querySelector('#more-options');
+    moreButton.style.display = "none";
   }
 
   _submitLogin(e) {

@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@polymer/app-layout": "^3.1.0",
+    "@polymer/iron-collapse": "^3.0.1",
     "@polymer/iron-form": "^3.0.1",
     "@polymer/paper-badge": "^3.0.1",
     "@polymer/paper-button": "^3.0.1",
