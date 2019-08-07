@@ -81,7 +81,7 @@ class MyMediaElement extends connect(store)(LitElement) {
         </style>
         <div class="media-container">
           <div class="inner-container">
-            <img src="${this._host}/media/${this.handle}?jwt=${this._token}">
+            <img src="${this._host}/api/media/${this.handle}?jwt=${this._token}">
             </img>
             ${this._rect.map(function(item)  {
               if (!item.rect) {

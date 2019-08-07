@@ -11,7 +11,7 @@ export const LOGOUT = 'LOGOUT';
 import { activePersonIfEmpty } from './app.js'
 
 export const getAuthToken = (host, password) => async (dispatch) => {
-  fetch(host + `/login`, {
+  fetch(host + `/api/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -29,7 +29,7 @@ export const getAuthToken = (host, password) => async (dispatch) => {
 };
 
 export const loadDbInfo = (host, token) => async (dispatch) => {
-  fetch(host + `/dbinfo`, {
+  fetch(host + `/api/dbinfo`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -57,7 +57,7 @@ export const loadDbInfo = (host, token) => async (dispatch) => {
 };
 
 export const loadPeople = (host, token) => async (dispatch) => {
-  fetch(host + `/people`, {
+  fetch(host + `/api/people`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -71,7 +71,7 @@ export const loadPeople = (host, token) => async (dispatch) => {
 };
 
 export const loadPlaces = (host, token) => async (dispatch) => {
-  fetch(host + `/places`, {
+  fetch(host + `/api/places`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -85,7 +85,7 @@ export const loadPlaces = (host, token) => async (dispatch) => {
 };
 
 export const loadFamilies = (host, token) => async (dispatch) => {
-  fetch(host + `/families`, {
+  fetch(host + `/api/families`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -99,7 +99,7 @@ export const loadFamilies = (host, token) => async (dispatch) => {
 };
 
 export const loadEvents = (host, token) => async (dispatch) => {
-  fetch(host + `/events`, {
+  fetch(host + `/api/events`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -226,7 +226,7 @@ const _strings = [
 ]
 
 export const loadStrings = (host) => async (dispatch) => {
-  fetch(host + `/translate?strings=` + JSON.stringify(_strings))
+  fetch(host + `/api/translate?strings=` + JSON.stringify(_strings))
     .then(resp => resp.json())
     .then(data => dispatch(getStrings(data)))
     .catch((error) => console.log(error));
