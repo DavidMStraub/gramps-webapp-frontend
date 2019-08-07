@@ -68,7 +68,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
       }
       </style>
       <div id="container" style="height: ${2**(this.depth - 1) * 100}px;">
-      ${this._people.map((g, i) => html`
+      ${this._people.map((g, i) => i > this.depth - 1 ? '' : html`
         ${g.map((p, j) => Object.keys(p).length ? html`
           <div
           class="card"
@@ -142,9 +142,10 @@ class MyPedigreeElement extends connect(store)(LitElement) {
     stateChanged(state) {
       this._host = state.app.host;
       this._token = state.api.token;
-      this._people = this._getTree(state, state.app.activePerson, this.depth);
+      this._people = this._getTree(state, state.app.activePerson, 6);
       this._children = this._getChildren(state, state.app.activePerson);
     }
+
 
     _personSelected(e) {
       store.dispatch(activePerson(e.detail.gramps_id));

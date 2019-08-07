@@ -134,7 +134,9 @@ const _strings = [
   "Hamlet",
   "Farm",
   "Building",
-  "Number"
+  "Number",
+  "Number of generations:",
+  "Zoom"
 ]
 
 export const loadStrings = (host) => async (dispatch) => {

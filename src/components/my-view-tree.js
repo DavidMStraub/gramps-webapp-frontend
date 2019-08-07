@@ -13,6 +13,8 @@ import { PageViewElement } from './page-view-element.js';
 import './my-pedigree-element.js';
 import './my-pedigree-card.js';
 
+import '@polymer/paper-slider/paper-slider.js';
+
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
 // This element is connected to the Redux store.
@@ -35,8 +37,12 @@ class MyViewTree extends connect(store)(PageViewElement) {
     }
     return html`
       <section>
-        <my-pedigree-element
-          depth="4">
+        <div>
+          <span style="font-size:0.8em;color:#666;padding-top:0.4em;">${_("Number of generations:")}</span>
+          <paper-slider min="2" max="6" .value="${this._depth}" @value-changed="${this._updateDepth}" pin step="1" snaps>
+          </paper-slider>
+        </div>
+        <my-pedigree-element .depth="${this._depth}">
         </my-pedigree-element>
       </section>
     `
@@ -44,12 +50,35 @@ class MyViewTree extends connect(store)(PageViewElement) {
 
     static get properties() { return {
       _gramps_id: { type: String },
+      _depth: { type: Number }
     }}
+
+
+    _updateDepth(event) {
+      if (event.detail.value) {
+        this._depth = event.detail.value;
+      }
+    }
+
+    constructor() {
+      super();
+      this._depth = 4;
+    }
+  
 
     static get styles() {
         return [
           SharedStyles
         ]
+    }
+
+    firstUpdated() {
+      var state = store.getState();
+      if (state.app.wideLayout) {
+        this._depth = 4;
+      } else {
+        this._depth = 2;
+      }
     }
 
     stateChanged(state) {
