@@ -126,6 +126,8 @@ class MyViewPlace extends connect(store)(PageViewElement) {
 
         ${(this._place.geolocation && this._place.geolocation[0]) ? html`<h3>${_("Map")}</h3>
         <my-leaflet-map
+          width="100%"
+          height="500px"
           latitude=${this._place.geolocation[0]}
           longitude=${this._place.geolocation[1]}
           zoom=13

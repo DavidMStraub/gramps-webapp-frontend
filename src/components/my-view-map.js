@@ -63,7 +63,7 @@ class MyViewMap extends connect(store)(PageViewElement) {
       </div>
       <my-leaflet-map
         height="100vh"
-        with="200px"
+        width="100%"
         latitude="${center[0]}"
         longitude="${center[1]}"
         zoom="6"

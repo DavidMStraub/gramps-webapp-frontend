@@ -34,7 +34,6 @@ class MyPedigreeElement extends connect(store)(LitElement) {
         position: relative;
         overflow-x: auto;
         overflow-y: visible;
-        height: ${2**(this.depth - 1) * 100}px;
       }
       div.card {
         position: absolute;
@@ -68,7 +67,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
         color: #aaa;
       }
       </style>
-      <div id="container">
+      <div id="container" style="height: ${2**(this.depth - 1) * 100}px;">
       ${this._people.map((g, i) => html`
         ${g.map((p, j) => Object.keys(p).length ? html`
           <div

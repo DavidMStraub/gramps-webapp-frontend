@@ -26,7 +26,6 @@ class MyPedigreeCard extends LitElement {
       return html`
       <style>
       .card {
-        width: ${this.width};
         height: 70px;
         padding: 10px;
         border-radius: 10px;
@@ -53,11 +52,11 @@ class MyPedigreeCard extends LitElement {
       }
       </style>
       ${(this.person != undefined && !Object.keys(this.person).length) ? html`
-        <div class="card">
+        <div class="card" style="width: ${this.width};">
         NN
         </div>
         ` : html`
-        <div class="card ${this.person.gender === 1 ? 'male' : 'female'}">
+        <div class="card ${this.person.gender === 1 ? 'male' : 'female'}" style="width: ${this.width};">
         <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'view-tree' : 'view-person/' + this.person.gramps_id}">
         <div class="photo">
           ${ this.person.media.length ? html`

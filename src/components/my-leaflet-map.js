@@ -14,22 +14,11 @@ import { Map,  TileLayer, LatLng, control } from '../../node_modules/leaflet/dis
 class MyLeafletMap extends LitElement {
   render() {
     return html`
-      <link rel="stylesheet" href="leaflet.css">
-      <style>
-      .mapcontainer {
-      }
-      #${this.mapid} {
-        width: ${this.width};
-        height: ${this.height};
-        z-index: 0;
-      }
-      #mapcontainer{
-      }
-      </style>
+      <link rel="stylesheet" href="/src/components/leaflet.css">
 
 
-      <div class="mapcontainer">
-        <div id="${this.mapid}">
+      <div class="mapcontainer" style="width:${this.width}; height:${this.height};">
+        <div id="${this.mapid}" style="z-index: 0; width: 100%; height: 100%;">
           <slot>
           </slot>
         </div>
@@ -70,12 +59,14 @@ class MyLeafletMap extends LitElement {
         attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
       }).addTo(this._map);
       this._map.addControl(control.zoom({ position: 'bottomright' }));
+      this._map.invalidateSize(false);
     }
 
     updated() {
       if (this._map != undefined) {
         this._map.panTo(new LatLng(this.latitude, this.longitude));
         this._map.setZoom(this.zoom);
+        this._map.invalidateSize(false);
       }
     }
 }
