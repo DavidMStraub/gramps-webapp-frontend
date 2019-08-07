@@ -15,7 +15,7 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadPeople, loadFamilies, loadEvents, loadStrings, loadPlaces, loadDbInfo, getAuthToken } from '../actions/api.js';
+import { loadStrings, loadTree, getAuthToken } from '../actions/api.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -363,12 +363,8 @@ class MyApp extends connect(store)(LitElement) {
 
 
   _loadData(host, token) {
-    store.dispatch(loadDbInfo(host, token));
+    store.dispatch(loadTree(host, token));
     store.dispatch(loadStrings(host));
-    store.dispatch(loadPeople(host, token));
-    store.dispatch(loadFamilies(host, token));
-    store.dispatch(loadEvents(host, token));
-    store.dispatch(loadPlaces(host, token));
   }
 
   updated(changedProps) {

@@ -1,10 +1,6 @@
 
-export const PEOPLE = 'PEOPLE';
-export const FAMILIES = 'FAMILIES';
-export const EVENTS = 'EVENTS';
+export const TREE = 'TREE';
 export const STRINGS = 'STRINGS';
-export const DBINFO = 'DBINFO';
-export const PLACES = 'PLACES';
 export const TOKEN = 'TOKEN';
 export const LOGOUT = 'LOGOUT';
 
@@ -28,8 +24,8 @@ export const getAuthToken = (host, password) => async (dispatch) => {
     });
 };
 
-export const loadDbInfo = (host, token) => async (dispatch) => {
-  fetch(host + `/api/dbinfo`, {
+export const loadTree = (host, token) => async (dispatch) => {
+  fetch(host + `/api/tree`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -48,68 +44,12 @@ export const loadDbInfo = (host, token) => async (dispatch) => {
       return data;
     })
     .then(data => {
-      dispatch(getDbInfo(data));
-      dispatch(activePersonIfEmpty(data.default_person));
+      dispatch(getTree(data));
+      dispatch(activePersonIfEmpty(data.dbinfo.default_person));
     })
     .catch((error) => {
       console.log(error);
     });
-};
-
-export const loadPeople = (host, token) => async (dispatch) => {
-  fetch(host + `/api/people`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        }
-      })
-    .then(resp => resp.json())
-    .then(data => dispatch(getPeople(data)))
-    .catch((error) => console.log(error));
-};
-
-export const loadPlaces = (host, token) => async (dispatch) => {
-  fetch(host + `/api/places`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        }
-      })
-    .then(resp => resp.json())
-    .then(data => dispatch(getPlaces(data)))
-    .catch((error) => console.log(error));
-};
-
-export const loadFamilies = (host, token) => async (dispatch) => {
-  fetch(host + `/api/families`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        }
-      })
-    .then(resp => resp.json())
-    .then(data => dispatch(getFamilies(data)))
-    .catch((error) => console.log(error));
-};
-
-export const loadEvents = (host, token) => async (dispatch) => {
-  fetch(host + `/api/events`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        }
-      })
-    .then(resp => resp.json())
-    .then(data => dispatch(getEvents(data)))
-    .catch((error) => console.log(error));
 };
 
 
@@ -120,44 +60,16 @@ const storeAuthToken = (data) => {
   };
 };
 
-const getPeople = (data) => {
+const getTree = (data) => {
   return {
-    type: PEOPLE,
-    people: data
-  };
-};
-
-const getPlaces = (data) => {
-  return {
-    type: PLACES,
-    places: data
-  };
-};
-
-const getDbInfo = (data) => {
-  return {
-    type: DBINFO,
-    dbinfo: data
+    type: TREE,
+    tree: data
   };
 };
 
 const logout = () => {
   return {
     type: LOGOUT
-  };
-};
-
-const getFamilies = (data) => {
-  return {
-    type: FAMILIES,
-    families: data
-  };
-};
-
-const getEvents = (data) => {
-  return {
-    type: EVENTS,
-    events: data
   };
 };
 
