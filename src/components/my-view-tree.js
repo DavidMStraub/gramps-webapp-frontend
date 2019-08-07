@@ -36,21 +36,34 @@ class MyViewTree extends connect(store)(PageViewElement) {
       `
     }
     return html`
+      <style>
+      .label {
+        font-size: 0.8em;
+        color: #666666;
+        padding-top: 0.4em;
+      }
+      </style>
       <section>
         <div>
-          <span style="font-size:0.8em;color:#666;padding-top:0.4em;">${_("Number of generations:")}</span>
+          <span class="label">${_("Number of generations:")}</span>
           <paper-slider min="2" max="6" .value="${this._depth}" @value-changed="${this._updateDepth}" pin step="1" snaps>
           </paper-slider>
+          <span class="label">${_("Zoom")}:</span>
+          <paper-slider min="0.2" max="1" .value="${this._zoom}" @value-changed="${this._updateZoom}" pin step="0.1" snaps>
+          </paper-slider>
         </div>
-        <my-pedigree-element .depth="${this._depth}">
-        </my-pedigree-element>
+        <div style="transform: scale(${this._zoom}); transform-origin: top left;">
+          <my-pedigree-element .depth="${this._depth}">
+          </my-pedigree-element>
+        </div>
       </section>
     `
     }
 
     static get properties() { return {
       _gramps_id: { type: String },
-      _depth: { type: Number }
+      _depth: { type: Number },
+      _zoom: { type: Number }
     }}
 
 
@@ -60,9 +73,16 @@ class MyViewTree extends connect(store)(PageViewElement) {
       }
     }
 
+    _updateZoom(event) {
+      if (event.detail.value) {
+        this._zoom = event.detail.value;
+      }
+    }
+
     constructor() {
       super();
       this._depth = 4;
+      this._zoom = 1;
     }
   
 

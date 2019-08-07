@@ -32,8 +32,6 @@ class MyPedigreeElement extends connect(store)(LitElement) {
       <style>
       div#container {
         position: relative;
-        overflow-x: auto;
-        overflow-y: visible;
       }
       div.card {
         position: absolute;
@@ -83,7 +81,8 @@ class MyPedigreeElement extends connect(store)(LitElement) {
               token=${this._token}
             >
             </my-pedigree-card>
-              <div
+            ${i == 0 ? '' : html`
+            <div
             class="branch-right ${p.gender === 1 ? 'male' : 'female'}"
             style="
             left: 0px;
@@ -94,6 +93,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
             "
             >
             </div>
+            `}
             <div
             class="branch-left ${p.gender === 1 ? 'male' : 'female'}"
             style="
