@@ -43,17 +43,14 @@ class MyViewTree extends connect(store)(PageViewElement) {
         padding-top: 0.4em;
       }
       </style>
-      <section>
+      <section id="pedigree-section">
         <div>
           <span class="label">${_("Number of generations:")}</span>
           <paper-slider min="2" max="6" .value="${this._depth}" @value-changed="${this._updateDepth}" pin step="1" snaps>
           </paper-slider>
-          <span class="label">${_("Zoom")}:</span>
-          <paper-slider min="0.2" max="1" .value="${this._zoom}" @value-changed="${this._updateZoom}" pin step="0.1" snaps>
-          </paper-slider>
         </div>
-        <div style="transform: scale(${this._zoom}); transform-origin: top left;">
-          <my-pedigree-element .depth="${this._depth}">
+        <div style="transform: scale(${this._zoom}); transform-origin: top left;" id="pedigree-container">
+          <my-pedigree-element .depth="${this._depth}" id="pedigree">
           </my-pedigree-element>
         </div>
       </section>
@@ -73,38 +70,64 @@ class MyViewTree extends connect(store)(PageViewElement) {
       }
     }
 
-    _updateZoom(event) {
-      if (event.detail.value) {
-        this._zoom = event.detail.value;
-      }
-    }
-
     constructor() {
       super();
       this._depth = 4;
       this._zoom = 1;
     }
   
-
     static get styles() {
         return [
           SharedStyles
         ]
     }
 
+    getZoom() {
+      let sec = this.shadowRoot.getElementById('pedigree-section');
+      let sec_width = sec.offsetWidth;
+      let tree_width = this._depth * 230 * this._zoom;
+      let new_zoom = (sec_width - 24) / tree_width * this._zoom;
+      if (new_zoom > 1) {
+        return 1;
+      } else if (new_zoom < 0.2) {
+        return 0.2;
+      } else {
+        return new_zoom;
+      }
+    }
+
+    setZoom() {
+      this._zoom = this.getZoom();
+    }
+
+    _resizeHandler(e) {
+      clearTimeout(this._resizeTimer);
+      var self = this;
+      this._resizeTimer = setTimeout(function() {
+        self.setZoom();
+      }, 250)
+    }
+
     firstUpdated() {
+      window.addEventListener('resize', this._resizeHandler.bind(this));
       var state = store.getState();
       if (state.app.wideLayout) {
         this._depth = 4;
       } else {
-        this._depth = 2;
+        this._depth = 3;
       }
+      this.setZoom();
     }
 
     stateChanged(state) {
       this._gramps_id = state.app.activePerson;
     }
 
+    updated(changedProps) {
+      if (changedProps.has('_depth')) {
+        this.setZoom();
+      }
+    }
 }
 
 window.customElements.define('my-view-tree', MyViewTree);
