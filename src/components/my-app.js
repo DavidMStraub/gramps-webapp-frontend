@@ -173,7 +173,6 @@ class MyApp extends connect(store)(LitElement) {
         height: 44px;
         width: 44px;
         z-index: 3;
-        display: ${this._drawerOpened ? 'none' : 'inline'};
       }
 
 
@@ -264,10 +263,6 @@ class MyApp extends connect(store)(LitElement) {
           margin-left: var(--app-drawer-width);
         }
 
-        .menu-btn {
-          display: none;
-        }
-
         [main-title] {
           margin-right: 0;
         }
@@ -275,7 +270,7 @@ class MyApp extends connect(store)(LitElement) {
     </style>
 
     <!-- Header -->
-    <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
+    <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}" style="display: ${this._drawerOpened ? 'none' : 'inline'};">${menuIcon}</button>
 
     <!-- Drawer content -->
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"

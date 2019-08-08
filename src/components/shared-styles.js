@@ -100,5 +100,14 @@ export const SharedStyles = css`
   .arrow {
     position: absolute;
   }
-
+  vaadin-grid {
+    height:calc(100vh - 48px - 32px);
+    margin-top: 32px;
+  }
+  @media (min-width: 768px) {
+    vaadin-grid {
+      height:calc(100vh - 48px);
+      margin-top: 0;
+    }
+  }
 `;

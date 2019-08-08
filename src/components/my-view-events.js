@@ -32,11 +32,6 @@ import '@vaadin/vaadin-grid/theme/material/vaadin-grid-selection-column.js';
 class MyViewEvents extends connect(store)(PageViewElement) {
   render() {
     return html`
-      <style>
-      vaadin-grid {
-        height:calc(100vh - 48px);
-      }
-      </style>
       <section>
         <vaadin-grid .items=${this._events} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
