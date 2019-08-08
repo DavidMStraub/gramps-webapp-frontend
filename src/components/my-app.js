@@ -38,6 +38,7 @@ store.addReducers({
 // These are the actions needed by this element.
 import {
   navigate,
+  activePerson,
   updateOffline,
   updateDrawerState,
   updateLightboxState,
@@ -52,7 +53,20 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import './snack-bar.js';
-import { menuIcon, accountIcon, familyIcon, personDetailIcon, homeIcon, mapIcon, pedigreeIcon, placeIcon, calendarIcon } from './my-icons.js';
+import {
+  menuIcon,
+  accountIcon,
+  familyIcon,
+  personDetailIcon,
+  homeIcon,
+  mapIcon,
+  pedigreeIcon,
+  placeIcon,
+  calendarIcon,
+  homeAccountIcon
+} from './my-icons.js';
+
+import { SharedStyles } from './shared-styles.js';
 
 class MyApp extends connect(store)(LitElement) {
   render() {
@@ -267,6 +281,9 @@ class MyApp extends connect(store)(LitElement) {
           margin-right: 0;
         }
       }
+      .link {
+        cursor: pointer;
+      }
     </style>
 
     <!-- Header -->
@@ -284,7 +301,7 @@ class MyApp extends connect(store)(LitElement) {
         <a ?selected="${this._page === 'view-places'}" href="/view-places">${placeIcon} ${_('Places')}</a>
         <a ?selected="${this._page === 'view-map'}" href="/view-map">${mapIcon} ${_('Map')}</a>
         <hr>
-        <span class="activePerson">${this._activePerson ? this._activePerson.name_surname +  ',': ''}
+        <span class="activePerson"><span class="link" @click="${this._setMainPersonActive}">${homeAccountIcon}</span> ${this._activePerson ? this._activePerson.name_surname +  ',': ''}
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
         <a ?selected="${this._page === 'view-person'}" href="/view-person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
         <a ?selected="${this._page === 'view-tree'}" href="/view-tree">${pedigreeIcon} ${_('Family Tree')}</a>
@@ -321,6 +338,7 @@ class MyApp extends connect(store)(LitElement) {
     `;
   }
 
+
   static get properties() {
     return {
       appTitle: { type: String },
@@ -356,6 +374,14 @@ class MyApp extends connect(store)(LitElement) {
     this.addEventListener('media-selected', (e) => this._mediaSelected(e));
   }
 
+  _setMainPersonActive() {
+    if (this._page === 'view-person') {
+      // In the person view, need to rewrite the URL as well
+      window.history.pushState({}, '', '/view-person/' + this._mainPerson);
+    }
+    // set active person to main person
+    store.dispatch(activePerson(this._mainPerson));
+  }
 
   _loadData(host, token) {
     store.dispatch(loadTree(host, token));
@@ -434,6 +460,7 @@ class MyApp extends connect(store)(LitElement) {
     this._activeMedium = state.app.activeMedium;
     this._activePerson = state.api.people[state.app.activePerson];
     this._activeEvent = state.api.people[state.app.activeEvent];
+    this._mainPerson = state.api.dbinfo.default_person;
   }
 }
 
