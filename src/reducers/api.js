@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { TREE, STRINGS, TOKEN, LOGOUT } from '../actions/api.js';
 
+
 const INITIAL_STATE = {
   people: {},
   families: {},
@@ -28,8 +29,7 @@ const api = (state = INITIAL_STATE, action) => {
         token: action.token
       };
     case LOGOUT:
-      console.log('logout');
-      return {};
+      return INITIAL_STATE;
     case TREE:
       return {
         ...state,

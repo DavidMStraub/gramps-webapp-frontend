@@ -29,7 +29,7 @@ const devCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // section of the wiki for more details:
 // https://github.com/Polymer/pwa-starter-kit/wiki/4.-Redux-and-state-management
 
-const MY_KEY = 'my_app'
+const MY_KEY = 'gramps_webapp'
 
 export const saveState = (state) => {
   let stringifiedState = JSON.stringify(state);

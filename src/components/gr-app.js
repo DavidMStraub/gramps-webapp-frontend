@@ -15,7 +15,7 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadStrings, loadTree, getAuthToken } from '../actions/api.js';
+import { loadStrings, loadTree, getAuthToken, apiLogout } from '../actions/api.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -44,7 +44,8 @@ import {
   updateLightboxState,
   updateActiveMedia,
   updateLayout,
-  storeHost
+  storeHost,
+  appLogout
 } from '../actions/app.js';
 
 // These are the elements needed by this element.
@@ -63,7 +64,8 @@ import {
   pedigreeIcon,
   placeIcon,
   calendarIcon,
-  homeAccountIcon
+  homeAccountIcon,
+  logoutIcon
 } from './gr-icons.js';
 
 import { SharedStyles } from './shared-styles.js';
@@ -200,13 +202,23 @@ class MyApp extends connect(store)(LitElement) {
         z-index: 1000;
       }
 
-      .drawer-list > a {
+      .drawer-list > a, .drawer-list > span {
         display: block;
         text-decoration: none;
         color: var(--app-drawer-text-color);
         line-height: 40px;
         padding: 0 24px;
         outline: none;
+      }
+
+      .drawer-list > a.button, .drawer-list > span.button{
+        display: inline-block;
+        padding: 8px 0 0 24px;
+      }
+
+      .drawer-list > a.button svg, .drawer-list > span.button svg{
+        height: 1.5em;
+        width: 1.5em;
       }
 
       .drawer-list svg {
@@ -305,6 +317,8 @@ class MyApp extends connect(store)(LitElement) {
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
         <a ?selected="${this._page === 'person'}" href="/person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
         <a ?selected="${this._page === 'tree'}" href="/tree">${pedigreeIcon} ${_('Family Tree')}</a>
+        <hr>
+        <span class="button link" @click="${this._logout}">${logoutIcon}</span>
       </nav>
     </app-drawer>
 
@@ -403,6 +417,13 @@ class MyApp extends connect(store)(LitElement) {
     store.dispatch(updateDrawerState(true));
   }
 
+  _logout() {
+    this._token = null;
+    this._loaded = false;
+    store.dispatch(apiLogout());
+    store.dispatch(appLogout());
+  }
+
   _drawerOpenedChanged(e) {
     store.dispatch(updateDrawerState(e.target.opened));
   }
@@ -448,6 +469,8 @@ class MyApp extends connect(store)(LitElement) {
           && Object.keys(state.api.strings).length
           && Object.keys(state.api.dbinfo).length) {
           this._loaded = true;
+      } else {
+        this._loaded = false;
       }
     }
     this._page = state.app.page;

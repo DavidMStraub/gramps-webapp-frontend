@@ -6,6 +6,7 @@ export const LOGOUT = 'LOGOUT';
 
 import { activePersonIfEmpty } from './app.js'
 
+
 export const getAuthToken = (host, password) => async (dispatch) => {
   fetch(host + `/api/login`, {
       method: 'POST',
@@ -67,7 +68,7 @@ const getTree = (data) => {
   };
 };
 
-const logout = () => {
+export const apiLogout = () => {
   return {
     type: LOGOUT
   };

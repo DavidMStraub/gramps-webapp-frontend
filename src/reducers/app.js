@@ -21,8 +21,10 @@ import {
   OPEN_SNACKBAR,
   CLOSE_SNACKBAR,
   UPDATE_DRAWER_STATE,
-  UPDATE_LIGHTBOX_STATE
+  UPDATE_LIGHTBOX_STATE,
+  LOGOUT
 } from '../actions/app.js';
+
 
 const INITIAL_STATE = {
   page: '',
@@ -104,7 +106,12 @@ const app = (state = INITIAL_STATE, action) => {
         ...state,
         snackbarOpened: false
       };
-    default:
+    case LOGOUT:
+        return {
+          ...state,
+          token: null
+        };
+          default:
       return state;
   }
 };

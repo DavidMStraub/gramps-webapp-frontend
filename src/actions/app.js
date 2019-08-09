@@ -21,6 +21,7 @@ export const UPDATE_LIGHTBOX_STATE = 'UPDATE_LIGHTBOX_STATE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
 export const HOST = 'HOST';
+export const LOGOUT = 'LOGOUT';
 
 export const navigate = (path) => (dispatch) => {
   // Extract the page name from path.
@@ -143,10 +144,17 @@ export const storeHost = (data) => {
   };
 };
 
+
 export const activePersonIfEmpty = (id) => {
   return {
     type: ACTIVE_PERSON_IF_EMPTY,
     id
+  };
+};
+
+export const appLogout = () => {
+  return {
+    type: LOGOUT
   };
 };
 
