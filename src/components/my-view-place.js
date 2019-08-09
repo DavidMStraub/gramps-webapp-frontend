@@ -192,7 +192,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         return ''
       }
       return html`
-      <a href="/view-person/${p.gramps_id}">${p.name_given}
+      <a href="/person/${p.gramps_id}">${p.name_given}
       ${p.name_surname}</a>${lastItem ? '' : ', '}
       `
     }

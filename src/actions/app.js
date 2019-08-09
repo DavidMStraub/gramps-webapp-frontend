@@ -24,7 +24,7 @@ export const HOST = 'HOST';
 
 export const navigate = (path) => (dispatch) => {
   // Extract the page name from path.
-  const page_id = path === '/' ? 'view-dashboard' : path.slice(1);
+  const page_id = path === '/' ? 'dashboard' : path.slice(1);
   const page = page_id.split('/')[0]
   const id = page_id.split('/')[1]
 
@@ -43,19 +43,19 @@ export const navigate = (path) => (dispatch) => {
 
 const loadPageId = (page, id) => (dispatch) => {
   switch(page) {
-    case 'view-tree':
+    case 'tree':
       import('../components/my-view-tree.js').then((module) => {
       });
-    case 'view-person':
+    case 'person':
       dispatch(activePerson(id));
       import('../components/my-view-person.js').then((module) => {
       });
       dispatch(activePerson(id));
-    case 'view-event':
+    case 'event':
       import('../components/my-view-event.js').then((module) => {
       });
       dispatch(activeEvent(id));
-    case 'view-place':
+    case 'place':
       import('../components/my-view-place.js').then((module) => {
       });
       dispatch(activePlace(id));
@@ -66,31 +66,31 @@ const loadPageId = (page, id) => (dispatch) => {
 
 const loadPage = (page) => (dispatch) => {
   switch(page) {
-    case 'view-dashboard':
+    case 'dashboard':
       import('../components/my-view-dashboard.js').then((module) => {
         // Put code in here that you want to run every time when
-        // navigating to view-dashboard after my-view-dashboard.js is loaded.
+        // navigating to dashboard after my-view-dashboard.js is loaded.
       });
       break;
-    case 'view-people':
+    case 'people':
       import('../components/my-view-people.js');
       break;
-    case 'view-families':
+    case 'families':
       import('../components/my-view-families.js');
       break;
-    case 'view-places':
+    case 'places':
       import('../components/my-view-places.js');
       break;
-    case 'view-map':
+    case 'map':
       import('../components/my-view-map.js');
       break;
-    case 'view-events':
+    case 'events':
       import('../components/my-view-events.js');
       break;
-    case 'view-tree':
+    case 'tree':
       import('../components/my-view-tree.js');
       break;
-    case 'view-person':
+    case 'person':
       import('../components/my-view-person.js');
       break;
     default:

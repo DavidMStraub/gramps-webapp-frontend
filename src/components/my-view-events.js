@@ -50,7 +50,7 @@ class MyViewEvents extends connect(store)(PageViewElement) {
               <vaadin-grid-filter path="date"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-event/[[item.handle]]"><div>[[item.date]]</div></a>
+              <a href="/event/[[item.handle]]"><div>[[item.date]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
@@ -68,7 +68,7 @@ class MyViewEvents extends connect(store)(PageViewElement) {
               <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-place/[[item.place]]"><div>[[item.place_name]]</div></a>
+              <a href="/place/[[item.place]]"><div>[[item.place_name]]</div></a>
             </template>
           </vaadin-grid-column>
         </vaadin-grid>

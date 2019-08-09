@@ -78,7 +78,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           ${this._event.place ? html`
             <tr>
               <th>${_('Place')}</th>
-              <td><a href="/view-place/${this._event.place}">${this._event.place_name}</a></td>
+              <td><a href="/place/${this._event.place}">${this._event.place_name}</a></td>
             </tr>
             ` : ''}
           ${Object.keys(this._participants).map((role) => {
@@ -132,14 +132,14 @@ class MyViewEvent extends connect(store)(PageViewElement) {
       }
       if (p.type == 'Person') {
         return html`
-        <a href="/view-person/${p.person.gramps_id}">${p.person.name_given}
+        <a href="/person/${p.person.gramps_id}">${p.person.name_given}
         ${p.person.name_surname}</a>${lastItem ? '' : ', '}
         `
       } else if (p.type == 'Family') {
         return html`
-        <a href="/view-person/${p.family.father_id}">${p.family.father_name}</a>
+        <a href="/person/${p.family.father_id}">${p.family.father_name}</a>
         ${_('and')}
-        <a href="/view-person/${p.family.mother_id}">${p.family.mother_name}</a>${lastItem ? '' : ', '}
+        <a href="/person/${p.family.mother_id}">${p.family.mother_name}</a>${lastItem ? '' : ', '}
         `
       }
     }

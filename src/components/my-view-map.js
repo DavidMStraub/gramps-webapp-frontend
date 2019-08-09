@@ -73,7 +73,7 @@ class MyViewMap extends connect(store)(PageViewElement) {
         <my-leaflet-map-marker
           latitude="${this._places[this._selected].geolocation[0]}"
           longitude="${this._places[this._selected].geolocation[1]}"
-          popup="<a href='view-place/${this._places[this._selected].gramps_id}'>${this._places[this._selected].name}</a>"
+          popup="<a href='place/${this._places[this._selected].gramps_id}'>${this._places[this._selected].name}</a>"
         >
         </my-leaflet-map-marker>
         ` : this.sortValues(this._places).map(function (p) {
@@ -82,7 +82,7 @@ class MyViewMap extends connect(store)(PageViewElement) {
             <my-leaflet-map-marker
               latitude="${p.geolocation[0]}"
               longitude="${p.geolocation[1]}"
-              popup="<a href='view-place/${p.gramps_id}'>${p.name}</a>"
+              popup="<a href='place/${p.gramps_id}'>${p.name}</a>"
             >
             </my-leaflet-map-marker>
             `

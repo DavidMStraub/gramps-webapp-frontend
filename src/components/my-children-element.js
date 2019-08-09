@@ -30,7 +30,7 @@ class MyChildrenElement extends LitElement {
       <vaadin-grid .items=${this.items} theme="row-dividers">
         <vaadin-grid-column path="name_given" header="${_('Given name')}">
           <template>
-            <a href="/view-person/[[item.gramps_id]]"><div>[[item.name_given]]</div></a>
+            <a href="/person/[[item.gramps_id]]"><div>[[item.name_given]]</div></a>
           </template>
         </vaadin-grid-column>
         <vaadin-grid-column path="birthdate" header="${_('Birth Date')}"></vaadin-grid-column>

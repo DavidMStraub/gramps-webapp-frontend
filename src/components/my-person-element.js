@@ -33,7 +33,7 @@ class MyPersonElement extends LitElement {
         font-size: 0.9em;
       }
       </style>
-      <a href="/view-person/${this.person.gramps_id}">
+      <a href="/person/${this.person.gramps_id}">
       ${this.person.name_surname}${(this.person.name_surname && this.person.name_given) ? ',' : ''}
       ${this.person.name_given}</a>
       <span class="gray">

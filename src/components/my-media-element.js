@@ -92,7 +92,7 @@ class MyMediaElement extends connect(store)(LitElement) {
               let width = item.rect[2] - item.rect[0];
               let height = item.rect[3] - item.rect[1];
               return html`
-              <a href="view-person/${item.gramps_id}" @click="${_boundCloseLightbox}">
+              <a href="person/${item.gramps_id}" @click="${_boundCloseLightbox}">
               <div class="rect"
                 style="left:${left}%;top:${top}%;width:${width}%;height:${height}%;">
                 <div class="label">${item.name_given} ${item.name_surname}</div>

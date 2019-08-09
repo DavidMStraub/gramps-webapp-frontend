@@ -39,7 +39,7 @@ class MyViewPlaces extends connect(store)(PageViewElement) {
               <vaadin-grid-sorter path="gramps_id">ID</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/view-place/[[item.gramps_id]]"><div>[[item.gramps_id]]</div></a>
+              <a href="/place/[[item.gramps_id]]"><div>[[item.gramps_id]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
@@ -49,7 +49,7 @@ class MyViewPlaces extends connect(store)(PageViewElement) {
               <vaadin-grid-filter path="name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-place/[[item.gramps_id]]"><div>[[item.name]]</div></a>
+              <a href="/place/[[item.gramps_id]]"><div>[[item.name]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>

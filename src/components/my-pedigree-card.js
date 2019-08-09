@@ -57,7 +57,7 @@ class MyPedigreeCard extends LitElement {
         </div>
         ` : html`
         <div class="card ${this.person.gender === 1 ? 'male' : 'female'}" style="width: ${this.width};">
-        <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'view-tree' : 'view-person/' + this.person.gramps_id}">
+        <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'tree' : 'person/' + this.person.gramps_id}">
         <div class="photo">
           ${ this.person.media.length ? html`
           <my-img-element

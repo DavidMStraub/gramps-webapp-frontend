@@ -293,33 +293,33 @@ class MyApp extends connect(store)(LitElement) {
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"
         @opened-changed="${this._drawerOpenedChanged}" style="z-index:9999;">
       <nav class="drawer-list">
-        <a ?selected="${this._page === 'view-dashboard'}" href="/view-dashboard">${homeIcon} ${_('Home Page')}</a>
+        <a ?selected="${this._page === 'dashboard'}" href="/dashboard">${homeIcon} ${_('Home Page')}</a>
         <hr>
-        <a ?selected="${this._page === 'view-people'}" href="/view-people">${accountIcon} ${_('People')}</a>
-        <a ?selected="${this._page === 'view-families'}" href="/view-families">${familyIcon} ${_('Families')}</a>
-        <a ?selected="${this._page === 'view-events'}" href="/view-events">${calendarIcon} ${_('Events')}</a>
-        <a ?selected="${this._page === 'view-places'}" href="/view-places">${placeIcon} ${_('Places')}</a>
-        <a ?selected="${this._page === 'view-map'}" href="/view-map">${mapIcon} ${_('Map')}</a>
+        <a ?selected="${this._page === 'people'}" href="/people">${accountIcon} ${_('People')}</a>
+        <a ?selected="${this._page === 'families'}" href="/families">${familyIcon} ${_('Families')}</a>
+        <a ?selected="${this._page === 'events'}" href="/events">${calendarIcon} ${_('Events')}</a>
+        <a ?selected="${this._page === 'places'}" href="/places">${placeIcon} ${_('Places')}</a>
+        <a ?selected="${this._page === 'map'}" href="/map">${mapIcon} ${_('Map')}</a>
         <hr>
         <span class="activePerson"><span class="link" @click="${this._setMainPersonActive}">${homeAccountIcon}</span> ${this._activePerson ? this._activePerson.name_surname +  ',': ''}
         ${this._activePerson ? this._activePerson.name_given: ''}</span>
-        <a ?selected="${this._page === 'view-person'}" href="/view-person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
-        <a ?selected="${this._page === 'view-tree'}" href="/view-tree">${pedigreeIcon} ${_('Family Tree')}</a>
+        <a ?selected="${this._page === 'person'}" href="/person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
+        <a ?selected="${this._page === 'tree'}" href="/tree">${pedigreeIcon} ${_('Family Tree')}</a>
       </nav>
     </app-drawer>
 
     <!-- Main content -->
     <main role="main" class="main-content">
-      <my-view-dashboard class="page" ?active="${this._page === 'view-dashboard'}"></my-view-dashboard>
-      <my-view-people class="page" ?active="${this._page === 'view-people'}"></my-view-people>
-      <my-view-person class="page" ?active="${this._page === 'view-person'}" id="my-view-person"></my-view-person>
-      <my-view-families class="page" ?active="${this._page === 'view-families'}"></my-view-families>
-      <my-view-events class="page" ?active="${this._page === 'view-events'}"></my-view-events>
-      <my-view-places class="page" ?active="${this._page === 'view-places'}"></my-view-places>
-      <my-view-map class="page" ?active="${this._page === 'view-map'}"></my-view-map>
-      <my-view-tree class="page" ?active="${this._page === 'view-tree'}"></my-view-tree>
-      <my-view-event class="page" ?active="${this._page === 'view-event'}" id="my-view-event"></my-view-event>
-      <my-view-place class="page" ?active="${this._page === 'view-place'}" id="my-view-place"></my-view-place>
+      <my-view-dashboard class="page" ?active="${this._page === 'dashboard'}"></my-view-dashboard>
+      <my-view-people class="page" ?active="${this._page === 'people'}"></my-view-people>
+      <my-view-person class="page" ?active="${this._page === 'person'}" id="my-view-person"></my-view-person>
+      <my-view-families class="page" ?active="${this._page === 'families'}"></my-view-families>
+      <my-view-events class="page" ?active="${this._page === 'events'}"></my-view-events>
+      <my-view-places class="page" ?active="${this._page === 'places'}"></my-view-places>
+      <my-view-map class="page" ?active="${this._page === 'map'}"></my-view-map>
+      <my-view-tree class="page" ?active="${this._page === 'tree'}"></my-view-tree>
+      <my-view-event class="page" ?active="${this._page === 'event'}" id="my-view-event"></my-view-event>
+      <my-view-place class="page" ?active="${this._page === 'place'}" id="my-view-place"></my-view-place>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
@@ -375,9 +375,9 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   _setMainPersonActive() {
-    if (this._page === 'view-person') {
+    if (this._page === 'person') {
       // In the person view, need to rewrite the URL as well
-      window.history.pushState({}, '', '/view-person/' + this._mainPerson);
+      window.history.pushState({}, '', '/person/' + this._mainPerson);
     }
     // set active person to main person
     store.dispatch(activePerson(this._mainPerson));

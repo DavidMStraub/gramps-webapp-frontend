@@ -101,14 +101,14 @@ class MyViewPerson extends connect(store)(PageViewElement) {
             ${asteriskIcon} ${this._person.birthdate}
             ` : ''}
             ${this._person.birthplace ? html`
-              ${_("in")} <a href="view-place/${this._person.birthplace}">${this._person.birthplace_name}</a>
+              ${_("in")} <a href="place/${this._person.birthplace}">${this._person.birthplace_name}</a>
               ` : ''}
           </p>
           <p>${this._person.deathdate ? html`
             ${crossIcon} ${this._person.deathdate}
             ` : ''}
             ${this._person.deathplace ? html`
-              ${_("in")} <a href="view-place/${this._person.deathplace}">${this._person.deathplace_name}</a>
+              ${_("in")} <a href="place/${this._person.deathplace}">${this._person.deathplace_name}</a>
               ` : ''}
           </p>
           </div>

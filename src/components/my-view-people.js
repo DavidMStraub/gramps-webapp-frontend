@@ -40,7 +40,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <vaadin-grid-sorter path="gramps_id">ID</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/view-person/[[item.gramps_id]]"><div>[[item.gramps_id]]</div></a>
+              <a href="/person/[[item.gramps_id]]"><div>[[item.gramps_id]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
@@ -50,7 +50,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <vaadin-grid-filter path="name_given"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-person/[[item.gramps_id]]"><div>[[item.name_given]]</div></a>
+              <a href="/person/[[item.gramps_id]]"><div>[[item.name_given]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column ?hidden="true">
@@ -60,7 +60,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <vaadin-grid-filter path="name_surname"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/view-person/[[item.gramps_id]]"><div>[[item.name_surname]]</div></a>
+              <a href="/person/[[item.gramps_id]]"><div>[[item.name_surname]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column ?hidden="${this._hidden}">
@@ -68,7 +68,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <vaadin-grid-sorter path="birthdate">${_('Birth Date')}</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/view-person/[[item.gramps_id]]"><div>[[item.birthdate]]</div></a>
+              <a href="/person/[[item.gramps_id]]"><div>[[item.birthdate]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column ?hidden="${this._hidden}">
@@ -76,7 +76,7 @@ class MyViewPeople extends connect(store)(PageViewElement) {
               <vaadin-grid-sorter path="deathdate">${_('Death Date')}</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/view-person/[[item.gramps_id]]"><div>[[item.deathdate]]</div></a>
+              <a href="/person/[[item.gramps_id]]"><div>[[item.deathdate]]</div></a>
             </template>
           </vaadin-grid-column>
         </vaadin-grid>

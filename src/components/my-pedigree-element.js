@@ -118,7 +118,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
           position: absolute;
           top: ${((2**(this.depth - 0 - 1) ) * (0 + 0.5) - 0.5 + 1) * 100 + i * 20}px;
         ">
-        <a @click="${() => this._selectPerson(p.gramps_id)}" href="view-tree"><span class="gray">└</span>&nbsp; ${p.name_given}</a>
+        <a @click="${() => this._selectPerson(p.gramps_id)}" href="tree"><span class="gray">└</span>&nbsp; ${p.name_given}</a>
         </div>
       ` : '')}
       </div>

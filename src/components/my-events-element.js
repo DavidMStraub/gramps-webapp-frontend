@@ -31,7 +31,7 @@ class MyEventsElement extends LitElement {
       <vaadin-grid-column>
         <template class="header">${_('Type')}</template>
         <template>
-          <a href="/view-event/[[item.handle]]"><div>[[item.type]]</div></a>
+          <a href="/event/[[item.handle]]"><div>[[item.type]]</div></a>
           <template is="dom-if" if="[[item.role]]">
             ([[item.role]])
           </template>
@@ -45,7 +45,7 @@ class MyEventsElement extends LitElement {
           <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
         </template>
         <template>
-          <a href="/view-place/[[item.place]]"><div>[[item.place_name]]</div></a>
+          <a href="/place/[[item.place]]"><div>[[item.place_name]]</div></a>
         </template>
       </vaadin-grid-column>
     ` : ''}
