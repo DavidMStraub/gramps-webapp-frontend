@@ -2,10 +2,11 @@
   "name": "gramps-app",
   "version": "0.1.0",
   "contributors": [
+    "David M. Straub",
     "The Polymer Authors"
   ],
-  "license": "BSD-3-Clause",
-  "repository": "Polymer/pwa-starter-kit",
+  "license": "AGPLv3",
+  "repository": "DavidMStraub/gramps-app-frontend",
   "scripts": {
     "start": "polymer serve",
     "build": "polymer build --auto-base-path && gulp prpl-server",
