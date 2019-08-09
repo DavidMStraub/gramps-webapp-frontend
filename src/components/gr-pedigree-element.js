@@ -12,8 +12,8 @@ import { html, LitElement } from 'lit-element';
 
 import { translate as _ } from '../translate.js';
 
-import { arrowRightIcon } from './my-icons.js';
-import './my-pedigree-card.js';
+import { arrowRightIcon } from './gr-icons.js';
+import './gr-pedigree-card.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -74,13 +74,13 @@ class MyPedigreeElement extends connect(store)(LitElement) {
             left: ${i * 230}px;
             top: ${((2**(this.depth - i - 1) ) * (j + 0.5) - 0.5) * 100}px;
           ">
-            <my-pedigree-card
+            <gr-pedigree-card
               .person=${p}
               @person-selected="${this._personSelected}"
               host=${this._host}
               token=${this._token}
             >
-            </my-pedigree-card>
+            </gr-pedigree-card>
             ${i == 0 ? '' : html`
             <div
             class="branch-right ${p.gender === 1 ? 'male' : 'female'}"
@@ -254,4 +254,4 @@ class MyPedigreeElement extends connect(store)(LitElement) {
     // }
 }
 
-window.customElements.define('my-pedigree-element', MyPedigreeElement);
+window.customElements.define('gr-pedigree-element', MyPedigreeElement);

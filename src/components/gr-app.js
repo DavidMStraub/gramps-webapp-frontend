@@ -21,8 +21,8 @@ import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/iron-collapse/iron-collapse.js';
 
-import './my-lightbox-element.js';
-import './my-media-element.js';
+import './gr-lightbox-element.js';
+import './gr-media-element.js';
 
 // This element is connected to the Redux store.
 import { store } from '../store.js';
@@ -64,7 +64,7 @@ import {
   placeIcon,
   calendarIcon,
   homeAccountIcon
-} from './my-icons.js';
+} from './gr-icons.js';
 
 import { SharedStyles } from './shared-styles.js';
 
@@ -310,23 +310,23 @@ class MyApp extends connect(store)(LitElement) {
 
     <!-- Main content -->
     <main role="main" class="main-content">
-      <my-view-dashboard class="page" ?active="${this._page === 'dashboard'}"></my-view-dashboard>
-      <my-view-people class="page" ?active="${this._page === 'people'}"></my-view-people>
-      <my-view-person class="page" ?active="${this._page === 'person'}" id="my-view-person"></my-view-person>
-      <my-view-families class="page" ?active="${this._page === 'families'}"></my-view-families>
-      <my-view-events class="page" ?active="${this._page === 'events'}"></my-view-events>
-      <my-view-places class="page" ?active="${this._page === 'places'}"></my-view-places>
-      <my-view-map class="page" ?active="${this._page === 'map'}"></my-view-map>
-      <my-view-tree class="page" ?active="${this._page === 'tree'}"></my-view-tree>
-      <my-view-event class="page" ?active="${this._page === 'event'}" id="my-view-event"></my-view-event>
-      <my-view-place class="page" ?active="${this._page === 'place'}" id="my-view-place"></my-view-place>
-      <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
+      <gr-view-dashboard class="page" ?active="${this._page === 'dashboard'}"></gr-view-dashboard>
+      <gr-view-people class="page" ?active="${this._page === 'people'}"></gr-view-people>
+      <gr-view-person class="page" ?active="${this._page === 'person'}" id="gr-view-person"></gr-view-person>
+      <gr-view-families class="page" ?active="${this._page === 'families'}"></gr-view-families>
+      <gr-view-events class="page" ?active="${this._page === 'events'}"></gr-view-events>
+      <gr-view-places class="page" ?active="${this._page === 'places'}"></gr-view-places>
+      <gr-view-map class="page" ?active="${this._page === 'map'}"></gr-view-map>
+      <gr-view-tree class="page" ?active="${this._page === 'tree'}"></gr-view-tree>
+      <gr-view-event class="page" ?active="${this._page === 'event'}" id="gr-view-event"></gr-view-event>
+      <gr-view-place class="page" ?active="${this._page === 'place'}" id="gr-view-place"></gr-view-place>
+      <gr-view404 class="page" ?active="${this._page === 'view404'}"></gr-view404>
     </main>
 
-    <my-lightbox-element .opened="${this._lightboxOpened}">
-      <my-media-element handle="${this._activeMedium}">
-      </my-media-element>
-    </my-lightbox-element>
+    <gr-lightbox-element .opened="${this._lightboxOpened}">
+      <gr-media-element handle="${this._activeMedium}">
+      </gr-media-element>
+    </gr-lightbox-element>
 
 
     <!-- <footer>
@@ -464,4 +464,4 @@ class MyApp extends connect(store)(LitElement) {
   }
 }
 
-window.customElements.define('my-app', MyApp);
+window.customElements.define('gr-app', MyApp);

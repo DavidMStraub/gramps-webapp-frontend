@@ -78,4 +78,4 @@ class MyEventsElement extends LitElement {
 
 }
 
-window.customElements.define('my-events-element', MyEventsElement);
+window.customElements.define('gr-events-element', MyEventsElement);

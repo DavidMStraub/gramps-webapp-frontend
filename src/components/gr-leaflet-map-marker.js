@@ -69,4 +69,4 @@ class MyLeafletMapMarker extends LitElement {
     }
 }
 
-window.customElements.define('my-leaflet-map-marker', MyLeafletMapMarker);
+window.customElements.define('gr-leaflet-map-marker', MyLeafletMapMarker);

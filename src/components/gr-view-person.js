@@ -13,12 +13,12 @@ import { PageViewElement } from './page-view-element.js';
 import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-badge/paper-badge.js';
-import './my-family-element.js';
-import './my-events-element.js';
-import './my-img-element.js';
-import './my-gallery-element.js';
+import './gr-family-element.js';
+import './gr-events-element.js';
+import './gr-img-element.js';
+import './gr-gallery-element.js';
 
-import { asteriskIcon, crossIcon, ringsIcon } from './my-icons.js';
+import { asteriskIcon, crossIcon, ringsIcon } from './gr-icons.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -85,14 +85,14 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       <section>
         ${this._media && this._media.length ? html`
         <div id="photo">
-          <my-img-element
+          <gr-img-element
             token="${this._token}"
             host="${this._host}"
             handle="${this._media[0].ref}"
             size="200"
             circle square
             .rect="${this._media[0].rect}">
-          </my-img-element>
+          </gr-img-element>
         </div>
         ` : ''}
         <div id="title">
@@ -130,25 +130,25 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       <section  ?hidden=${this._selected != 0} style="clear:left;">
         ${this._events ?
           html`
-          <my-events-element .items="${this._events}" place></my-events-element>`
+          <gr-events-element .items="${this._events}" place></gr-events-element>`
           : '' }
       </section>
 
       <section  ?hidden=${this._selected != 1}>
-      ${this._parents ? html`<my-family-element
+      ${this._parents ? html`<gr-family-element
         gramps_id="${this._parents}"
-        siblings father mother></my-family-element>` : '' }
+        siblings father mother></gr-family-element>` : '' }
       </section>
       <section  ?hidden=${this._selected != 2}>
       ${this._person.families ? this._person.families.map((f) => html`
-        <my-family-element
+        <gr-family-element
         gramps_id="${f}"
         father
-        mother></my-family-element>`) : '' }
+        mother></gr-family-element>`) : '' }
       </section>
       <section  ?hidden=${this._selected != 3}>
-      <my-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
-      </my-gallery-element>
+      <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
+      </gr-gallery-element>
       </section>
     `
     }
@@ -227,4 +227,4 @@ class MyViewPerson extends connect(store)(PageViewElement) {
 
 }
 
-window.customElements.define('my-view-person', MyViewPerson);
+window.customElements.define('gr-view-person', MyViewPerson);

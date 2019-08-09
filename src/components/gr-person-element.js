@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { html, LitElement } from 'lit-element';
 
 import { translate as _ } from '../translate.js';
-import { asteriskIcon, crossIcon, ringsIcon } from './my-icons.js';
+import { asteriskIcon, crossIcon, ringsIcon } from './gr-icons.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
@@ -59,4 +59,4 @@ class MyPersonElement extends LitElement {
 
 }
 
-window.customElements.define('my-person-element', MyPersonElement);
+window.customElements.define('gr-person-element', MyPersonElement);

@@ -28,7 +28,7 @@ class MyGalleryElement extends LitElement {
       </style>
         ${this.images.map((image, i, arr) => html`
         <div class="item">
-          <my-img-element
+          <gr-img-element
             host="${this.host}"
             handle="${image.ref}"
             token="${this.token}"
@@ -38,7 +38,7 @@ class MyGalleryElement extends LitElement {
             .rect="${image.rect}"
             next="${arr[i + 1] ? arr[i + 1].ref : ''}"
             prev="${arr[i - 1] ? arr[i - 1].ref : ''}">
-          </my-img-element>
+          </gr-img-element>
         </div>
         `)}
       `
@@ -58,4 +58,4 @@ class MyGalleryElement extends LitElement {
 
 }
 
-window.customElements.define('my-gallery-element', MyGalleryElement);
+window.customElements.define('gr-gallery-element', MyGalleryElement);

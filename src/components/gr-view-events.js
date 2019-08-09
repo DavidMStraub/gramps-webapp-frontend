@@ -29,54 +29,46 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sort-column.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-selection-column.js';
 
-class MyViewPeople extends connect(store)(PageViewElement) {
+class MyViewEvents extends connect(store)(PageViewElement) {
   render() {
     return html`
       <section>
-        <vaadin-grid .items=${this._people} theme="row-dividers" multi-sort>
+        <vaadin-grid .items=${this._events} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
           <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
               <vaadin-grid-sorter path="gramps_id">ID</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/person/[[item.gramps_id]]"><div>[[item.gramps_id]]</div></a>
+              [[item.gramps_id]]
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="name_given" direction="asc">${_('Given name')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="date" direction="desc">${_('Date')}</vaadin-grid-sorter>
               <br>
-              <vaadin-grid-filter path="name_given"></vaadin-grid-filter>
+              <vaadin-grid-filter path="date"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/person/[[item.gramps_id]]"><div>[[item.name_given]]</div></a>
+              <a href="/event/[[item.handle]]"><div>[[item.date]]</div></a>
             </template>
           </vaadin-grid-column>
-          <vaadin-grid-column ?hidden="true">
+          <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="name_surname" direction="asc">${_('Surname')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="type">${_('Type')}</vaadin-grid-sorter>
+            </template>
+            <template>
+              [[item.type]]
+            </template>
+          </vaadin-grid-column>
+          <vaadin-grid-column>
+            <template class="header">
+              <vaadin-grid-sorter path="place_name">${_('Place')}</vaadin-grid-sorter>
               <br>
-              <vaadin-grid-filter path="name_surname"></vaadin-grid-filter>
+              <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/person/[[item.gramps_id]]"><div>[[item.name_surname]]</div></a>
-            </template>
-          </vaadin-grid-column>
-          <vaadin-grid-column ?hidden="${this._hidden}">
-            <template class="header">
-              <vaadin-grid-sorter path="birthdate">${_('Birth Date')}</vaadin-grid-sorter>
-            </template>
-            <template>
-              <a href="/person/[[item.gramps_id]]"><div>[[item.birthdate]]</div></a>
-            </template>
-          </vaadin-grid-column>
-          <vaadin-grid-column ?hidden="${this._hidden}">
-            <template class="header">
-              <vaadin-grid-sorter path="deathdate">${_('Death Date')}</vaadin-grid-sorter>
-            </template>
-            <template>
-              <a href="/person/[[item.gramps_id]]"><div>[[item.deathdate]]</div></a>
+              <a href="/place/[[item.place]]"><div>[[item.place_name]]</div></a>
             </template>
           </vaadin-grid-column>
         </vaadin-grid>
@@ -95,20 +87,25 @@ class MyViewPeople extends connect(store)(PageViewElement) {
   }
 
   static get properties() { return {
-    _people: { type: Object },
-    _hidden: { type: Boolean }
+    _events: { type: Object },
+    _hidden: { type: Boolean },
   }}
 
+  _get_place_name(state, event) {
+    if (event.place != undefined && event.place != '') {
+      event.place_name = state.api.places[event.place].name;
+    };
+    return event;
+  }
+
   stateChanged(state) {
-    this._people = Object.values(state.api.people);
-    this._hidden = !state.app.wideLayout;
+    this._events = Object.values(state.api.events).map((e) => this._get_place_name(state, e));
+    this._hidden = !store.getState().app.wideLayout;
   }
 
   firstUpdated() {
-    // const grid = this.shadowRoot.querySelector('vaadin-grid');
-    // grid.items = Object.values(store.getState().api.people);
   }
 
 }
 
-window.customElements.define('my-view-people', MyViewPeople);
+window.customElements.define('gr-view-events', MyViewEvents);

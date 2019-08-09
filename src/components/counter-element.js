@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { LitElement, html, css } from 'lit-element';
 
 // These are the elements needed by this element.
-import { plusIcon, minusIcon } from './my-icons.js';
+import { plusIcon, minusIcon } from './gr-icons.js';
 
 // These are the shared styles needed by this element.
 import { ButtonSharedStyles } from './button-shared-styles.js';

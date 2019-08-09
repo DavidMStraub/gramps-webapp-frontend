@@ -56,4 +56,4 @@ class MyChildrenElement extends LitElement {
 
 }
 
-window.customElements.define('my-children-element', MyChildrenElement);
+window.customElements.define('gr-children-element', MyChildrenElement);

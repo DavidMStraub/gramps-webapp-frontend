@@ -15,7 +15,7 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-import './my-img-element.js';
+import './gr-img-element.js';
 
 
 class MyPedigreeCard extends LitElement {
@@ -60,7 +60,7 @@ class MyPedigreeCard extends LitElement {
         <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'tree' : 'person/' + this.person.gramps_id}">
         <div class="photo">
           ${ this.person.media.length ? html`
-          <my-img-element
+          <gr-img-element
             token="${this.token}"
             host="${this.host}"
             handle="${this.person.media[0].ref}"
@@ -68,7 +68,7 @@ class MyPedigreeCard extends LitElement {
             circle square
             nolink
             .rect="${this.person.media[0].rect}">
-          </my-img-element>
+          </gr-img-element>
           ` : ''}
         </div>
         <span class="name">${this.person.name_surname},
@@ -113,4 +113,4 @@ class MyPedigreeCard extends LitElement {
 
 }
 
-window.customElements.define('my-pedigree-card', MyPedigreeCard);
+window.customElements.define('gr-pedigree-card', MyPedigreeCard);

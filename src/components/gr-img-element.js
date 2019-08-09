@@ -81,4 +81,4 @@ class MyImgElement extends LitElement {
 
 }
 
-window.customElements.define('my-img-element', MyImgElement);
+window.customElements.define('gr-img-element', MyImgElement);

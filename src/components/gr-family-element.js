@@ -11,11 +11,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { html, LitElement } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
 
-import './my-pedigree-card.js';
-import './my-children-element.js';
-import './my-person-element.js';
+import './gr-pedigree-card.js';
+import './gr-children-element.js';
+import './gr-person-element.js';
 
-import { ringsIcon } from './my-icons.js';
+import { ringsIcon } from './gr-icons.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -42,13 +42,13 @@ class MyFamilyElement extends connect(store)(LitElement) {
     this._children = this._family.children.map((gid) => state.api.people[gid]);
     return html`
       <div style="float:left;">
-        <my-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}" token="${this._token}"></my-pedigree-card>
+        <gr-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}" token="${this._token}"></gr-pedigree-card>
       </div>
       <span style="display:block;float:left;padding:0.8em 2em;text-align:center;">
       ${this._family.marriagedate ? html`${ringsIcon} ${this._family.marriagedate}` : ''} ${this._family.marriageplace ? html`<br>${_('in')} <a href="/place/${this._family.marriageplace}">${this._marriageplace_name}</a>`: ''}
       </span>
       <div style="float:left;">
-        <my-pedigree-card .person=${this._mother} width="200px" link="person" host="${this._host}" token="${this._token}"></my-pedigree-card>
+        <gr-pedigree-card .person=${this._mother} width="200px" link="person" host="${this._host}" token="${this._token}"></gr-pedigree-card>
       </div>
       </p>
       <div style="clear:left;">
@@ -56,7 +56,7 @@ class MyFamilyElement extends connect(store)(LitElement) {
       ${this._family.children.length > 0 ?
         html`
         <h3>${this.siblings ? _("Siblings") : _("Children")}</h3>
-        <my-children-element .items="${this._children}"></my-children-element>`
+        <gr-children-element .items="${this._children}"></gr-children-element>`
         : '' }
     `
     }
@@ -100,4 +100,4 @@ class MyFamilyElement extends connect(store)(LitElement) {
 
 }
 
-window.customElements.define('my-family-element', MyFamilyElement);
+window.customElements.define('gr-family-element', MyFamilyElement);

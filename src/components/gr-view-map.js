@@ -23,8 +23,8 @@ import { store } from '../store.js';
 
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 
-import './my-leaflet-map.js';
-import './my-leaflet-map-marker.js';
+import './gr-leaflet-map.js';
+import './gr-leaflet-map-marker.js';
 
 
 class MyViewMap extends connect(store)(PageViewElement) {
@@ -61,7 +61,7 @@ class MyViewMap extends connect(store)(PageViewElement) {
         @value-changed="${this._valueChange}"
         ></vaadin-combo-box>
       </div>
-      <my-leaflet-map
+      <gr-leaflet-map
         height="100vh"
         width="100%"
         latitude="${center[0]}"
@@ -70,25 +70,25 @@ class MyViewMap extends connect(store)(PageViewElement) {
         mapid="map-mapview"
       >
       ${this._selected ? html`
-        <my-leaflet-map-marker
+        <gr-leaflet-map-marker
           latitude="${this._places[this._selected].geolocation[0]}"
           longitude="${this._places[this._selected].geolocation[1]}"
           popup="<a href='place/${this._places[this._selected].gramps_id}'>${this._places[this._selected].name}</a>"
         >
-        </my-leaflet-map-marker>
+        </gr-leaflet-map-marker>
         ` : this.sortValues(this._places).map(function (p) {
         if (p.geolocation && p.geolocation[0]) {
             return html`
-            <my-leaflet-map-marker
+            <gr-leaflet-map-marker
               latitude="${p.geolocation[0]}"
               longitude="${p.geolocation[1]}"
               popup="<a href='place/${p.gramps_id}'>${p.name}</a>"
             >
-            </my-leaflet-map-marker>
+            </gr-leaflet-map-marker>
             `
           }
       })}
-      </my-leaflet-map>
+      </gr-leaflet-map>
     `
   }
 
@@ -170,4 +170,4 @@ class MyViewMap extends connect(store)(PageViewElement) {
 
 }
 
-window.customElements.define('my-view-map', MyViewMap);
+window.customElements.define('gr-view-map', MyViewMap);

@@ -21,7 +21,6 @@ import { translate as _ } from '../translate.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
-
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sorter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -29,11 +28,11 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sort-column.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-selection-column.js';
 
-class MyViewEvents extends connect(store)(PageViewElement) {
+class MyViewFamilies extends connect(store)(PageViewElement) {
   render() {
     return html`
       <section>
-        <vaadin-grid .items=${this._events} theme="row-dividers" multi-sort>
+        <vaadin-grid .items=${this._families} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
           <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
@@ -45,30 +44,30 @@ class MyViewEvents extends connect(store)(PageViewElement) {
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="date" direction="desc">${_('Date')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="father_name" direction="asc">${_('Father')}</vaadin-grid-sorter>
               <br>
-              <vaadin-grid-filter path="date"></vaadin-grid-filter>
+              <vaadin-grid-filter path="father_name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/event/[[item.handle]]"><div>[[item.date]]</div></a>
+              <a href="/person/[[item.father_id]]"><div>[[item.father_name]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="type">${_('Type')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="mother_name">${_('Mother')}</vaadin-grid-sorter>
+              <br>
+              <vaadin-grid-filter path="mother_name"></vaadin-grid-filter>
             </template>
             <template>
-              [[item.type]]
+              <a href="/person/[[item.mother_id]]"><div>[[item.mother_name]]</div></a>
             </template>
           </vaadin-grid-column>
-          <vaadin-grid-column>
+          <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
-              <vaadin-grid-sorter path="place_name">${_('Place')}</vaadin-grid-sorter>
-              <br>
-              <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
+              <vaadin-grid-sorter path="marriagedate">${_('Marriage Date')}</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/place/[[item.place]]"><div>[[item.place_name]]</div></a>
+              [[item.marriagedate]]
             </template>
           </vaadin-grid-column>
         </vaadin-grid>
@@ -81,31 +80,21 @@ class MyViewEvents extends connect(store)(PageViewElement) {
       ]
   }
 
-  constructor() {
-    super();
-    this._hidden = false;
-  }
-
   static get properties() { return {
-    _events: { type: Object },
-    _hidden: { type: Boolean },
+    _families: { type: Object },
+    _hidden: { type: Boolean }
   }}
 
-  _get_place_name(state, event) {
-    if (event.place != undefined && event.place != '') {
-      event.place_name = state.api.places[event.place].name;
-    };
-    return event;
-  }
-
   stateChanged(state) {
-    this._events = Object.values(state.api.events).map((e) => this._get_place_name(state, e));
-    this._hidden = !store.getState().app.wideLayout;
+    this._families = Object.values(state.api.families);
+    this._hidden = !state.app.wideLayout;
   }
 
   firstUpdated() {
+    // const grid = this.shadowRoot.querySelector('vaadin-grid');
+    // grid.items = Object.values(store.getState().api.families);
   }
 
 }
 
-window.customElements.define('my-view-events', MyViewEvents);
+window.customElements.define('gr-view-families', MyViewFamilies);

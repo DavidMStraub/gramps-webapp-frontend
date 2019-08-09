@@ -28,46 +28,36 @@ import '@vaadin/vaadin-grid/vaadin-grid-filter-column.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sort-column.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-selection-column.js';
 
-class MyViewFamilies extends connect(store)(PageViewElement) {
+class MyViewPlaces extends connect(store)(PageViewElement) {
   render() {
     return html`
       <section>
-        <vaadin-grid .items=${this._families} theme="row-dividers" multi-sort>
+        <vaadin-grid .items=${this._places} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
           <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">
               <vaadin-grid-sorter path="gramps_id">ID</vaadin-grid-sorter>
             </template>
             <template>
-              [[item.gramps_id]]
+              <a href="/place/[[item.gramps_id]]"><div>[[item.gramps_id]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="father_name" direction="asc">${_('Father')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="name" direction="asc">${_('Name')}</vaadin-grid-sorter>
               <br>
-              <vaadin-grid-filter path="father_name"></vaadin-grid-filter>
+              <vaadin-grid-filter path="name"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/person/[[item.father_id]]"><div>[[item.father_name]]</div></a>
+              <a href="/place/[[item.gramps_id]]"><div>[[item.name]]</div></a>
             </template>
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="mother_name">${_('Mother')}</vaadin-grid-sorter>
-              <br>
-              <vaadin-grid-filter path="mother_name"></vaadin-grid-filter>
+              <vaadin-grid-sorter path="type_string">${_('Type')}</vaadin-grid-sorter>
             </template>
             <template>
-              <a href="/person/[[item.mother_id]]"><div>[[item.mother_name]]</div></a>
-            </template>
-          </vaadin-grid-column>
-          <vaadin-grid-column ?hidden="${this._hidden}">
-            <template class="header">
-              <vaadin-grid-sorter path="marriagedate">${_('Marriage Date')}</vaadin-grid-sorter>
-            </template>
-            <template>
-              [[item.marriagedate]]
+              [[item.type_string]]
             </template>
           </vaadin-grid-column>
         </vaadin-grid>
@@ -80,21 +70,24 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
       ]
   }
 
+  constructor() {
+    super();
+    this._hidden = false;
+  }
+
   static get properties() { return {
-    _families: { type: Object },
+    _places: { type: Object },
     _hidden: { type: Boolean }
   }}
 
   stateChanged(state) {
-    this._families = Object.values(state.api.families);
-    this._hidden = !state.app.wideLayout;
+    this._places = Object.values(state.api.places);
+    this._hidden = !store.getState().app.wideLayout;
   }
 
   firstUpdated() {
-    // const grid = this.shadowRoot.querySelector('vaadin-grid');
-    // grid.items = Object.values(store.getState().api.families);
   }
 
 }
 
-window.customElements.define('my-view-families', MyViewFamilies);
+window.customElements.define('gr-view-places', MyViewPlaces);

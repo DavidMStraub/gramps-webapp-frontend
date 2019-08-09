@@ -44,19 +44,19 @@ export const navigate = (path) => (dispatch) => {
 const loadPageId = (page, id) => (dispatch) => {
   switch(page) {
     case 'tree':
-      import('../components/my-view-tree.js').then((module) => {
+      import('../components/gr-view-tree.js').then((module) => {
       });
     case 'person':
       dispatch(activePerson(id));
-      import('../components/my-view-person.js').then((module) => {
+      import('../components/gr-view-person.js').then((module) => {
       });
       dispatch(activePerson(id));
     case 'event':
-      import('../components/my-view-event.js').then((module) => {
+      import('../components/gr-view-event.js').then((module) => {
       });
       dispatch(activeEvent(id));
     case 'place':
-      import('../components/my-view-place.js').then((module) => {
+      import('../components/gr-view-place.js').then((module) => {
       });
       dispatch(activePlace(id));
   }
@@ -67,35 +67,35 @@ const loadPageId = (page, id) => (dispatch) => {
 const loadPage = (page) => (dispatch) => {
   switch(page) {
     case 'dashboard':
-      import('../components/my-view-dashboard.js').then((module) => {
+      import('../components/gr-view-dashboard.js').then((module) => {
         // Put code in here that you want to run every time when
-        // navigating to dashboard after my-view-dashboard.js is loaded.
+        // navigating to dashboard after gr-view-dashboard.js is loaded.
       });
       break;
     case 'people':
-      import('../components/my-view-people.js');
+      import('../components/gr-view-people.js');
       break;
     case 'families':
-      import('../components/my-view-families.js');
+      import('../components/gr-view-families.js');
       break;
     case 'places':
-      import('../components/my-view-places.js');
+      import('../components/gr-view-places.js');
       break;
     case 'map':
-      import('../components/my-view-map.js');
+      import('../components/gr-view-map.js');
       break;
     case 'events':
-      import('../components/my-view-events.js');
+      import('../components/gr-view-events.js');
       break;
     case 'tree':
-      import('../components/my-view-tree.js');
+      import('../components/gr-view-tree.js');
       break;
     case 'person':
-      import('../components/my-view-person.js');
+      import('../components/gr-view-person.js');
       break;
     default:
       page = 'view404';
-      import('../components/my-view404.js');
+      import('../components/gr-view404.js');
   }
 
   dispatch(updatePage(page));

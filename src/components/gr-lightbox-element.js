@@ -15,7 +15,7 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-import { closeIcon } from './my-icons.js';
+import { closeIcon } from './gr-icons.js';
 
 
 class MyLightboxElement extends LitElement {
@@ -113,4 +113,4 @@ class MyLightboxElement extends LitElement {
 
 }
 
-window.customElements.define('my-lightbox-element', MyLightboxElement);
+window.customElements.define('gr-lightbox-element', MyLightboxElement);

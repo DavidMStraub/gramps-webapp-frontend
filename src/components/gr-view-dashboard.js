@@ -97,4 +97,4 @@ class MyViewDashboard extends connect(store)(PageViewElement) {
   }
 }
 
-window.customElements.define('my-view-dashboard', MyViewDashboard);
+window.customElements.define('gr-view-dashboard', MyViewDashboard);

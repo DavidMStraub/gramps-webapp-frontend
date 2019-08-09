@@ -10,9 +10,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { html } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
-import './my-family-element.js';
-import './my-events-element.js';
-import './my-gallery-element.js';
+import './gr-family-element.js';
+import './gr-events-element.js';
+import './gr-gallery-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -97,8 +97,8 @@ class MyViewEvent extends connect(store)(PageViewElement) {
         <p>${this._event.description}</p>
 
         ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
-        <my-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
-        </my-gallery-element>
+        <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
+        </gr-gallery-element>
 
       </section>
     `
@@ -170,4 +170,4 @@ class MyViewEvent extends connect(store)(PageViewElement) {
 
 }
 
-window.customElements.define('my-view-event', MyViewEvent);
+window.customElements.define('gr-view-event', MyViewEvent);

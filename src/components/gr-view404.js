@@ -34,4 +34,4 @@ class MyView404 extends PageViewElement {
   }
 }
 
-window.customElements.define('my-view404', MyView404);
+window.customElements.define('gr-view404', MyView404);

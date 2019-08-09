@@ -10,8 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 import { html, LitElement } from 'lit-element';
 import { PageViewElement } from './page-view-element.js';
-import './my-pedigree-element.js';
-import './my-pedigree-card.js';
+import './gr-pedigree-element.js';
+import './gr-pedigree-card.js';
 
 import '@polymer/paper-slider/paper-slider.js';
 
@@ -50,8 +50,8 @@ class MyViewTree extends connect(store)(PageViewElement) {
           </paper-slider>
         </div>
         <div style="transform: scale(${this._zoom}); transform-origin: top left;" id="pedigree-container">
-          <my-pedigree-element .depth="${this._depth}" id="pedigree">
-          </my-pedigree-element>
+          <gr-pedigree-element .depth="${this._depth}" id="pedigree">
+          </gr-pedigree-element>
         </div>
       </section>
     `
@@ -130,4 +130,4 @@ class MyViewTree extends connect(store)(PageViewElement) {
     }
 }
 
-window.customElements.define('my-view-tree', MyViewTree);
+window.customElements.define('gr-view-tree', MyViewTree);

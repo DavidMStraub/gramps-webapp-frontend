@@ -20,7 +20,7 @@ import { store } from '../store.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-import { chevronLeftIcon, chevronRightIcon } from './my-icons.js';
+import { chevronLeftIcon, chevronRightIcon } from './gr-icons.js';
 
 class MyMediaElement extends connect(store)(LitElement) {
   render() {
@@ -216,4 +216,4 @@ class MyMediaElement extends connect(store)(LitElement) {
 
 }
 
-window.customElements.define('my-media-element', MyMediaElement);
+window.customElements.define('gr-media-element', MyMediaElement);

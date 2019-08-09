@@ -71,4 +71,4 @@ class MyLeafletMap extends LitElement {
     }
 }
 
-window.customElements.define('my-leaflet-map', MyLeafletMap);
+window.customElements.define('gr-leaflet-map', MyLeafletMap);

@@ -13,11 +13,11 @@ import { PageViewElement } from './page-view-element.js';
 import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-badge/paper-badge.js';
-import './my-family-element.js';
-import './my-leaflet-map.js';
-import './my-leaflet-map-marker.js';
-import './my-events-element.js';
-import './my-gallery-element.js';
+import './gr-family-element.js';
+import './gr-leaflet-map.js';
+import './gr-leaflet-map-marker.js';
+import './gr-events-element.js';
+import './gr-gallery-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -120,12 +120,12 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         </table>
 
         ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
-        <my-gallery-element .images=${this._media} host="${this._host}" token="${this._token}">
-        </my-gallery-element>
+        <gr-gallery-element .images=${this._media} host="${this._host}" token="${this._token}">
+        </gr-gallery-element>
 
 
         ${(this._place.geolocation && this._place.geolocation[0]) ? html`<h3>${_("Map")}</h3>
-        <my-leaflet-map
+        <gr-leaflet-map
           width="100%"
           height="500px"
           latitude=${this._place.geolocation[0]}
@@ -133,12 +133,12 @@ class MyViewPlace extends connect(store)(PageViewElement) {
           zoom=13
           mapid="map-place"
         >
-          <my-leaflet-map-marker
+          <gr-leaflet-map-marker
             latitude=${this._place.geolocation[0]}
             longitude=${this._place.geolocation[1]}
           >
-          </my-leaflet-map-marker>
-        </my-leaflet-map>
+          </gr-leaflet-map-marker>
+        </gr-leaflet-map>
         ` : ''}
 
       </section>
@@ -219,4 +219,4 @@ class MyViewPlace extends connect(store)(PageViewElement) {
 
 }
 
-window.customElements.define('my-view-place', MyViewPlace);
+window.customElements.define('gr-view-place', MyViewPlace);
