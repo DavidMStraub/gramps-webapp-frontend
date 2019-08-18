@@ -79,7 +79,11 @@ class MyMediaElement extends connect(store)(LitElement) {
           }
         }
         </style>
-        <div class="media-container">
+        <div class="media-container"
+         style="transform: translateX(${this._translateX}px);"
+         @touchstart="${this._handleTouchStart}"
+         @touchmove="${this._handleTouchMove}"
+         @touchend="${this._handleTouchEnd}">
           <div class="inner-container">
             <img src="${this._host}/api/media/${this.handle}?jwt=${this._token}">
             </img>
@@ -136,16 +140,42 @@ class MyMediaElement extends connect(store)(LitElement) {
         ]
     }
 
+    constructor() {
+      super();
+      this._translateX = 0;
+    }
+
     static get properties() { return {
       media: { type: Object },
       handle: { type: String },
       _rect: { type: Object },
       _prev: { type: String },
-      _next: { type: String }
+      _next: { type: String },
+      _translateX: { type: Number }
     }}
 
     firstUpdated() {
       window.addEventListener('keydown', this._escHandler.bind(this));
+    }
+
+    _handleTouchStart(e) {
+      this._touchStartX = e.touches[0].pageX;
+      this._touchMoveX = this._touchStartX;
+    }
+
+    _handleTouchMove(e) {
+      this._touchMoveX = e.touches[0].pageX;
+      this._translateX = this._touchMoveX - this._touchStartX;
+    }
+
+    _handleTouchEnd(e) {
+      this._translateX = 0;
+      let movedX = this._touchMoveX - this._touchStartX;
+      if (movedX < -10  && this._next != '') {
+        this._handle_right();
+      } else if (movedX > 10 && this._prev != '') {
+        this._handle_left();
+      }
     }
 
     _escHandler(e) {
