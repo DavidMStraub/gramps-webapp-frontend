@@ -4,8 +4,8 @@
   "description": "Progressive web app for genealogical research, based on the Gramps project",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#3f51b5",
-  "background_color": "#3f51b5",
+  "theme_color": "#5D4037",
+  "background_color": "#5D4037",
   "icons": [
     {
       "src": "images/manifest/icon-192x192.png",
