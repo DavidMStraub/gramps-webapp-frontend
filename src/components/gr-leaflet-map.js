@@ -53,10 +53,10 @@ class MyLeafletMap extends LitElement {
     firstUpdated() {
       var mapel = this.shadowRoot.querySelector('#' + this.mapid);
       this._map = new Map(mapel, {zoomControl: false}).setView([this.latitude, this.longitude], this.zoom);
-      new TileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-        maxZoom: 17,
-        zoomControl: false,
-        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+      new TileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
+        attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+        maxZoom: 19,
+        zoomControl: false
       }).addTo(this._map);
       this._map.addControl(control.zoom({ position: 'bottomright' }));
       this._map.invalidateSize(false);
