@@ -165,6 +165,7 @@ class MyApp extends connect(store)(LitElement) {
         background-color: var(--app-header-background-color);
         color: var(--app-header-text-color);
         border-bottom: 1px solid #eee;
+        z-index: 3;
       }
 
       .toolbar-top {
@@ -178,17 +179,12 @@ class MyApp extends connect(store)(LitElement) {
       }
 
       .menu-btn {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background-color: #ffffff;
+        background: none;
         border: none;
-        border-radius: 5px;
         fill: var(--app-header-text-color);
         cursor: pointer;
         height: 44px;
         width: 44px;
-        z-index: 3;
       }
 
 
@@ -246,7 +242,7 @@ class MyApp extends connect(store)(LitElement) {
 
       .main-content {
         min-height: 100vh;
-
+        padding-top: 48px;
       }
 
       .page {
@@ -289,6 +285,10 @@ class MyApp extends connect(store)(LitElement) {
           margin-left: var(--app-drawer-width);
         }
 
+        .main-content {
+          padding-top: 0;
+        }
+  
         [main-title] {
           margin-right: 0;
         }
@@ -299,7 +299,11 @@ class MyApp extends connect(store)(LitElement) {
     </style>
 
     <!-- Header -->
-    <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}" style="display: ${this._drawerOpened ? 'none' : 'inline'};">${menuIcon}</button>
+    <app-header condenses reveals effects="waterfall" style="display: ${this._drawerOpened ? 'none' : 'initial'};">
+      <app-toolbar class="toolbar-top">
+        <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
+      </app-toolbar>
+    </app-header>
 
     <!-- Drawer content -->
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"

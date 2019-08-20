@@ -21,6 +21,10 @@ import { translate as _ } from '../translate.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
+import { updateDrawerState } from '../actions/app.js';
+
+import { menuIcon } from './gr-icons.js';
+
 import '@vaadin/vaadin-combo-box/vaadin-combo-box.js';
 
 import './gr-leaflet-map.js';
@@ -37,9 +41,8 @@ class MyViewMap extends connect(store)(PageViewElement) {
       <style>
       #searchbox {
         position: absolute;
-        top: 20px;
-        left: ${this._drawer ? html`276px` : html`80px`};
         float: left;
+        top: 72px;
         z-index: 1;
       }
       :host {
@@ -49,17 +52,28 @@ class MyViewMap extends connect(store)(PageViewElement) {
         color: red;
         font-weight: normal !important;
       }
-      :host(.mapsearch) [part="value"] {
-        color: red;
-        background-color:green;
-        font-weight: normal !important;
+      #tiramisu {
+        margin-top: -48px;
+      }
+      @media (min-width: 768px) {
+        #tiramisu {
+          margin-top: 0;
+        }
+        #searchbox {
+          top: 20px;
+        }
       }
       </style>
-      <div id="searchbox">
+      <div id="tiramisu">
+      </div>
+      <div id="searchbox" style="
+      left: ${this._drawer ? '276px' : '20px'};
+      ">
         <vaadin-combo-box id="mapsearch" class="mapsearch"
-        placeholder="Filtern" item-label-path="name"
+        placeholder="${_("Filter")}" item-label-path="name"
         @value-changed="${this._valueChange}"
-        ></vaadin-combo-box>
+        >
+        </vaadin-combo-box>
       </div>
       <gr-leaflet-map
         height="100vh"
@@ -109,6 +123,10 @@ class MyViewMap extends connect(store)(PageViewElement) {
     _selected: {type: String},
     // _hidden: { type: Boolean }
   }}
+
+  _menuButtonClicked() {
+    store.dispatch(updateDrawerState(true));
+  }
 
   _valueChange(e) {
     let combobox = this.shadowRoot.querySelector('#mapsearch');

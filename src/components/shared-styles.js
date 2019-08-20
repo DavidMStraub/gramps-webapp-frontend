@@ -101,8 +101,7 @@ export const SharedStyles = css`
     position: absolute;
   }
   vaadin-grid {
-    height:calc(100vh - 48px - 32px);
-    margin-top: 32px;
+    height:calc(100vh - 48px);
   }
   @media (min-width: 768px) {
     vaadin-grid {
