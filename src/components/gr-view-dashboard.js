@@ -46,7 +46,7 @@ class MyViewDashboard extends connect(store)(PageViewElement) {
         font-weight: 500;
       }
       section.cards {
-        column-count: 3;
+        column-width: 300px;
         column-gap: 15px;
       }
       </style>
