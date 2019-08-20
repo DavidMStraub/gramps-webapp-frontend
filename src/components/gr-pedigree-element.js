@@ -93,7 +93,6 @@ class MyPedigreeElement extends connect(store)(LitElement) {
             "
             >
             </div>
-            `}
             <div
             class="branch-left ${p.gender === 1 ? 'male' : 'female'}"
             style="
@@ -105,6 +104,7 @@ class MyPedigreeElement extends connect(store)(LitElement) {
             "
             >
             </div>
+            `}
           </div>
         ` : '')}
       `)}
