@@ -4,6 +4,24 @@
 
 This is a javascript frontend for the Gramps web app built on [PWA Starter Kit](https://github.com/Polymer/pwa-starter-kit).
 
+For details see the [backend repository](https://github.com/DavidMStraub/gramps-webapp).
+
+
+
+## Get started
+
+After cloning the repository, run
+```
+npm install
+```
+to install dependencies and then 
+```
+npm start
+```
+to run the frontend locally.
+
+For details, see the [PWA Starter Kit docs](https://pwa-starter-kit.polymer-project.org/setup).
+
 ## Disclaimer
 
 This project is not part of the official [Gramps project](https://gramps-project.org/).
