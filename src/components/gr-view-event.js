@@ -58,11 +58,11 @@ class MyViewEvent extends connect(store)(PageViewElement) {
       </style>
       <section>
         <div id="title">
-          <h2>${this._event.type}
-          ${this._participants[_('Primary')] ? html`:
+          <h2>${this._event.type}:
+          ${this._participants[_('Primary')] ? html`
           ${this._participants[_('Primary')].map((p, i, arr) => this._participantLink(p, i==arr.length - 1))}
           ` : ''}
-          ${this._participants[_('Family')] ? html`:
+          ${this._participants[_('Family')] ? html`
           ${this._participants[_('Family')].map((p, i, arr) => this._participantLink(p, i==arr.length - 1))}
           ` : ''}
           </h2>
