@@ -341,6 +341,7 @@ class MyApp extends connect(store)(LitElement) {
       <gr-view-tree class="page" ?active="${this._page === 'tree'}"></gr-view-tree>
       <gr-view-event class="page" ?active="${this._page === 'event'}" id="gr-view-event"></gr-view-event>
       <gr-view-place class="page" ?active="${this._page === 'place'}" id="gr-view-place"></gr-view-place>
+      <gr-view-source class="page" ?active="${this._page === 'source'}" id="gr-view-source"></gr-view-source>
       <gr-view404 class="page" ?active="${this._page === 'view404'}"></gr-view404>
     </main>
 

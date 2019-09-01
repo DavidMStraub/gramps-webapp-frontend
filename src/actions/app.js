@@ -13,6 +13,7 @@ export const ACTIVE_PERSON = 'ACTIVE_PERSON';
 export const ACTIVE_MEDIA = 'ACTIVE_MEDIA';
 export const ACTIVE_EVENT = 'ACTIVE_EVENT';
 export const ACTIVE_PLACE = 'ACTIVE_PLACE';
+export const ACTIVE_SOURCE = 'ACTIVE_SOURCE';
 export const ACTIVE_PERSON_IF_EMPTY = 'ACTIVE_PERSON_IF_EMPTY';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const UPDATE_WIDE_LAYOUT = 'UPDATE_WIDE_LAYOUT';
@@ -60,7 +61,11 @@ const loadPageId = (page, id) => (dispatch) => {
       import('../components/gr-view-place.js').then((module) => {
       });
       dispatch(activePlace(id));
-  }
+    case 'source':
+      import('../components/gr-view-source.js').then((module) => {
+      });
+      dispatch(activeSource(id));
+    }
   dispatch(updatePage(page));
   window.scrollTo(0, 0);
 }
@@ -129,6 +134,13 @@ export const activeEvent = (id) => {
 export const activePlace = (id) => {
   return {
     type: ACTIVE_PLACE,
+    id
+  };
+};
+
+export const activeSource = (id) => {
+  return {
+    type: ACTIVE_SOURCE,
     id
   };
 };

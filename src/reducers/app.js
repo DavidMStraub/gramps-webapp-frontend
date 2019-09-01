@@ -13,6 +13,7 @@ import {
   ACTIVE_PERSON,
   ACTIVE_EVENT,
   ACTIVE_PLACE,
+  ACTIVE_SOURCE,
   ACTIVE_MEDIA,
   HOST,
   ACTIVE_PERSON_IF_EMPTY,
@@ -56,6 +57,11 @@ const app = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         activePlace: action.id
+      };
+    case ACTIVE_SOURCE:
+      return {
+        ...state,
+        activeSource: action.id
       };
     case ACTIVE_MEDIA:
       return {

@@ -24,6 +24,8 @@ class MyGalleryElement extends LitElement {
       <style>
       div.item {
         float:left; margin:5px;
+        height: 200px;
+        width: 200px;
       }
       </style>
         ${this.images.map((image, i, arr) => html`
