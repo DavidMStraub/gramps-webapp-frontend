@@ -45,7 +45,7 @@ class MyViewEvents extends connect(store)(PageViewElement) {
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="date" direction="desc">${_('Date')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="date_sortval" direction="desc">${_('Date')}</vaadin-grid-sorter>
               <br>
               <vaadin-grid-filter path="date"></vaadin-grid-filter>
             </template>
