@@ -157,6 +157,10 @@ class MyApp extends connect(store)(LitElement) {
         --app-drawer-selected-color: var(--app-light-text-color);
       }
 
+      .app-drawer-content {
+        background-color: var(--app-drawer-background-color);
+      }
+
       app-header {
         position: fixed;
         top: 0;
@@ -309,23 +313,25 @@ class MyApp extends connect(store)(LitElement) {
     <!-- Drawer content -->
     <app-drawer .opened="${this._drawerOpened}" .persistent="${this._wideLayout}"
         @opened-changed="${this._drawerOpenedChanged}" style="z-index:9999;">
-      <nav class="drawer-list">
-        <a ?selected="${this._page === 'dashboard'}" href="/dashboard">${homeIcon} ${_('Home Page')}</a>
-        <hr>
-        <a ?selected="${this._page === 'people'}" href="/people">${accountIcon} ${_('People')}</a>
-        <a ?selected="${this._page === 'families'}" href="/families">${familyIcon} ${_('Families')}</a>
-        <a ?selected="${this._page === 'events'}" href="/events">${calendarIcon} ${_('Events')}</a>
-        <a ?selected="${this._page === 'sources'}" href="/sources">${bookIcon} ${_('Sources')}</a>
-        <a ?selected="${this._page === 'places'}" href="/places">${placeIcon} ${_('Places')}</a>
-        <a ?selected="${this._page === 'map'}" href="/map">${mapIcon} ${_('Map')}</a>
-        <hr>
-        <span class="activePerson"><span class="link" @click="${this._setMainPersonActive}">${homeAccountIcon}</span> ${this._activePerson ? this._activePerson.name_surname +  ',': ''}
-        ${this._activePerson ? this._activePerson.name_given: ''}</span>
-        <a ?selected="${this._page === 'person'}" href="/person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
-        <a ?selected="${this._page === 'tree'}" href="/tree">${pedigreeIcon} ${_('Family Tree')}</a>
-        <hr>
-        <span class="button link" @click="${this._logout}">${logoutIcon}</span>
-      </nav>
+      <div class="app-drawer-content" style="height: 100%; overflow: auto;">
+        <nav class="drawer-list">
+          <a ?selected="${this._page === 'dashboard'}" href="/dashboard">${homeIcon} ${_('Home Page')}</a>
+          <hr>
+          <a ?selected="${this._page === 'people'}" href="/people">${accountIcon} ${_('People')}</a>
+          <a ?selected="${this._page === 'families'}" href="/families">${familyIcon} ${_('Families')}</a>
+          <a ?selected="${this._page === 'events'}" href="/events">${calendarIcon} ${_('Events')}</a>
+          <a ?selected="${this._page === 'sources'}" href="/sources">${bookIcon} ${_('Sources')}</a>
+          <a ?selected="${this._page === 'places'}" href="/places">${placeIcon} ${_('Places')}</a>
+          <a ?selected="${this._page === 'map'}" href="/map">${mapIcon} ${_('Map')}</a>
+          <hr>
+          <span class="activePerson"><span class="link" @click="${this._setMainPersonActive}">${homeAccountIcon}</span> ${this._activePerson ? this._activePerson.name_surname +  ',': ''}
+          ${this._activePerson ? this._activePerson.name_given: ''}</span>
+          <a ?selected="${this._page === 'person'}" href="/person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
+          <a ?selected="${this._page === 'tree'}" href="/tree">${pedigreeIcon} ${_('Family Tree')}</a>
+          <hr>
+          <span class="button link" @click="${this._logout}">${logoutIcon}</span>
+        </nav>
+      </div>
     </app-drawer>
 
     <!-- Main content -->
