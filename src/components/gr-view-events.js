@@ -63,12 +63,12 @@ class MyViewEvents extends connect(store)(PageViewElement) {
           </vaadin-grid-column>
           <vaadin-grid-column>
             <template class="header">
-              <vaadin-grid-sorter path="place_name">${_('Place')}</vaadin-grid-sorter>
+              <vaadin-grid-sorter path="primary_participants">${_('Participants')}</vaadin-grid-sorter>
               <br>
-              <vaadin-grid-filter path="place_name"></vaadin-grid-filter>
+              <vaadin-grid-filter path="primary_participants"></vaadin-grid-filter>
             </template>
             <template>
-              <a href="/place/[[item.place]]"><div>[[item.place_name]]</div></a>
+              [[item.primary_participants]]
             </template>
           </vaadin-grid-column>
         </vaadin-grid>
@@ -91,15 +91,31 @@ class MyViewEvents extends connect(store)(PageViewElement) {
     _hidden: { type: Boolean },
   }}
 
-  _get_place_name(state, event) {
-    if (event.place != undefined && event.place != '') {
-      event.place_name = state.api.places[event.place].name;
-    };
+  _get_event_participants(state, event) {
+    if (event.participants != undefined && event.participants[_("Primary")] != undefined) {
+      var p_people = event.participants[_("Primary")].map(function(p, index) {
+        if (p.type == 'Person') {
+          return(state.api.people[p.gramps_id].name_given + ' ' + state.api.people[p.gramps_id].name_surname);
+        }
+      }).join(', ');
+    } else {
+      var p_people = ''
+    }
+    if (event.participants != undefined && event.participants[_("Family")] != undefined) {
+      var p_families = event.participants[_("Family")].map(function(p, index) {
+        if (p.type == 'Family') {
+          return(state.api.families[p.gramps_id].father_name + ', ' + state.api.families[p.gramps_id].mother_name);
+        }
+      }).join(', ');
+    } else {
+      var p_families = ''
+    }
+    event.primary_participants =  p_people + p_families;
     return event;
   }
 
   stateChanged(state) {
-    this._events = Object.values(state.api.events).map((e) => this._get_place_name(state, e));
+    this._events = Object.values(state.api.events).map((e) => this._get_event_participants(state, e));
     this._hidden = !store.getState().app.wideLayout;
   }
 
