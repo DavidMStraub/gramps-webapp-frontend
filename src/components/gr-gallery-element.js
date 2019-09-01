@@ -41,6 +41,7 @@ class MyGalleryElement extends LitElement {
           </gr-img-element>
         </div>
         `)}
+      <div style="clear:left;"></div>
       `
     }
 
