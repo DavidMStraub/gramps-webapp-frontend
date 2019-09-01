@@ -65,7 +65,8 @@ import {
   placeIcon,
   calendarIcon,
   homeAccountIcon,
-  logoutIcon
+  logoutIcon,
+  bookIcon
 } from './gr-icons.js';
 
 import { SharedStyles } from './shared-styles.js';
@@ -314,6 +315,7 @@ class MyApp extends connect(store)(LitElement) {
         <a ?selected="${this._page === 'people'}" href="/people">${accountIcon} ${_('People')}</a>
         <a ?selected="${this._page === 'families'}" href="/families">${familyIcon} ${_('Families')}</a>
         <a ?selected="${this._page === 'events'}" href="/events">${calendarIcon} ${_('Events')}</a>
+        <a ?selected="${this._page === 'sources'}" href="/sources">${bookIcon} ${_('Sources')}</a>
         <a ?selected="${this._page === 'places'}" href="/places">${placeIcon} ${_('Places')}</a>
         <a ?selected="${this._page === 'map'}" href="/map">${mapIcon} ${_('Map')}</a>
         <hr>
@@ -333,6 +335,7 @@ class MyApp extends connect(store)(LitElement) {
       <gr-view-person class="page" ?active="${this._page === 'person'}" id="gr-view-person"></gr-view-person>
       <gr-view-families class="page" ?active="${this._page === 'families'}"></gr-view-families>
       <gr-view-events class="page" ?active="${this._page === 'events'}"></gr-view-events>
+      <gr-view-sources class="page" ?active="${this._page === 'sources'}"></gr-view-sources>
       <gr-view-places class="page" ?active="${this._page === 'places'}"></gr-view-places>
       <gr-view-map class="page" ?active="${this._page === 'map'}"></gr-view-map>
       <gr-view-tree class="page" ?active="${this._page === 'tree'}"></gr-view-tree>

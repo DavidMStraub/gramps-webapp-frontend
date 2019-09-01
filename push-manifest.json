@@ -52,6 +52,11 @@
       "type": "script",
       "weight": 1
     },
+    "src/components/gr-view-sources.js": {
+      "crossorigin": "anonymous",
+      "type": "script",
+      "weight": 1
+    },
     "src/components/gr-view-map.js": {
       "crossorigin": "anonymous",
       "type": "script",

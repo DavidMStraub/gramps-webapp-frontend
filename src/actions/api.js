@@ -137,7 +137,10 @@ const _strings = [
   "Building",
   "Number",
   "Number of generations:",
-  "Zoom"
+  "Zoom",
+  "Author",
+  "Publication info",
+  "Sources"
 ]
 
 export const loadStrings = (host) => async (dispatch) => {

@@ -16,6 +16,9 @@ const INITIAL_STATE = {
   families: {},
   events: {},
   places: {},
+  citations: {},
+  sources: {},
+  repositories: {},
   strings: {},
   dbinfo: {},
   token: ''
@@ -37,6 +40,9 @@ const api = (state = INITIAL_STATE, action) => {
         places: action.tree.places,
         families: action.tree.families,
         events: action.tree.events,
+        citations: action.tree.citations,
+        sources: action.tree.sources,
+        repositories: action.tree.repositories,
         dbinfo: action.tree.dbinfo,
       };
     case STRINGS:

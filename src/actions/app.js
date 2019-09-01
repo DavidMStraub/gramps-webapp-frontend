@@ -82,6 +82,9 @@ const loadPage = (page) => (dispatch) => {
     case 'places':
       import('../components/gr-view-places.js');
       break;
+    case 'sources':
+      import('../components/gr-view-sources.js');
+      break;
     case 'map':
       import('../components/gr-view-map.js');
       break;
