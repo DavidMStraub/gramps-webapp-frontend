@@ -140,7 +140,12 @@ const _strings = [
   "Zoom",
   "Author",
   "Publication info",
-  "Sources"
+  "Source",
+  "Sources",
+  "Citation",
+  "Citations",
+  "Repository",
+  "Repositories",
 ]
 
 export const loadStrings = (host) => async (dispatch) => {

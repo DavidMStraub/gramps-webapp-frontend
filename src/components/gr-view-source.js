@@ -70,6 +70,12 @@ class MyViewSource extends connect(store)(PageViewElement) {
               <td>${this._source.pubinfo}</td>
             </tr>
           `}
+          ${this._source.repositories == '' ? '' : html`
+            <tr>
+              <th>${_("Repositories")}</th>
+              <td>${this._repositories.join(', ')}</td>
+            </tr>
+          `}
         </table>
 
 
@@ -102,7 +108,6 @@ class MyViewSource extends connect(store)(PageViewElement) {
       _media: { type: Object },
     }}
 
-
     firstUpdated() {
     }
 
@@ -114,6 +119,7 @@ class MyViewSource extends connect(store)(PageViewElement) {
       if (this._source != undefined) {
         this._media = this._source.media;
       }
+      this._repositories = this._source.repositories.map(repo => state.api.repositories[repo].title);
     }
 
 }
