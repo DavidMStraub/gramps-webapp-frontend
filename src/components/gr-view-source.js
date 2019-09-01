@@ -118,8 +118,8 @@ class MyViewSource extends connect(store)(PageViewElement) {
       this._source = state.api.sources[this._gramps_id];
       if (this._source != undefined) {
         this._media = this._source.media;
-      }
-      this._repositories = this._source.repositories.map(repo => state.api.repositories[repo].title);
+        this._repositories = this._source.repositories.map(repo => state.api.repositories[repo].title);
+       }
     }
 
 }

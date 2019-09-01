@@ -13,6 +13,7 @@ import { PageViewElement } from './page-view-element.js';
 import './gr-family-element.js';
 import './gr-events-element.js';
 import './gr-gallery-element.js';
+import './gr-citations-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -100,6 +101,11 @@ class MyViewEvent extends connect(store)(PageViewElement) {
         <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
         </gr-gallery-element>
 
+        ${this._citations.length ? html`<h3>${_("Sources")}</h3>` : ''}
+        <gr-citations-element .citations=${this._citations}>
+        </gr-citations-element>
+
+
       </section>
     `
     }
@@ -155,6 +161,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           this._event.place_name = state.api.places[this._event.place].name;
         }
         this._media = this._event.media;
+        this._citations = this._event.citations;
         this._participants = Object.assign({}, this._event.participants);
         Object.keys(this._participants).map((role) => {
           this._participants[role] = this._participants[role].map(function(p) {
