@@ -17,8 +17,10 @@ import './gr-family-element.js';
 import './gr-events-element.js';
 import './gr-img-element.js';
 import './gr-gallery-element.js';
+import './gr-citations-element.js';
 
-import { asteriskIcon, crossIcon, ringsIcon } from './gr-icons.js';
+
+import { asteriskIcon, crossIcon } from './gr-icons.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -121,8 +123,9 @@ class MyViewPerson extends connect(store)(PageViewElement) {
           <paper-tab>${_("Parents")}</paper-tab>
           <paper-tab>${_("Families")}</paper-tab>
           <paper-tab><div style="display:inline-block"><span>${_("Gallery")}</span>${this._media.length ?
-            html` <paper-badge label="${this._media.length}"></paper-badge></div>
-          ` : ''}</paper-tab>
+            html` <paper-badge label="${this._media.length}"></paper-badge>
+          ` : ''}</div></paper-tab>
+          <paper-tab>${_("Sources")}</paper-tab>
         </paper-tabs>
         </div>
       </section>
@@ -146,11 +149,17 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         father
         mother></gr-family-element>`) : '' }
       </section>
+
       <section  ?hidden=${this._selected != 3}>
       <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
       </gr-gallery-element>
       </section>
-    `
+
+      <section  ?hidden=${this._selected != 4}>
+      <gr-citations-element .citations=${this._citations}>
+      </gr-citations-element>
+        </section>
+      `
     }
 
     static get styles() {
@@ -222,6 +231,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
           this._person.deathplace_name = state.api.places[this._person.deathplace].name;
         }
         this._media = this._person.media;
+        this._citations = this._person.citations;
       }
     }
 

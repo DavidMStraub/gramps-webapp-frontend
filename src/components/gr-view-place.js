@@ -18,6 +18,7 @@ import './gr-leaflet-map.js';
 import './gr-leaflet-map-marker.js';
 import './gr-events-element.js';
 import './gr-gallery-element.js';
+import './gr-citations-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 

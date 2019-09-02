@@ -36,7 +36,7 @@ class MyCitationsElement extends connect(store)(LitElement) {
           }
           return html`
         <ul>
-          <li>${citation.page}</li>
+          <li>${citation.page ? citation.page : _("Citation")}</li>
         </ul>
         `})}
       </li>`)}
