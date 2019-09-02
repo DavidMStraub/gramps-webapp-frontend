@@ -23,9 +23,10 @@ import { SharedStyles } from './shared-styles.js';
 
 class MyCitationsElement extends connect(store)(LitElement) {
   render() {
-    if (this._citations == undefined || !this._sources) {
-        return html``;
-    }
+    let state = store.getState();
+    this._citations = this.citations.map(c => state.api.citations[c]);
+    this._sources = this.citations.map(c => state.api.sources[state.api.citations[c].source]);
+    this._sources = [...new Set(this._sources)];  // eliminate duplicates
     return html`
     <ul>
       ${this._sources.map(source => html`
@@ -54,15 +55,9 @@ class MyCitationsElement extends connect(store)(LitElement) {
   }
 
   static get properties() { return {
-    citations: { type: Array },
-    _sources: { type: Array }
+    citations: { type: Array }
   }}
 
-  stateChanged(state) {
-    this._citations = this.citations.map(c => state.api.citations[c]);
-    this._sources = this.citations.map(c => state.api.sources[state.api.citations[c].source]);
-    this._sources = [...new Set(this._sources)];  // eliminate duplicates
-  }
 }
 
 window.customElements.define('gr-citations-element', MyCitationsElement);
