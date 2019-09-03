@@ -324,7 +324,9 @@ class MyApp extends connect(store)(LitElement) {
           <a ?selected="${this._page === 'places'}" href="/places">${placeIcon} ${_('Places')}</a>
           <a ?selected="${this._page === 'map'}" href="/map">${mapIcon} ${_('Map')}</a>
           <hr>
-          <span class="activePerson"><span class="link" @click="${this._setMainPersonActive}">${homeAccountIcon}</span> ${this._activePerson ? this._activePerson.name_surname +  ',': ''}
+          <span class="activePerson">${this._mainPerson ? html`<span class="link" @click="${this._setMainPersonActive}">${homeAccountIcon}</span>
+          ` : ''}
+          ${this._activePerson ? this._activePerson.name_surname +  ',': ''}
           ${this._activePerson ? this._activePerson.name_given: ''}</span>
           <a ?selected="${this._page === 'person'}" href="/person/${this._activePerson.gramps_id}">${personDetailIcon} ${_('Details')}</a>
           <a ?selected="${this._page === 'tree'}" href="/tree">${pedigreeIcon} ${_('Family Tree')}</a>
