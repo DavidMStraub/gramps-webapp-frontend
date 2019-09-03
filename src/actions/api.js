@@ -46,7 +46,12 @@ export const loadTree = (host, token) => async (dispatch) => {
     })
     .then(data => {
       dispatch(getTree(data));
-      dispatch(activePersonIfEmpty(data.dbinfo.default_person));
+      if (data.dbinfo.default_person != '') {
+        dispatch(activePersonIfEmpty(data.dbinfo.default_person));
+      } else {
+        let first_person = Object.keys(data.people)[0];
+        dispatch(activePersonIfEmpty(data.people[first_person].gramps_id));
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -145,7 +150,7 @@ const _strings = [
   "Citation",
   "Citations",
   "Repository",
-  "Repositories",
+  "Repositories"
 ]
 
 export const loadStrings = (host) => async (dispatch) => {
