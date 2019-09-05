@@ -38,7 +38,7 @@ class MyNoteElement extends connect(store)(LitElement) {
     }
     return html`
       <h4>${_("Note")} ${this.grampsid}</h4>
-      <p>${this._note.content}</p>
+      <p id="note-content"></p>
       `
   }
 
@@ -83,6 +83,7 @@ class MyNoteElement extends connect(store)(LitElement) {
     }
     if (state.api.notes != undefined && state.api.notes[this.grampsid] != undefined) {
       this._note = state.api.notes[this.grampsid];
+      this.shadowRoot.getElementById("note-content").innerHTML = this._note.content;
     }
   }
 }
