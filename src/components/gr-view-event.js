@@ -14,6 +14,7 @@ import './gr-family-element.js';
 import './gr-events-element.js';
 import './gr-gallery-element.js';
 import './gr-citations-element.js';
+import './gr-note-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 

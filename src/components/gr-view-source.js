@@ -14,6 +14,7 @@ import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-badge/paper-badge.js';
 import './gr-gallery-element.js';
+import './gr-note-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -83,7 +84,14 @@ class MyViewSource extends connect(store)(PageViewElement) {
         <gr-gallery-element .images=${this._media} host="${this._host}" token="${this._token}">
         </gr-gallery-element>
 
-      </section>
+
+        ${this._notes.length ? html`<h3>${_("Notes")}</h3>` : ''}
+        ${this._notes.map(n => html`
+        <gr-note-element grampsid=${n}>
+        </gr-note-element>
+        `)}
+
+        </section>
 
     `
     }
@@ -118,6 +126,7 @@ class MyViewSource extends connect(store)(PageViewElement) {
       this._source = state.api.sources[this._gramps_id];
       if (this._source != undefined) {
         this._media = this._source.media;
+        this._notes = this._source.notes;
         this._repositories = this._source.repositories.map(repo => state.api.repositories[repo].title);
        }
     }
