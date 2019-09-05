@@ -32,8 +32,11 @@ const devCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const MY_KEY = 'gramps_webapp'
 
 export const saveState = (state) => {
-  let stringifiedState = JSON.stringify(state);
-  localStorage.setItem(MY_KEY, stringifiedState);
+  if (state.api != undefined) {
+    let reduced_state = {app: state.app, api: {token: state.api.token}};
+    let stringifiedState = JSON.stringify(reduced_state);
+    localStorage.setItem(MY_KEY, stringifiedState);
+  }
 }
 export const loadState = () => {
   let json = localStorage.getItem(MY_KEY) || '{}';
@@ -51,13 +54,13 @@ export const loadState = () => {
 
 export const store = createStore(
   state => state,
-//  loadState(),  // If there is local storage data, load it.
+  loadState(),  // If there is local storage data, load it.
   compose(lazyReducerEnhancer(combineReducers), applyMiddleware(thunk)),
 );
 
 // This subscriber writes to local storage anytime the state updates.
 store.subscribe(() => {
-//  saveState(store.getState());
+  saveState(store.getState());
 });
 
 

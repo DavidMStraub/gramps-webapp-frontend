@@ -473,12 +473,13 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    if (state.api.token && !this._token) {
+    this._token = state.api.token;
+    if (this._token && !this._loaded) {
       this._loadData(state.app.host, state.api.token);
     }
-    this._token = state.api.token;
     if (!this._loaded) {
       if ('api' in state
+          && 'people' in state.api
           && Object.keys(state.api.people).length
           && Object.keys(state.api.families).length
           && Object.keys(state.api.events).length
@@ -489,17 +490,20 @@ class MyApp extends connect(store)(LitElement) {
         this._loaded = false;
       }
     }
-    this._page = state.app.page;
-    this._offline = state.app.offline;
-    this._snackbarOpened = state.app.snackbarOpened;
-    this._drawerOpened = state.app.drawerOpened;
-    this._lightboxOpened = state.app.lightboxOpened;
-    this._wideLayout = state.app.wideLayout;
-    this._people = state.api.people;
-    this._activeMedium = state.app.activeMedium;
-    this._activePerson = state.api.people[state.app.activePerson];
-    this._activeEvent = state.api.people[state.app.activeEvent];
-    this._mainPerson = state.api.dbinfo.default_person;
+    if (this._loaded) {
+      this._token = state.api.token;
+      this._page = state.app.page;
+      this._offline = state.app.offline;
+      this._snackbarOpened = state.app.snackbarOpened;
+      this._drawerOpened = state.app.drawerOpened;
+      this._lightboxOpened = state.app.lightboxOpened;
+      this._wideLayout = state.app.wideLayout;
+      this._people = state.api.people;
+      this._activeMedium = state.app.activeMedium;
+      this._activePerson = state.api.people[state.app.activePerson];
+      this._activeEvent = state.api.people[state.app.activeEvent];
+      this._mainPerson = state.api.dbinfo.default_person;
+    }
   }
 }
 
