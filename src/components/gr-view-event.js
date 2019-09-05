@@ -101,6 +101,12 @@ class MyViewEvent extends connect(store)(PageViewElement) {
         <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
         </gr-gallery-element>
 
+        ${this._notes.length ? html`<h3>${_("Notes")}</h3>` : ''}
+        ${this._notes.map(n => html`
+        <gr-note-element grampsid=${n}>
+        </gr-note-element>
+        `)}
+
         ${this._citations.length ? html`<h3>${_("Sources")}</h3>` : ''}
         <gr-citations-element .citations=${this._citations}>
         </gr-citations-element>
@@ -126,7 +132,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
       _handle: { type: String },
       _token: { type: String },
       _host: { type: String },
-      _media: { type: Object },
+      _media: { type: Object }
     }}
 
     firstUpdated() {
@@ -162,6 +168,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
         }
         this._media = this._event.media;
         this._citations = this._event.citations;
+        this._notes = this._event.notes;
         this._participants = Object.assign({}, this._event.participants);
         Object.keys(this._participants).map((role) => {
           this._participants[role] = this._participants[role].map(function(p) {

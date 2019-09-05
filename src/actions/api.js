@@ -1,10 +1,43 @@
 
 export const TREE = 'TREE';
+export const NOTE = 'NOTE';
 export const STRINGS = 'STRINGS';
 export const TOKEN = 'TOKEN';
 export const LOGOUT = 'LOGOUT';
 
 import { activePersonIfEmpty } from './app.js'
+
+
+
+export const loadNote = (host, token, id) => async (dispatch) => {
+  fetch(host + `/api/note/` + id, {
+        method: 'GET',
+        headers: {
+          //'Accept': 'application/json',
+          //'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        }
+      })
+    .then(resp => {
+      var respStatus = resp.status;
+      if (respStatus == 401) {
+        dispatch(logout());
+      }
+      if (respStatus != 200) {
+        return {"gramps_id": id, "content": "error"};
+      }
+      return resp.json();
+    })
+    .then(data => {
+      return data;
+    })
+    .then(data => {
+      dispatch(getNote(data));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
 
 
 export const getAuthToken = (host, password) => async (dispatch) => {
@@ -70,6 +103,14 @@ const getTree = (data) => {
   return {
     type: TREE,
     tree: data
+  };
+};
+
+
+const getNote = (data) => {
+  return {
+    type: NOTE,
+    note: data
   };
 };
 
@@ -150,7 +191,9 @@ const _strings = [
   "Citation",
   "Citations",
   "Repository",
-  "Repositories"
+  "Repositories",
+  "Note",
+  "Notes"
 ]
 
 export const loadStrings = (host) => async (dispatch) => {

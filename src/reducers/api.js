@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { TREE, STRINGS, TOKEN, LOGOUT } from '../actions/api.js';
+import { TREE, NOTE, STRINGS, TOKEN, LOGOUT } from '../actions/api.js';
 
 
 const INITIAL_STATE = {
@@ -21,6 +21,7 @@ const INITIAL_STATE = {
   repositories: {},
   strings: {},
   dbinfo: {},
+  notes: {},
   token: ''
 };
 
@@ -31,6 +32,14 @@ const api = (state = INITIAL_STATE, action) => {
         ...state,
         token: action.token
       };
+    case NOTE:
+      return {
+        ...state,
+        notes: {
+          ...state.notes,
+          [action.note.gramps_id]: action.note
+        }
+      }
     case LOGOUT:
       return INITIAL_STATE;
     case TREE:

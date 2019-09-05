@@ -31,7 +31,7 @@ export const SharedStyles = css`
     background: var(--app-section-even-color);
   }
 
-  h2, h3 {
+  h2, h3, h4 {
     text-align: left;
     font-weight: 400;
     color: var(--app-dark-text-color);
@@ -43,6 +43,10 @@ export const SharedStyles = css`
 
   h3 {
     font-size: 20px;
+  }
+
+  h3 {
+    font-size: 16px;
   }
 
   a:link, a:visited, a:hover, a:active {
@@ -57,6 +61,9 @@ export const SharedStyles = css`
     }
     h3 {
       font-size: 28px;
+    }
+    h4 {
+      font-size: 20px;
     }
   }
 

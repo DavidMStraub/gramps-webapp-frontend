@@ -19,6 +19,7 @@ import './gr-leaflet-map-marker.js';
 import './gr-events-element.js';
 import './gr-gallery-element.js';
 import './gr-citations-element.js';
+import './gr-note-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -142,10 +143,16 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         </gr-leaflet-map>
         ` : ''}
 
+        ${this._notes.length ? html`<h3>${_("Notes")}</h3>` : ''}
+        ${this._notes.map(n => html`
+        <gr-note-element grampsid=${n}>
+        </gr-note-element>
+        `)}
+
         ${this._citations.length ? html`<h3>${_("Sources")}</h3>` : ''}
         <gr-citations-element .citations=${this._citations}>
         </gr-citations-element>
-
+        
       </section>
 
     `
@@ -218,6 +225,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
         this._media = this._place.media;
         this._hierarchy = this._place._hierarchy;
         this._citations = this._place.citations;
+        this._notes = this._place.notes;
       }
       // this._events = Object.values(state.api.events).filter((e) => e.place == this._gramps_id);
       // this._events = this._events.map((e) => this._get_place_name(state, e));
