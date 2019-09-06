@@ -98,7 +98,6 @@ class MyViewSources extends connect(store)(PageViewElement) {
       }
       return s;
     })
-    console.log(this._sources);
     this._hidden = !store.getState().app.wideLayout;
   }
 

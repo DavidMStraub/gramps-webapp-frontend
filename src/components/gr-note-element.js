@@ -43,6 +43,10 @@ class MyNoteElement extends connect(store)(LitElement) {
     }
     return html`
       <style>
+      paper-card {
+        margin: 10px 0px;
+        width: 100%;
+      }
       .card-content p {
         margin: 1em 0;
       }

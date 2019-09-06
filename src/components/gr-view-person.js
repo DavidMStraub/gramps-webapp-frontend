@@ -16,6 +16,7 @@ import '@polymer/paper-badge/paper-badge.js';
 import './gr-family-element.js';
 import './gr-events-element.js';
 import './gr-img-element.js';
+import './gr-note-element.js';
 import './gr-gallery-element.js';
 import './gr-citations-element.js';
 
@@ -125,6 +126,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
           <paper-tab><div style="display:inline-block"><span>${_("Gallery")}</span>${this._media.length ?
             html` <paper-badge label="${this._media.length}"></paper-badge>
           ` : ''}</div></paper-tab>
+          <paper-tab>${_("Notes")}</paper-tab>
           <paper-tab>${_("Sources")}</paper-tab>
         </paper-tabs>
         </div>
@@ -155,10 +157,19 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       </gr-gallery-element>
       </section>
 
+      </section>
+
       <section  ?hidden=${this._selected != 4}>
+      ${this._notes.map(n => html`
+      <gr-note-element grampsid=${n}>
+      </gr-note-element>
+      `)}
+      </section>
+
+      <section  ?hidden=${this._selected != 5}>
       <gr-citations-element .citations=${this._citations}>
       </gr-citations-element>
-        </section>
+      </section>
       `
     }
 
@@ -232,6 +243,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         }
         this._media = this._person.media;
         this._citations = this._person.citations;
+        this._notes = this._person.notes;
       }
     }
 
