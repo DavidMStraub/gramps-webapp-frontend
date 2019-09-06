@@ -87,7 +87,10 @@ class MyNoteElement extends connect(store)(LitElement) {
     }
     if (state.api.notes != undefined && state.api.notes[this.grampsid] != undefined) {
       this._note = state.api.notes[this.grampsid];
-      this.shadowRoot.getElementById("note-content").innerHTML = this._note.content;
+      let noteContent = this.shadowRoot.getElementById("note-content")
+      if (noteContent !=  undefined) {
+        noteContent.innerHTML = this._note.content;
+      }
     }
   }
 }
