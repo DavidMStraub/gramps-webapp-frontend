@@ -21,6 +21,8 @@ import { translate as _ } from '../translate.js';
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
+import { paperclipIcon } from './gr-icons.js';
+
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid.js';
 import '@vaadin/vaadin-grid/theme/material/vaadin-grid-sorter.js';
 import '@vaadin/vaadin-grid/vaadin-grid-filter.js';
@@ -60,6 +62,13 @@ class MyViewSources extends connect(store)(PageViewElement) {
               [[item.author]]
             </template>
           </vaadin-grid-column>
+          <vaadin-grid-column ?hidden="${this._hidden}">
+          <template>
+            <template is="dom-if" if="[[item.has_attachment]]">
+              ${paperclipIcon}
+            </template>
+          </template>
+          </vaadin-grid-column>
         </vaadin-grid>
     `
   }
@@ -82,6 +91,14 @@ class MyViewSources extends connect(store)(PageViewElement) {
 
   stateChanged(state) {
     this._sources = Object.values(state.api.sources);
+    this._sources = this._sources.map(function(s) {
+      s.has_attachment = false;
+      if (s.media.length > 0  || s.notes.length > 0) {
+        s.has_attachment = true;
+      }
+      return s;
+    })
+    console.log(this._sources);
     this._hidden = !store.getState().app.wideLayout;
   }
 
