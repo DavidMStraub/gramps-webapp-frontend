@@ -33,7 +33,7 @@ class MyViewDashboard extends connect(store)(PageViewElement) {
       paper-card {
         width: 100%;
         margin-bottom: 15px;
-      }
+      }    
       .card-content h3 {
         margin: 0em 0em 0.75em 0em;
         line-height: 1em;

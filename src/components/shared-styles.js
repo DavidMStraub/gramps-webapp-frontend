@@ -33,26 +33,35 @@ export const SharedStyles = css`
 
   h2, h3, h4 {
     text-align: left;
-    font-weight: 400;
     color: var(--app-dark-text-color);
   }
 
   h2 {
     font-size: 24px;
+    font-weight: 300;
   }
 
   h3 {
     font-size: 20px;
+    font-weight: 400;
   }
 
-  h3 {
+  h4 {
     font-size: 16px;
+    font-weight: 400;
+    margin: 0.67em 0;
   }
 
   a:link, a:visited, a:hover, a:active {
     color: var(--app-dark-text-color);
     text-decoration:none;
     outline: none;
+  }
+
+  paper-card {
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
   }
 
   @media (min-width: 460px) {
@@ -63,7 +72,7 @@ export const SharedStyles = css`
       font-size: 28px;
     }
     h4 {
-      font-size: 20px;
+      font-size: 18px;
     }
   }
 

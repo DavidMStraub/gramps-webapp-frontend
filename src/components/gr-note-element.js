@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 import { html, LitElement } from 'lit-element';
 import { loadNote } from '../actions/api.js';
 
+import '@polymer/paper-card/paper-card.js';
+
 import { translate as _ } from '../translate.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
@@ -26,7 +28,6 @@ class MyNoteElement extends connect(store)(LitElement) {
   render() {
     if (this._note == undefined) {
       return html`
-      <h4>${_("Note")} ${this.grampsid}</h4>
       <p>Loading ...</p>
       `
     }
@@ -37,8 +38,11 @@ class MyNoteElement extends connect(store)(LitElement) {
       `
     }
     return html`
-      <h4>${_("Note")} ${this.grampsid}</h4>
-      <p id="note-content"></p>
+      <paper-card>
+        <div class="card-content">
+          <div id="note-content"></div>
+        </div>
+      </paper-card>
       `
   }
 
