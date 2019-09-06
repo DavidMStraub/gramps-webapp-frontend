@@ -38,6 +38,17 @@ class MyNoteElement extends connect(store)(LitElement) {
       `
     }
     return html`
+      <style>
+      .card-content p {
+        margin: 1em 0;
+      }
+      .card-content p:first-child {
+        margin-top: 0;
+      }
+      .card-content p:last-child {
+        margin-bottom: 0;
+      }
+      </style>
       <paper-card>
         <div class="card-content">
           <div id="note-content"></div>
