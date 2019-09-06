@@ -23,6 +23,7 @@ import { store } from '../store.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
+import { documentIcon } from './gr-icons.js';
 
 class MyNoteElement extends connect(store)(LitElement) {
   render() {
@@ -33,8 +34,11 @@ class MyNoteElement extends connect(store)(LitElement) {
     }
     if (this._note.content == "error") {
       return html`
-      <h4>${_("Note")} ${this.grampsid}</h4>
-      <p>Error. <a class="link" @click="${this._reloadNote}">Reload</a></p>
+      <paper-card>
+        <div class="card-content">
+        <p>Error. <a class="link" @click="${this._reloadNote}">Reload</a></p>
+        </div>
+      </paper-card>
       `
     }
     return html`
@@ -48,9 +52,33 @@ class MyNoteElement extends connect(store)(LitElement) {
       .card-content p:last-child {
         margin-bottom: 0;
       }
+      .handle {
+        font-size: 0.8em;
+        background-color: rgba(0, 0, 0, 0.05);
+        padding: 0.3em 0.5em;
+        margin: 0 0.3em;
+        border-radius: 0.5em;
+        font-weight: 500;
+        color: rgba(0, 0, 0, 0.4);
+      }
+      .note-head {
+        margin-bottom: 1em;
+      }
+      .note-head svg {
+        height: 1.5em;
+        top: .42em;
+        position: relative;
+      }
+      .note-head svg path {
+        fill: rgba(0, 0, 0, 0.35);
+      }
       </style>
       <paper-card>
         <div class="card-content">
+          <div class="note-head">
+            ${documentIcon}
+            <span class="handle">${this.grampsid}</span>
+          </div>
           <div id="note-content"></div>
         </div>
       </paper-card>
