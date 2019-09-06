@@ -393,6 +393,7 @@ class MyApp extends connect(store)(LitElement) {
     this._loaded = false;
     this._lightboxOpened = false;
     this._token = '';
+    this._loadDispatched = false;
   }
 
   firstUpdated() {
@@ -414,6 +415,7 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   _loadData(host, token) {
+    this._loadDispatched = true;
     store.dispatch(loadTree(host, token));
     store.dispatch(loadStrings(host));
   }
@@ -474,7 +476,7 @@ class MyApp extends connect(store)(LitElement) {
 
   stateChanged(state) {
     this._token = state.api.token;
-    if (this._token && !this._loaded) {
+    if (this._token && !this._loaded  && !this._loadDispatched) {
       this._loadData(state.app.host, state.api.token);
     }
     if (!this._loaded) {
