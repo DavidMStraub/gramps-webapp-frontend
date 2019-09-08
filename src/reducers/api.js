@@ -19,6 +19,7 @@ const INITIAL_STATE = {
   citations: {},
   sources: {},
   repositories: {},
+  media: {},
   strings: {},
   dbinfo: {},
   notes: {},
@@ -52,6 +53,7 @@ const api = (state = INITIAL_STATE, action) => {
         citations: action.tree.citations,
         sources: action.tree.sources,
         repositories: action.tree.repositories,
+        media: action.tree.media,
         dbinfo: action.tree.dbinfo,
       };
     case STRINGS:
