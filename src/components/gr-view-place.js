@@ -121,7 +121,7 @@ class MyViewPlace extends connect(store)(PageViewElement) {
           })}
         </table>
 
-        ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
+        ${this._media.length ? html`<h3>${_("Media")}</h3>` : ''}
         <gr-gallery-element .images=${this._media} host="${this._host}" token="${this._token}">
         </gr-gallery-element>
 
@@ -216,13 +216,20 @@ class MyViewPlace extends connect(store)(PageViewElement) {
     //   return event;
     // }
 
+    _addMimeType(mhandles, state) {
+      return mhandles.map(function(mobj) {
+        mobj.mime = state.api.media[mobj.ref].mime;
+        return mobj;
+      })
+    }
+
     stateChanged(state) {
       this._host = state.app.host;
       this._token = state.api.token;
       this._gramps_id = state.app.activePlace;
       this._place = state.api.places[this._gramps_id];
       if (this._place != undefined) {
-        this._media = this._place.media;
+        this._media = this._addMimeType(this._place.media, state);
         this._hierarchy = this._place._hierarchy;
         this._citations = this._place.citations;
         this._notes = this._place.notes;

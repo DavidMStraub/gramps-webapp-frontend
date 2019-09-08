@@ -98,7 +98,7 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           </p>
         <p>${this._event.description}</p>
 
-        ${this._media.length ? html`<h3>${_("Gallery")}</h3>` : ''}
+        ${this._media.length ? html`<h3>${_("Media")}</h3>` : ''}
         <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
         </gr-gallery-element>
 
@@ -157,6 +157,13 @@ class MyViewEvent extends connect(store)(PageViewElement) {
       }
     }
 
+    _addMimeType(mhandles, state) {
+      return mhandles.map(function(mobj) {
+        mobj.mime = state.api.media[mobj.ref].mime;
+        return mobj;
+      })
+    }
+
     stateChanged(state) {
       this._host = state.app.host;
       this._token = state.api.token;
@@ -167,7 +174,10 @@ class MyViewEvent extends connect(store)(PageViewElement) {
         if (this._event.place != '' && state.api.places[this._event.place] != undefined) {
           this._event.place_name = state.api.places[this._event.place].name;
         }
-        this._media = this._event.media;
+        this._media = this._addMimeType(this._event.media, state);
+        Object.keys(this._media).map((mref) => {
+          this._media[mref].mime = state.api.media[mref].mime;
+        });
         this._citations = this._event.citations;
         this._notes = this._event.notes;
         this._participants = Object.assign({}, this._event.participants);

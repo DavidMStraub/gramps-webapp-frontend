@@ -36,6 +36,7 @@ class MyGalleryElement extends LitElement {
             host="${this.host}"
             handle="${image.ref}"
             token="${this.token}"
+            mime="${image.mime}"
             .handles="${this.images.map((image) => image.ref)}"
             size="200"
             square
@@ -44,7 +45,7 @@ class MyGalleryElement extends LitElement {
             prev="${arr[i - 1] ? arr[i - 1].ref : ''}">
           </gr-img-element>
         </div>
-        `)}
+      `)}
       <div style="clear:left;"></div>
       `
     }

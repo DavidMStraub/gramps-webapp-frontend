@@ -193,7 +193,8 @@ const _strings = [
   "Repository",
   "Repositories",
   "Note",
-  "Notes"
+  "Notes",
+  "Media"
 ]
 
 export const loadStrings = (host) => async (dispatch) => {

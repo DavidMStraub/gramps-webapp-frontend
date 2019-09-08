@@ -15,9 +15,38 @@ import { translate as _ } from '../translate.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
+import { fileIcon, filePdfIcon } from './gr-icons.js';
+
+
 class MyImgElement extends LitElement {
   render() {
-    if (this.rect == undefined) {
+    if (!this.mime.startsWith('image/')) {
+       var img = html`
+      <style>
+      div.file {
+        background-color: #ebebeb;
+        text-align: center;
+      }
+      div.file svg {
+        height: 70%;
+        width: 70%;
+        top: 15%;
+      }
+      div.file svg path {
+        fill: rgba(0, 0, 0, 0.1);
+      }
+      </style>
+      <div  
+        class="file"
+        style="width:${this.size}px;height:${this.size}px;"
+      >${this.mime == 'application/pdf' ? filePdfIcon : fileIcon}</div>
+    `;
+      return html`<a
+        mimetype="${this.mime}"
+        href="${this.host}/api/media/${this.handle}?jwt=${this.token}"
+        target="_blank"
+      >${img}</a>`;
+    } else if (this.rect == undefined) {
       var img = html`
       <img
       srcset="${this.host}/api/thumbnail/${this.handle}/${this.size}?jwt=${this.token},
@@ -76,7 +105,8 @@ class MyImgElement extends LitElement {
       circle: { type: Boolean },
       square: { type: Boolean },
       nolink: { type: Boolean },
-      host: {type: String}
+      host: {type: String},
+      mime: {type: String}
     }}
 
 }

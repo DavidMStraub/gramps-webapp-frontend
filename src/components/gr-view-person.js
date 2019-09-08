@@ -123,7 +123,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
           <paper-tab>${_("Events")}</paper-tab>
           <paper-tab>${_("Parents")}</paper-tab>
           <paper-tab>${_("Families")}</paper-tab>
-          <paper-tab><div style="display:inline-block"><span>${_("Gallery")}</span>${this._media.length ?
+          <paper-tab><div style="display:inline-block"><span>${_("Media")}</span>${this._media.length ?
             html` <paper-badge label="${this._media.length}"></paper-badge>
           ` : ''}</div></paper-tab>
           <paper-tab>${_("Notes")}</paper-tab>
@@ -217,6 +217,13 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       return event;
     }
 
+    _addMimeType(mhandles, state) {
+      return mhandles.map(function(mobj) {
+        mobj.mime = state.api.media[mobj.ref].mime;
+        return mobj;
+      })
+    }
+
     stateChanged(state) {
       this._host = state.app.host;
       this._token = state.api.token;
@@ -241,7 +248,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         if (this._person.deathplace != '') {
           this._person.deathplace_name = state.api.places[this._person.deathplace].name;
         }
-        this._media = this._person.media;
+        this._media = this._addMimeType(this._person.media, state);
         this._citations = this._person.citations;
         this._notes = this._person.notes;
       }
