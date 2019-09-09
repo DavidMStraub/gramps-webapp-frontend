@@ -79,7 +79,6 @@ class MyViewSource extends connect(store)(PageViewElement) {
           `}
         </table>
 
-
         ${this._media.length ? html`<h3>${_("Media")}</h3>` : ''}
         <gr-gallery-element .images=${this._media} host="${this._host}" token="${this._token}">
         </gr-gallery-element>

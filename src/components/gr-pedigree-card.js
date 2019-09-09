@@ -59,7 +59,7 @@ class MyPedigreeCard extends LitElement {
         <div class="card ${this.person.gender === 1 ? 'male' : 'female'}" style="width: ${this.width};">
         <a @click="${this._personSelected}" href="${this.link  === 'pedigree' ? 'tree' : 'person/' + this.person.gramps_id}">
         <div class="photo">
-          ${ this.person.media.length ? html`
+          ${this.person.media.length ? html`
           <gr-img-element
             token="${this.token}"
             host="${this.host}"

@@ -20,7 +20,7 @@ import { fileIcon, filePdfIcon } from './gr-icons.js';
 
 class MyImgElement extends LitElement {
   render() {
-    if (!this.mime.startsWith('image/')) {
+    if (!this.mime.startsWith('image/') && this.mime != '') {
        var img = html`
       <style>
       div.file {
@@ -86,6 +86,7 @@ class MyImgElement extends LitElement {
       super();
       this.nolink = false;
       this.handles = Array();
+      this.mime = '';
     }
 
     _lightbox_handle() {
