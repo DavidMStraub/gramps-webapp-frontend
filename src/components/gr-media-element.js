@@ -20,7 +20,14 @@ import { store } from '../store.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-import { chevronLeftIcon, chevronRightIcon } from './gr-icons.js';
+import {
+  chevronLeftIcon,
+  chevronRightIcon,
+  fileIcon,
+  filePdfIcon
+} from './gr-icons.js';
+
+
 
 class MyMediaElement extends connect(store)(LitElement) {
   render() {
@@ -44,6 +51,10 @@ class MyMediaElement extends connect(store)(LitElement) {
           display: inline-block;
           max-height: 100vh;
           max-width: 100vw;
+          color: rgba(255, 255, 255, 0.8);
+        }
+        div.inner-container a {
+          color: rgba(255, 255, 255, 0.8);
         }
         div.rect {
           position:absolute;
@@ -69,6 +80,18 @@ class MyMediaElement extends connect(store)(LitElement) {
           max-width:100vw;
           max-height:100vh;
         }
+        div.file {
+          background-color: rgba(255, 255, 255, 0.1);
+          text-align: center;
+        }
+        div.file svg {
+          height: 70%;
+          width: 70%;
+          top: 15%;
+        }
+        div.file svg path {
+          fill: rgba(0, 0, 0, 0.1);
+        }  
         @media (hover: hover) {
           div.rect div.label {
             display: none;
@@ -105,14 +128,22 @@ class MyMediaElement extends connect(store)(LitElement) {
               </a>
             `})}
           ` : html`
-          Download: <a
-           mimetype="${this._mime}"
+          <a
+            mimetype="${this._mime}"
            href="${this._host}/api/media/${this.handle}?jwt=${this._token}"
            target="_blank"
-          >${this._mime}</a>
-          `}
+          >
+          <div  
+              class="file"
+              style="width:50vh;height:50vh;"
+            >${this._mime == 'application/pdf' ? filePdfIcon : fileIcon}
+            </div>
+            <br>
+            ${_("Download")}
+            </a>
+            `}
+            </div>
           </div>
-        </div>
         ${this._prev ? html`
           <div class="arrow" style="left: 10vw;top: 50vh;">
             <span @click="${this._handle_left}" class="link">${chevronLeftIcon}</span>
