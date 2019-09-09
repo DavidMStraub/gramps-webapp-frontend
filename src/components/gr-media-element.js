@@ -85,6 +85,7 @@ class MyMediaElement extends connect(store)(LitElement) {
          @touchmove="${this._handleTouchMove}"
          @touchend="${this._handleTouchEnd}">
           <div class="inner-container">
+            ${this._mime.startsWith('picture/') ? html`
             <img src="${this._host}/api/media/${this.handle}?jwt=${this._token}">
             </img>
             ${this._rect.map(function(item)  {
@@ -103,6 +104,13 @@ class MyMediaElement extends connect(store)(LitElement) {
               </div>
               </a>
             `})}
+          ` : html`
+          Download: <a
+           mimetype="${this._mime}"
+           href="${this._host}/api/media/${this.handle}?jwt=${this._token}"
+           target="_blank"
+          >${this._mime}</a>
+          `}
           </div>
         </div>
         ${this._prev ? html`
@@ -151,7 +159,8 @@ class MyMediaElement extends connect(store)(LitElement) {
       _rect: { type: Object },
       _prev: { type: String },
       _next: { type: String },
-      _translateX: { type: Number }
+      _translateX: { type: Number },
+      _mime: { type: String }
     }}
 
     firstUpdated() {
@@ -220,7 +229,8 @@ class MyMediaElement extends connect(store)(LitElement) {
       this._token = state.api.token;
       if (state.app.activeMedia != undefined) {
         this.media = state.app.activeMedia.media;
-        this.handle = state.app.activeMedia.selected
+        this.handle = state.app.activeMedia.selected;
+        this._mime = state.api.media[this.handle].mime;
         var _prev = '';
         var _next = '';
         var _handle = this.handle

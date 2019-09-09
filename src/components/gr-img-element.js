@@ -41,11 +41,6 @@ class MyImgElement extends LitElement {
         style="width:${this.size}px;height:${this.size}px;"
       >${this.mime == 'application/pdf' ? filePdfIcon : fileIcon}</div>
     `;
-      return html`<a
-        mimetype="${this.mime}"
-        href="${this.host}/api/media/${this.handle}?jwt=${this.token}"
-        target="_blank"
-      >${img}</a>`;
     } else if (this.rect == undefined) {
       var img = html`
       <img
