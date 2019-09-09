@@ -92,6 +92,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
             token="${this._token}"
             host="${this._host}"
             handle="${this._media[0].ref}"
+            mime="${this._media[0].mime}"
             size="200"
             circle square
             .rect="${this._media[0].rect}">
@@ -119,6 +120,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         <paper-tabs
           autoselect
           .selected="${this._selected}"
+          scrollable
           @iron-activate="${this._handleSelected}">
           <paper-tab>${_("Events")}</paper-tab>
           <paper-tab>${_("Parents")}</paper-tab>
