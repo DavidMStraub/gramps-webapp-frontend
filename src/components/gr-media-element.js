@@ -23,8 +23,7 @@ import { SharedStyles } from './shared-styles.js';
 import {
   chevronLeftIcon,
   chevronRightIcon,
-  fileIcon,
-  filePdfIcon
+  fileIcon
 } from './gr-icons.js';
 
 
@@ -111,12 +110,12 @@ class MyMediaElement extends connect(store)(LitElement) {
             </div>
         </div>
         ${this._prev ? html`
-          <div class="arrow" style="left: 10vw;top: 50vh;">
+          <div class="arrow" style="left: 5vw;top: 50vh;">
             <span @click="${this._handle_left}" class="link">${chevronLeftIcon}</span>
           </div>
           ` : ''}
         ${this._next ? html`
-          <div class="arrow" style="right: 10vw;top: 50vh;">
+          <div class="arrow" style="right: 5vw;top: 50vh;">
             <span @click="${this._handle_right}" class="link">${chevronRightIcon}</span>
           </div>
           ` : ''}
@@ -144,7 +143,13 @@ class MyMediaElement extends connect(store)(LitElement) {
     }
 
     _innerContainerContent_pdf() {
-      return this._innerContainerContent_file();
+      return html`
+          <embed
+            src="${this._host}/api/media/${this.handle}?jwt=${this._token}"
+            type="application/pdf"
+            style="width: 80vw; height: 90vh;"
+          >
+          </embed>`
     }
 
     _innerContainerContent_file(mime) {
