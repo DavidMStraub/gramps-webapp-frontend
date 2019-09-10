@@ -20,7 +20,7 @@ import { fileIcon, filePdfIcon } from './gr-icons.js';
 
 class MyImgElement extends LitElement {
   render() {
-    if (!this.mime.startsWith('image/') && this.mime != '') {
+    if (!this.mime.startsWith('image/') && this.mime != '' && this.mime != 'application/pdf') {
        var img = html`
       <style>
       div.file {

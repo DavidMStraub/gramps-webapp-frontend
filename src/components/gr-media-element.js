@@ -32,7 +32,6 @@ import {
 class MyMediaElement extends connect(store)(LitElement) {
   render() {
       if (this.media) {
-        var _boundCloseLightbox = this._closeLightbox;
         return html`
         <style>
         div.media-container {
@@ -107,43 +106,10 @@ class MyMediaElement extends connect(store)(LitElement) {
          @touchstart="${this._handleTouchStart}"
          @touchmove="${this._handleTouchMove}"
          @touchend="${this._handleTouchEnd}">
-          <div class="inner-container">
-            ${this._mime.startsWith('picture/') ? html`
-            <img src="${this._host}/api/media/${this.handle}?jwt=${this._token}">
-            </img>
-            ${this._rect.map(function(item)  {
-              if (!item.rect) {
-                return '';
-              }
-              let left = item.rect[0];
-              let top = item.rect[1];
-              let width = item.rect[2] - item.rect[0];
-              let height = item.rect[3] - item.rect[1];
-              return html`
-              <a href="person/${item.gramps_id}" @click="${_boundCloseLightbox}">
-              <div class="rect"
-                style="left:${left}%;top:${top}%;width:${width}%;height:${height}%;">
-                <div class="label">${item.name_given} ${item.name_surname}</div>
-              </div>
-              </a>
-            `})}
-          ` : html`
-          <a
-            mimetype="${this._mime}"
-           href="${this._host}/api/media/${this.handle}?jwt=${this._token}"
-           target="_blank"
-          >
-          <div  
-              class="file"
-              style="width:50vh;height:50vh;"
-            >${this._mime == 'application/pdf' ? filePdfIcon : fileIcon}
+            <div class="inner-container">
+              ${this._innerContainerContent(this._mime)}
             </div>
-            <br>
-            ${_("Download")}
-            </a>
-            `}
-            </div>
-          </div>
+        </div>
         ${this._prev ? html`
           <div class="arrow" style="left: 10vw;top: 50vh;">
             <span @click="${this._handle_left}" class="link">${chevronLeftIcon}</span>
@@ -158,7 +124,66 @@ class MyMediaElement extends connect(store)(LitElement) {
       } else {
         return html`<p>Media object not found!</p>`
       }
-  }
+    }
+
+    _innerContainerContent(mime) {
+      if (mime.startsWith('image/')) {
+        return this._innerContainerContent_image();
+      } else if (mime == 'application/pdf') {
+        return this._innerContainerContent_pdf();
+      } else {
+        return this._innerContainerContent_file(mime);
+      }
+    }
+
+    _innerContainerContent_image() {
+      return html`
+          <img src="${this._host}/api/media/${this.handle}?jwt=${this._token}">
+          </img>
+          ${this._personRectangles()}`
+    }
+
+    _innerContainerContent_pdf() {
+      return this._innerContainerContent_file();
+    }
+
+    _innerContainerContent_file(mime) {
+      return html`
+          <a
+           mimetype="${mime}"
+           href="${this._host}/api/media/${this.handle}?jwt=${this._token}"
+           target="_blank"
+          >
+          <div  
+              class="file"
+              style="width:50vh;height:50vh;"
+            >${fileIcon}
+          </div>
+          <br>
+          ${_("Download")}
+          </a>`
+    }
+
+    _personRectangles() {
+      var _boundCloseLightbox = this._closeLightbox;
+      return this._rect.map(function(item)  {
+        if (!item.rect) {
+          return '';
+        }
+        let left = item.rect[0];
+        let top = item.rect[1];
+        let width = item.rect[2] - item.rect[0];
+        let height = item.rect[3] - item.rect[1];
+        return html`
+        <a href="person/${item.gramps_id}" @click="${_boundCloseLightbox}">
+        <div class="rect"
+          style="left:${left}%;top:${top}%;width:${width}%;height:${height}%;">
+          <div class="label">${item.name_given} ${item.name_surname}</div>
+        </div>
+        </a>
+      `
+      });
+    }
 
     _handle_left() {
       this.dispatchEvent(new CustomEvent('media-selected',
