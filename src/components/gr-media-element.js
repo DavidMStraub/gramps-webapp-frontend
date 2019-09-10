@@ -144,12 +144,13 @@ class MyMediaElement extends connect(store)(LitElement) {
 
     _innerContainerContent_pdf() {
       return html`
-          <embed
-            src="${this._host}/api/media/${this.handle}?jwt=${this._token}"
+          <object
+            data="${this._host}/api/media/${this.handle}?jwt=${this._token}"
             type="application/pdf"
             style="width: 80vw; height: 90vh;"
           >
-          </embed>`
+            ${this._innerContainerContent_file('application/pdf')}
+          </object>`
     }
 
     _innerContainerContent_file(mime) {
