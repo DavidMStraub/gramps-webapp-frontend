@@ -289,10 +289,12 @@ class MyMediaElement extends connect(store)(LitElement) {
     stateChanged(state) {
       this._host = state.app.host;
       this._token = state.api.token;
-      if (state.app.activeMedia != undefined) {
+      if (state.app.activeMedia != undefined && state.api.media) {
         this.media = state.app.activeMedia.media;
         this.handle = state.app.activeMedia.selected;
-        this._mime = state.api.media[this.handle].mime;
+        if (this.handle in state.api.media) {
+          this._mime = state.api.media[this.handle].mime;
+        }
         var _prev = '';
         var _next = '';
         var _handle = this.handle
