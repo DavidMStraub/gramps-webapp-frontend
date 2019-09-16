@@ -104,7 +104,7 @@ class MyMediaElement extends connect(store)(LitElement) {
             display: block;
           }
         }
-        h5 {
+        .label {
           color: #777;
           font-size: 0.8em;
           font-weight: 500;
@@ -143,11 +143,11 @@ class MyMediaElement extends connect(store)(LitElement) {
             <div class="inner-container">
               ${this._innerContainerContent(this._mime)}
               <div class="meta-container">
-              <h5>${_("Description")}</h5>
+              <p class="label">${_("Description")}</p>
               <p>${this._desc}</p>
               
               ${this._date ? html`
-              <h5>${_("Date")}</h5>
+              <p class="label">${_("Date")}</p>
               <p>${this._date}</p>`
               : ''}
               

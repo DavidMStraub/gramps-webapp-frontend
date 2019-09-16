@@ -36,17 +36,17 @@ class MyCitationsElement extends connect(store)(LitElement) {
     this._sources = [...new Set(this._sources)];  // eliminate duplicates
     return html`
       <style>
-      h3 svg {
+      h4 svg {
         height: 1.6em;
         top: .46em;
         position: relative;
       }
-      h4 svg {
+      h5 svg {
         height: 2em;
         top: 0.6em;
         position: relative;
       }
-      h3 svg path, h4 svg path {
+      h4 svg path, h5 svg path {
         fill: rgba(0, 0, 0, 0.2);
       }
       .handle {
@@ -66,16 +66,16 @@ class MyCitationsElement extends connect(store)(LitElement) {
       }
       </style>
       ${this._sources.map(source => html`
-      <h3><a href="/source/${source.gramps_id}">${bookIcon} ${source.title}  <span style="font-size:0.5em;top:-0.4em;position:relative;"><span class="handle">${source.gramps_id}</span></span></a>
+      <h4><a href="/source/${source.gramps_id}">${bookIcon} ${source.title}  <span style="font-size:0.7em;top:-0.2em;position:relative;"><span class="handle">${source.gramps_id}</span></span></a>
       ${source.media.length || source.notes.length ? paperclipIcon : ''}
-      </h3>
+      </h4>
       ${this._citations.map(function(citation) {
           if (citation.source != source.gramps_id) {
             return html``;
           }
           return html`
           <div class="citation">
-            <h4>${quoteCloseIcon}  ${citation.page ? citation.page : _("Citation")}</h4>
+            <h5>${quoteCloseIcon}  ${citation.page ? citation.page : _("Citation")}</h5>
             <div class="citation-content">
               ${citation.notes.map(n => html`
               <gr-note-element grampsid=${n}>
