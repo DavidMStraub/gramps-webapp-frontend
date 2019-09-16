@@ -44,7 +44,9 @@ class MyFamilyElement extends connect(store)(LitElement) {
     this._events = this._family.events.map((h) => state.api.events[h]);
     this._events = this._events.map((e) => this._get_place_name(state, e));
     this._media = this._addMimeType(this._family.media, state);
-    return html`
+    this._citations = this._family.citations;
+    this._notes = this._family.notes;
+return html`
       <div style="float:left;">
         <gr-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}" token="${this._token}"></gr-pedigree-card>
       </div>
@@ -71,7 +73,16 @@ class MyFamilyElement extends connect(store)(LitElement) {
       <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
       </gr-gallery-element>
 
-      `
+      ${this._notes.length ? html`<h3>${_("Notes")}</h3>` : ''}
+      ${this._notes.map(n => html`
+      <gr-note-element grampsid=${n}>
+      </gr-note-element>
+      `)}
+
+      ${this._citations.length ? html`<h3>${_("Sources")}</h3>` : ''}
+      <gr-citations-element .citations=${this._citations}>
+      </gr-citations-element>
+    `
     }
 
     static get styles() {
