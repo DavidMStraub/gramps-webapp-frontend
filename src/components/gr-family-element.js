@@ -43,6 +43,7 @@ class MyFamilyElement extends connect(store)(LitElement) {
     this._children = this._family.children.map((gid) => state.api.people[gid]);
     this._events = this._family.events.map((h) => state.api.events[h]);
     this._events = this._events.map((e) => this._get_place_name(state, e));
+    this._media = this._addMimeType(this._family.media, state);
     return html`
       <div style="float:left;">
         <gr-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}" token="${this._token}"></gr-pedigree-card>
@@ -65,7 +66,12 @@ class MyFamilyElement extends connect(store)(LitElement) {
       ${this._family.events.length > 0 ? html`<h3>${_("Events")}</h3>
       <gr-events-element .items="${this._events}" place></gr-events-element>
       ` : ''}
-    `
+
+      ${this._media.length ? html`<h3>${_("Media")}</h3>` : ''}
+      <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
+      </gr-gallery-element>
+
+      `
     }
 
     static get styles() {
@@ -99,6 +105,14 @@ class MyFamilyElement extends connect(store)(LitElement) {
         event.place_name = state.api.places[event.place].name;
       };
       return event;
+    }
+
+    _addMimeType(mhandles, state) {
+      return mhandles.map(function(handle) {
+        let mobj = {'ref': handle};
+        mobj.mime = state.api.media[mobj.ref].mime;
+        return mobj;
+      })
     }
 
     stateChanged(state) {
