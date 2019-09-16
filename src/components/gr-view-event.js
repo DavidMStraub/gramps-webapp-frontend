@@ -175,9 +175,6 @@ class MyViewEvent extends connect(store)(PageViewElement) {
           this._event.place_name = state.api.places[this._event.place].name;
         }
         this._media = this._addMimeType(this._event.media, state);
-        Object.keys(this._media).map((mref) => {
-          this._media[mref].mime = state.api.media[mref].mime;
-        });
         this._citations = this._event.citations;
         this._notes = this._event.notes;
         this._participants = Object.assign({}, this._event.participants);
