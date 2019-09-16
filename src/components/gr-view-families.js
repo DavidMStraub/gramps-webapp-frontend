@@ -32,7 +32,7 @@ class MyViewFamilies extends connect(store)(PageViewElement) {
   render() {
     return html`
       <section>
-        <vaadin-grid .items=${this._families} theme="row-dividers" multi-sort>
+        <vaadin-grid class="fullscreen" .items=${this._families} theme="row-dividers" multi-sort>
           <vaadin-grid-selection-column auto-select hidden></vaadin-grid-selection-column>
           <vaadin-grid-column ?hidden="${this._hidden}">
             <template class="header">

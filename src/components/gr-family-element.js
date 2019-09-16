@@ -14,6 +14,7 @@ import { PageViewElement } from './page-view-element.js';
 import './gr-pedigree-card.js';
 import './gr-children-element.js';
 import './gr-person-element.js';
+import './gr-events-element.js';
 
 import { ringsIcon } from './gr-icons.js';
 
@@ -40,6 +41,8 @@ class MyFamilyElement extends connect(store)(LitElement) {
     this._father = state.api.people[this._family.father_id];
     this._mother = state.api.people[this._family.mother_id];
     this._children = this._family.children.map((gid) => state.api.people[gid]);
+    this._events = this._family.events.map((h) => state.api.events[h]);
+    this._events = this._events.map((e) => this._get_place_name(state, e));
     return html`
       <div style="float:left;">
         <gr-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}" token="${this._token}"></gr-pedigree-card>
@@ -58,6 +61,10 @@ class MyFamilyElement extends connect(store)(LitElement) {
         <h3>${this.siblings ? _("Siblings") : _("Children")}</h3>
         <gr-children-element .items="${this._children}"></gr-children-element>`
         : '' }
+      
+      ${this._family.events.length > 0 ? html`<h3>${_("Events")}</h3>
+      <gr-events-element .items="${this._events}" place></gr-events-element>
+      ` : ''}
     `
     }
 
@@ -86,6 +93,13 @@ class MyFamilyElement extends connect(store)(LitElement) {
       _host: { type: String },
       _token: { type: String }
     }}
+
+    _get_place_name(state, event) {
+      if (event.place != undefined && event.place != '' && state.api && state.api.places) {
+        event.place_name = state.api.places[event.place].name;
+      };
+      return event;
+    }
 
     stateChanged(state) {
       this._host = state.app.host;

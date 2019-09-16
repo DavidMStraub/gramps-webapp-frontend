@@ -117,11 +117,11 @@ export const SharedStyles = css`
   .arrow {
     position: absolute;
   }
-  vaadin-grid {
+  vaadin-grid.fullscreen {
     height:calc(100vh - 48px);
   }
   @media (min-width: 768px) {
-    vaadin-grid {
+    vaadin-grid.fullscreen {
       height:calc(100vh - 48px);
       margin-top: 0;
     }
