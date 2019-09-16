@@ -20,6 +20,9 @@ import { store } from '../store.js';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
+import './gr-note-element.js';
+import './gr-citations-element.js';
+
 import {
   chevronLeftIcon,
   chevronRightIcon,
@@ -48,8 +51,10 @@ class MyMediaElement extends connect(store)(LitElement) {
           transform: translate(-50%, -50%);
           display: inline-block;
           max-height: 100vh;
-          max-width: 100vw;
           color: rgba(255, 255, 255, 0.8);
+        }
+        div.inner-container img {
+          display: block;
         }
         div.inner-container a {
           color: rgba(255, 255, 255, 0.8);
@@ -99,6 +104,36 @@ class MyMediaElement extends connect(store)(LitElement) {
             display: block;
           }
         }
+        h5 {
+          color: #777;
+          font-size: 0.8em;
+          font-weight: 500;
+          margin-bottom: 0.25em;
+        }
+        div.meta-container {
+          background-color: rgba(255, 255, 255, 0.9);
+          color: rgba(0, 0, 0, 0.75);
+          text-align: left;
+          font-size: 0.8em;
+          padding: 1em;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        @media (min-width: 768px) {
+          div.inner-container {
+            left: calc(50% - 100px);
+          }
+          div.media-container img {
+            max-width:calc(100vw - 200px);
+          }
+          div.meta-container {
+            width: calc(200px - 2em);
+            min-height:calc(100% - 2em);
+            position: absolute;
+            right: -200px;
+            top: 0;
+          }
+        }
         </style>
         <div class="media-container"
          style="transform: translateX(${this._translateX}px);"
@@ -107,6 +142,25 @@ class MyMediaElement extends connect(store)(LitElement) {
          @touchend="${this._handleTouchEnd}">
             <div class="inner-container">
               ${this._innerContainerContent(this._mime)}
+              <div class="meta-container">
+              <h5>${_("Description")}</h5>
+              <p>${this._desc}</p>
+              
+              ${this._date ? html`
+              <h5>${_("Date")}</h5>
+              <p>${this._date}</p>`
+              : ''}
+              
+              ${this._notes.length ? html`<h4>${_("Notes")}</h4>` : ''}
+              ${this._notes.map(n => html`
+              <gr-note-element grampsid=${n}>
+              </gr-note-element>
+              `)}
+              
+              ${this._citations.length ? html`<h4>${_("Sources")}</h4>` : ''}
+              <gr-citations-element .citations=${this._citations}>
+              </gr-citations-element>
+              </div>  
             </div>
         </div>
         ${this._prev ? html`
@@ -295,6 +349,10 @@ class MyMediaElement extends connect(store)(LitElement) {
         if (this.handle in state.api.media) {
           this._mime = state.api.media[this.handle].mime;
         }
+        this._desc = state.api.media[this.handle].desc;
+        this._citations = state.api.media[this.handle].citations;
+        this._notes = state.api.media[this.handle].notes;
+        this._date = state.api.media[this.handle].date;
         var _prev = '';
         var _next = '';
         var _handle = this.handle
