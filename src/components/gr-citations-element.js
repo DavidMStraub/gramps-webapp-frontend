@@ -66,9 +66,11 @@ class MyCitationsElement extends connect(store)(LitElement) {
       }
       </style>
       ${this._sources.map(source => html`
+      ${this.nosources ? '' : html`
       <h4><a href="/source/${source.gramps_id}">${bookIcon} ${source.title}  <span style="font-size:0.7em;top:-0.2em;position:relative;"><span class="handle">${source.gramps_id}</span></span></a>
       ${source.media.length || source.notes.length ? paperclipIcon : ''}
       </h4>
+      `}
       ${this._citations.map(function(citation) {
           if (citation.source != source.gramps_id) {
             return html``;
@@ -106,9 +108,15 @@ class MyCitationsElement extends connect(store)(LitElement) {
 
   firstUpdated() {
   }
+  
+  constructor() {
+    super();
+    this.nosources = false;
+  }
 
   static get properties() { return {
-    citations: { type: Array }
+    citations: { type: Array },
+    nosources: {type: Boolean }
   }}
 
   _addMimeType(mhandles, state) {

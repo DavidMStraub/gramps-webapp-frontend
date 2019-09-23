@@ -15,6 +15,7 @@ import '@polymer/paper-tabs/paper-tab.js';
 import '@polymer/paper-badge/paper-badge.js';
 import './gr-gallery-element.js';
 import './gr-note-element.js';
+import './gr-citations-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 
@@ -89,6 +90,10 @@ class MyViewSource extends connect(store)(PageViewElement) {
         <gr-note-element grampsid=${n}>
         </gr-note-element>
         `)}
+  
+        ${this._citations.length ? html`<h3>${_("Citations")}</h3>` : ''}
+        <gr-citations-element .citations=${this._citations} nosources>
+        </gr-citations-element>
 
         </section>
 
@@ -133,6 +138,7 @@ class MyViewSource extends connect(store)(PageViewElement) {
       if (this._source != undefined) {
         this._media = this._addMimeType(this._source.media, state);
         this._notes = this._source.notes;
+        this._citations = Object.values(state.api.citations).filter(c => c.source == this._gramps_id).map(c => c.gramps_id);
         this._repositories = this._source.repositories.map(repo => state.api.repositories[repo].title);
        }
     }
