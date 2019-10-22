@@ -48,13 +48,13 @@ class MyFamilyElement extends connect(store)(LitElement) {
     this._notes = this._family.notes;
 return html`
       <div style="float:left;">
-        <gr-pedigree-card .person=${this._father} width="200px" link="person" host="${this._host}" token="${this._token}"></gr-pedigree-card>
+        <gr-pedigree-card .person=${this._father} width="200px" link="person" token="${this._token}"></gr-pedigree-card>
       </div>
       <span style="display:block;float:left;padding:0.8em 2em;text-align:center;">
       ${this._family.marriagedate ? html`${ringsIcon} ${this._family.marriagedate}` : ''} ${this._family.marriageplace ? html`<br>${_('in')} <a href="/place/${this._family.marriageplace}">${this._marriageplace_name}</a>`: ''}
       </span>
       <div style="float:left;">
-        <gr-pedigree-card .person=${this._mother} width="200px" link="person" host="${this._host}" token="${this._token}"></gr-pedigree-card>
+        <gr-pedigree-card .person=${this._mother} width="200px" link="person" token="${this._token}"></gr-pedigree-card>
       </div>
       </p>
       <div style="clear:left;">
@@ -70,7 +70,7 @@ return html`
       ` : ''}
 
       ${this._media.length ? html`<h3>${_("Media")}</h3>` : ''}
-      <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
+      <gr-gallery-element .images=${this._media} token=${this._token}>
       </gr-gallery-element>
 
       ${this._notes.length ? html`<h3>${_("Notes")}</h3>` : ''}
@@ -107,7 +107,6 @@ return html`
       _father: {type: Object},
       _mother: {type: Object},
       _children: {type: Array},
-      _host: { type: String },
       _token: { type: String }
     }}
 
@@ -127,7 +126,6 @@ return html`
     }
 
     stateChanged(state) {
-      this._host = state.app.host;
       this._token = state.api.token;
     }
     //   if (this._family != undefined) {

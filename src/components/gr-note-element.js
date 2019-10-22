@@ -114,14 +114,13 @@ class MyNoteElement extends connect(store)(LitElement) {
 
   _reloadNote() {
     this._note = undefined;
-    store.dispatch(loadNote(this._host, this._token, this.grampsid));
+    store.dispatch(loadNote(this._token, this.grampsid));
   }
 
   getNote() {
     let state = store.getState();
-    this._host = state.app.host;
     this._token = state.api.token;
-    store.dispatch(loadNote(this._host, this._token, this.grampsid));
+    store.dispatch(loadNote(this._token, this.grampsid));
   }
 
   stateChanged(state) {

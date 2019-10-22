@@ -21,7 +21,6 @@ export const UPDATE_DRAWER_STATE = 'UPDATE_DRAWER_STATE';
 export const UPDATE_LIGHTBOX_STATE = 'UPDATE_LIGHTBOX_STATE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
-export const HOST = 'HOST';
 export const LOGOUT = 'LOGOUT';
 
 export const navigate = (path) => (dispatch) => {
@@ -151,13 +150,6 @@ export const activeSource = (id) => {
 //     media
 //   };
 // };
-
-export const storeHost = (data) => {
-  return {
-    type: HOST,
-    host: data
-  };
-};
 
 
 export const activePersonIfEmpty = (id) => {

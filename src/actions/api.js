@@ -9,8 +9,9 @@ import { activePersonIfEmpty } from './app.js'
 
 
 
-export const loadNote = (host, token, id) => async (dispatch) => {
-  fetch(host + `/api/note/` + id, {
+
+export const loadNote = (token, id) => async (dispatch) => {
+  fetch(window.APIHOST + `/api/note/` + id, {
         method: 'GET',
         headers: {
           //'Accept': 'application/json',
@@ -40,8 +41,8 @@ export const loadNote = (host, token, id) => async (dispatch) => {
 };
 
 
-export const getAuthToken = (host, password) => async (dispatch) => {
-  fetch(host + `/api/login`, {
+export const getAuthToken = (password) => async (dispatch) => {
+  fetch(window.APIHOST + `/api/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -58,8 +59,8 @@ export const getAuthToken = (host, password) => async (dispatch) => {
     });
 };
 
-export const loadTree = (host, token) => async (dispatch) => {
-  fetch(host + `/api/tree`, {
+export const loadTree = (token) => async (dispatch) => {
+  fetch(window.APIHOST + `/api/tree`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -197,8 +198,8 @@ const _strings = [
   "Media"
 ]
 
-export const loadStrings = (host) => async (dispatch) => {
-  fetch(host + `/api/translate?strings=` + JSON.stringify(_strings))
+export const loadStrings = () => async (dispatch) => {
+  fetch(window.APIHOST + `/api/translate?strings=` + JSON.stringify(_strings))
     .then(resp => resp.json())
     .then(data => dispatch(getStrings(data)))
     .catch((error) => console.log(error));

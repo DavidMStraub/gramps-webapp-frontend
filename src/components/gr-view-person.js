@@ -95,7 +95,6 @@ class MyViewPerson extends connect(store)(PageViewElement) {
         <div id="photo">
           <gr-img-element
             token="${this._token}"
-            host="${this._host}"
             handle="${this._media[0].ref}"
             mime="${this._media[0].mime}"
             size="200"
@@ -160,7 +159,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       </section>
 
       <section  ?hidden=${this._selected != 3}>
-      <gr-gallery-element .images=${this._media} host=${this._host} token=${this._token}>
+      <gr-gallery-element .images=${this._media} token=${this._token}>
       </gr-gallery-element>
       </section>
 
@@ -195,7 +194,6 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       _gramps_id: { type: String },
       _person: { type: Object },
       _parents: { type: String },
-      _host: { type: String },
       _token: { type: String },
       _events: { type: Object },
       _selected: { type: Number }
@@ -232,7 +230,6 @@ class MyViewPerson extends connect(store)(PageViewElement) {
     }
 
     stateChanged(state) {
-      this._host = state.app.host;
       this._token = state.api.token;
       this._gramps_id = state.app.activePerson;
       this._person = state.api.people[this._gramps_id];

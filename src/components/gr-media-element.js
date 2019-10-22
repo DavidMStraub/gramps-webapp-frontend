@@ -29,7 +29,7 @@ import {
   fileIcon
 } from './gr-icons.js';
 
-
+ 
 
 class MyMediaElement extends connect(store)(LitElement) {
   render() {
@@ -191,7 +191,7 @@ class MyMediaElement extends connect(store)(LitElement) {
 
     _innerContainerContent_image() {
       return html`
-          <img src="${this._host}/api/media/${this.handle}?jwt=${this._token}">
+          <img src="${window.APIHOST}/api/media/${this.handle}?jwt=${this._token}">
           </img>
           ${this._personRectangles()}`
     }
@@ -199,7 +199,7 @@ class MyMediaElement extends connect(store)(LitElement) {
     _innerContainerContent_pdf() {
       return html`
           <object
-            data="${this._host}/api/media/${this.handle}?jwt=${this._token}"
+            data="${window.APIHOST}/api/media/${this.handle}?jwt=${this._token}"
             type="application/pdf"
             style="width: 80vw; height: 90vh;"
           >
@@ -211,7 +211,7 @@ class MyMediaElement extends connect(store)(LitElement) {
       return html`
           <a
            mimetype="${mime}"
-           href="${this._host}/api/media/${this.handle}?jwt=${this._token}"
+           href="${window.APIHOST}/api/media/${this.handle}?jwt=${this._token}"
            target="_blank"
           >
           <div  
@@ -341,7 +341,6 @@ class MyMediaElement extends connect(store)(LitElement) {
     }
 
     stateChanged(state) {
-      this._host = state.app.host;
       this._token = state.api.token;
       if (state.app.activeMedia != undefined && state.api.media) {
         this.media = state.app.activeMedia.media;

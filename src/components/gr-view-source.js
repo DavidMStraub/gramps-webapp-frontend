@@ -81,7 +81,7 @@ class MyViewSource extends connect(store)(PageViewElement) {
         </table>
 
         ${this._media.length ? html`<h3>${_("Media")}</h3>` : ''}
-        <gr-gallery-element .images=${this._media} host="${this._host}" token="${this._token}">
+        <gr-gallery-element .images=${this._media} token="${this._token}">
         </gr-gallery-element>
 
 
@@ -115,7 +115,6 @@ class MyViewSource extends connect(store)(PageViewElement) {
     static get properties() { return {
       _source: { type: Object },
       _gramps_id: { type: String },
-      _host: { type: String },
       _token: { type: String },
       _media: { type: Object },
     }}
@@ -131,7 +130,6 @@ class MyViewSource extends connect(store)(PageViewElement) {
     }
 
     stateChanged(state) {
-      this._host = state.app.host;
       this._token = state.api.token;
       this._gramps_id = state.app.activeSource;
       this._source = state.api.sources[this._gramps_id];

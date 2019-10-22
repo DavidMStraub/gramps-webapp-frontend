@@ -33,7 +33,6 @@ class MyGalleryElement extends LitElement {
         ${this.images.map((image, i, arr) => html`
         <div class="item">
           <gr-img-element
-            host="${this.host}"
             handle="${image.ref}"
             token="${this.token}"
             mime="${image.mime}"
@@ -58,7 +57,6 @@ class MyGalleryElement extends LitElement {
 
     static get properties() { return {
       images: { type: Object },
-      host: {type: String},
       token: {type: String}
     }}
 

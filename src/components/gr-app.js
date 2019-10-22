@@ -44,7 +44,6 @@ import {
   updateLightboxState,
   updateActiveMedia,
   updateLayout,
-  storeHost,
   appLogout
 } from '../actions/app.js';
 
@@ -92,10 +91,6 @@ class MyApp extends connect(store)(LitElement) {
       <div id="inner">
       <form id="login-form">
       <paper-input @keypress="${this._handleInputKeypress}" label="password" type="password" id="login-input" autofocus></paper-input>
-      <paper-button @click="${this._toggleCollapse}" id="more-options">More options</paper-button>
-      <iron-collapse id="collapse-advanced">
-        <paper-input @keypress="${this._handleInputKeypress}" label="API base url" type="url" id="host-input" placeholder="https://example.com:1234"></paper-input>
-      </iron-collapse>
       <paper-button raised @click="${this._submitLogin}">login</paper-button>
       </form>
       </div>
@@ -414,10 +409,10 @@ class MyApp extends connect(store)(LitElement) {
     store.dispatch(activePerson(this._mainPerson));
   }
 
-  _loadData(host, token) {
+  _loadData(token) {
     this._loadDispatched = true;
-    store.dispatch(loadTree(host, token));
-    store.dispatch(loadStrings(host));
+    store.dispatch(loadTree(token));
+    store.dispatch(loadStrings());
   }
 
   updated(changedProps) {
@@ -462,10 +457,8 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   _submitLogin(e) {
-    const hostInput = this.shadowRoot.querySelector('#host-input');
-    store.dispatch(storeHost(hostInput.value));
     const loginInput = this.shadowRoot.querySelector('#login-input');
-    store.dispatch(getAuthToken(hostInput.value, loginInput.value));
+    store.dispatch(getAuthToken(loginInput.value));
   }
 
   _handleInputKeypress(e) {
@@ -477,7 +470,7 @@ class MyApp extends connect(store)(LitElement) {
   stateChanged(state) {
     this._token = state.api.token;
     if (this._token && !this._loaded  && !this._loadDispatched) {
-      this._loadData(state.app.host, state.api.token);
+      this._loadData(state.api.token);
     }
     if (!this._loaded) {
       if ('api' in state

@@ -62,7 +62,6 @@ class MyPedigreeCard extends LitElement {
           ${this.person.media.length ? html`
           <gr-img-element
             token="${this.token}"
-            host="${this.host}"
             handle="${this.person.media[0].ref}"
             size="70"
             circle square
@@ -107,7 +106,6 @@ class MyPedigreeCard extends LitElement {
       person: { type: Object },
       width: {type: String },
       link: {type: String},
-      host: {type: String},
       token: {type: String}
     }}
 

@@ -16,7 +16,7 @@ import { translate as _ } from '../translate.js';
 import { SharedStyles } from './shared-styles.js';
 
 import { fileIcon, filePdfIcon } from './gr-icons.js';
-
+ 
 
 class MyImgElement extends LitElement {
   render() {
@@ -44,19 +44,19 @@ class MyImgElement extends LitElement {
     } else if (this.rect == undefined) {
       var img = html`
       <img
-      srcset="${this.host}/api/thumbnail/${this.handle}/${this.size}?jwt=${this.token},
-      ${this.host}/api/thumbnail/${this.handle}/${1.5 * this.size}?jwt=${this.token} 1.5x,
-      ${this.host}/api/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token} 2x"
-      src="${this.host}/api/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token}"
+      srcset="${window.APIHOST}/api/thumbnail/${this.handle}/${this.size}?jwt=${this.token},
+      ${window.APIHOST}/api/thumbnail/${this.handle}/${1.5 * this.size}?jwt=${this.token} 1.5x,
+      ${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token} 2x"
+      src="${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token}"
       style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       `
     } else {
       var img = html`
       <img
-      srcset="${this.host}/api/thumbnail/${this.handle}/${this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token},
-      ${this.host}/api/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 1.5x,
-      ${this.host}/api/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 2x"
-      src="${this.host}/api/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token}"
+      srcset="${window.APIHOST}/api/thumbnail/${this.handle}/${this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token},
+      ${window.APIHOST}/api/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 1.5x,
+      ${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 2x"
+      src="${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token}"
       style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
       ${this.link ? html`</a>` : ''}
       `
@@ -67,7 +67,7 @@ class MyImgElement extends LitElement {
         return html`
         <span @click="${this._lightbox_handle}" class="link">${img}</span>
         `;
-      // return html`<a href="${this.host}/api/media/${this.handle}">${img}</a>`;
+      // return html`<a href="${window.APIHOST}/api/media/${this.handle}">${img}</a>`;
     }
     }
 
@@ -101,7 +101,6 @@ class MyImgElement extends LitElement {
       circle: { type: Boolean },
       square: { type: Boolean },
       nolink: { type: Boolean },
-      host: {type: String},
       mime: {type: String}
     }}
 

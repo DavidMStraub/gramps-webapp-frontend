@@ -27,7 +27,6 @@ import './gr-note-element.js';
 
 class MyCitationsElement extends connect(store)(LitElement) {
   render() {
-    var _host = this._host;
     var _token = this._token;
     var _addMimeType = this._addMimeType;
     let state = store.getState();
@@ -89,7 +88,6 @@ class MyCitationsElement extends connect(store)(LitElement) {
             <div class="citation-content">
               <gr-gallery-element
                 .images=${_addMimeType(citation.media, store.getState())}
-                host=${_host}
                 token=${_token}>
               </gr-gallery-element>
             </div>
@@ -127,7 +125,6 @@ class MyCitationsElement extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._host = state.app.host;
     this._token = state.api.token;
   }
 }
