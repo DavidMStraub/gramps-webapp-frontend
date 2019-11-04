@@ -3,6 +3,7 @@ export const TREE = 'TREE';
 export const NOTE = 'NOTE';
 export const STRINGS = 'STRINGS';
 export const TOKEN = 'TOKEN';
+export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const LOGOUT = 'LOGOUT';
 
 import { activePersonIfEmpty } from './app.js'
@@ -53,6 +54,7 @@ export const getAuthToken = (password) => async (dispatch) => {
     .then(resp => resp.json())
     .then(data => {
       dispatch(storeAuthToken(data.access_token));
+      dispatch(storeRefreshToken(data.refresh_token));
     })
     .catch((error) => {
       console.log(error);
@@ -96,6 +98,13 @@ export const loadTree = (token) => async (dispatch) => {
 const storeAuthToken = (data) => {
   return {
     type: TOKEN,
+    token: data
+  };
+};
+
+const storeRefreshToken = (data) => {
+  return {
+    type: REFRESH_TOKEN,
     token: data
   };
 };

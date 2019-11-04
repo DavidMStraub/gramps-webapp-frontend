@@ -33,7 +33,7 @@ const MY_KEY = 'gramps_webapp'
 
 export const saveState = (state) => {
   if (state.api != undefined) {
-    let reduced_state = {app: state.app, api: {token: state.api.token}};
+    let reduced_state = {app: state.app, api: {token: state.api.token, refresh_token: state.api.refresh_token}};
     let stringifiedState = JSON.stringify(reduced_state);
     localStorage.setItem(MY_KEY, stringifiedState);
   }
