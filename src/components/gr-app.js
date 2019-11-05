@@ -481,7 +481,7 @@ class MyApp extends connect(store)(LitElement) {
     if (this._token && !this._loaded  && !this._loadDispatched) {
       this._loadData(state.api.token, state.api.refresh_token);
     }
-    else if (this._token != state.api.token) {
+    else if (this._token != state.api.token && !this._loaded) {
       this._loadDispatched = false;
       this._loadData(state.api.token, state.api.refresh_token);
     }
