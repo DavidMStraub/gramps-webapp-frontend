@@ -71,7 +71,13 @@ export const refreshAuthToken = (refreshToken) => async (dispatch) => {
         'Content-Type': 'application/json'
       }
     })
-    .then(resp => resp.json())
+    .then(resp => {
+      var respStatus = resp.status;
+      if (respStatus != 200) {
+        dispatch(logout());
+      }
+      return resp.json();
+    })
     .then(data => {
       dispatch(storeAuthToken(data.access_token));
     })
