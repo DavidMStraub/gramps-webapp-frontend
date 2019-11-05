@@ -480,6 +480,11 @@ class MyApp extends connect(store)(LitElement) {
     if (this._token && !this._loaded  && !this._loadDispatched) {
       this._loadData(state.api.token, state.api.refresh_token);
     }
+    else if (this._token != state.api.token && !this._loaded) {
+      this._loadDispatched = false;
+      this._loadData(state.api.token, state.api.refresh_token);
+    }
+    this._token = state.api.token;
     if (state.api.expires) {
       let tokenExpiresIn = (state.api.expires - Date.now());
       if (tokenExpiresIn < 30 * 1000) {
@@ -487,11 +492,6 @@ class MyApp extends connect(store)(LitElement) {
         throttle(this._refreshToken, 5000)();
       }
     }
-    else if (this._token != state.api.token && !this._loaded) {
-      this._loadDispatched = false;
-      this._loadData(state.api.token, state.api.refresh_token);
-    }
-    this._token = state.api.token;
     if (!this._loaded) {
       if ('api' in state
           && 'people' in state.api
