@@ -203,6 +203,7 @@ class MyMediaElement extends connect(store)(LitElement) {
             data="${window.APIHOST}/api/media/${this.handle}?jwt=${this._token}"
             type="application/pdf"
             style="width: 80vw; height: 90vh;"
+            @error=${this._errorHandler}
           >
             ${this._innerContainerContent_file('application/pdf')}
           </object>`
