@@ -15,7 +15,7 @@ import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
 import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
-import { loadStrings, loadTree, getAuthToken, apiLogout } from '../actions/api.js';
+import { loadStrings, loadTree, getAuthToken, refreshAuthToken, apiLogout } from '../actions/api.js';
 import '@polymer/paper-spinner/paper-spinner-lite.js';
 import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-button/paper-button.js';
@@ -397,6 +397,7 @@ class MyApp extends connect(store)(LitElement) {
     installMediaQueryWatcher(`(min-width: 768px)`,
         (matches) => store.dispatch(updateLayout(matches)));
     this.addEventListener('lightbox-opened-changed', (e) => this._lightboxOpenedChanged(e));
+    this.addEventListener('media-load-error', throttle(this._refreshToken, 5000));
     this.addEventListener('media-selected', (e) => this._mediaSelected(e));
   }
 
@@ -413,6 +414,15 @@ class MyApp extends connect(store)(LitElement) {
     this._loadDispatched = true;
     store.dispatch(loadTree(token, refreshToken));
     store.dispatch(loadStrings());
+  }
+
+  _refreshToken() {
+    let state = store.getState();
+    let refreshToken = state.api.refresh_token;
+    if (refreshToken) {
+      console.log("Refreshing token");
+      store.dispatch(refreshAuthToken(refreshToken));
+    }
   }
 
   updated(changedProps) {
@@ -508,3 +518,18 @@ class MyApp extends connect(store)(LitElement) {
 }
 
 window.customElements.define('gr-app', MyApp);
+
+
+function throttle (callback, limit) {
+  var wait = false; 
+  return function () { 
+      if (!wait) {
+          callback.call();
+          wait = true;              
+          setTimeout(function () {   
+              wait = false;         
+          }, limit);
+      } else {
+      }
+  }
+}

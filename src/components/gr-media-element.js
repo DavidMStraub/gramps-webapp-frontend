@@ -191,7 +191,8 @@ class MyMediaElement extends connect(store)(LitElement) {
 
     _innerContainerContent_image() {
       return html`
-          <img src="${window.APIHOST}/api/media/${this.handle}?jwt=${this._token}">
+          <img src="${window.APIHOST}/api/media/${this.handle}?jwt=${this._token}"
+          @error=${this._errorHandler}>
           </img>
           ${this._personRectangles()}`
     }
@@ -312,6 +313,11 @@ class MyMediaElement extends connect(store)(LitElement) {
       } else if ((e.key === "ArrowLeft" || e.key === "Left") && this._prev != '') {
         this._handle_left();
     };
+    }
+
+    _errorHandler(e) {
+      this.dispatchEvent(new CustomEvent('media-load-error',
+        {bubbles: true, composed: true}));
     }
 
     _closeLightbox() {

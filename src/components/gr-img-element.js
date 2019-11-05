@@ -48,7 +48,8 @@ class MyImgElement extends LitElement {
       ${window.APIHOST}/api/thumbnail/${this.handle}/${1.5 * this.size}?jwt=${this.token} 1.5x,
       ${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token} 2x"
       src="${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}?jwt=${this.token}"
-      style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
+      style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;"
+      @error=${this._errorHandler}>
       `
     } else {
       var img = html`
@@ -57,7 +58,8 @@ class MyImgElement extends LitElement {
       ${window.APIHOST}/api/thumbnail/${this.handle}/${1.5 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 1.5x,
       ${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token} 2x"
       src="${window.APIHOST}/api/thumbnail/${this.handle}/${2 * this.size}/${this.rect[0]}/${this.rect[1]}/${this.rect[2]}/${this.rect[3]}?jwt=${this.token}"
-      style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;">
+      style="border-radius:${this.circle ? '50%' : '0'};max-height:100vh;"
+      @error=${this._errorHandler}>
       ${this.link ? html`</a>` : ''}
       `
     }
@@ -82,6 +84,11 @@ class MyImgElement extends LitElement {
       this.nolink = false;
       this.handles = Array();
       this.mime = '';
+    }
+
+    _errorHandler(e) {
+      this.dispatchEvent(new CustomEvent('media-load-error',
+        {bubbles: true, composed: true}));
     }
 
     _lightbox_handle() {
