@@ -54,7 +54,9 @@ export const getAuthToken = (password) => async (dispatch) => {
     })
     .then(resp => resp.json())
     .then(data => {
-      dispatch(storeAuthToken(data.access_token));
+      // Set expected token refresh date to now + 15 minutes
+      let expires = Date.now() + 15 * 60 * 1000;
+      dispatch(storeAuthToken(data.access_token, expires));
       dispatch(storeRefreshToken(data.refresh_token));
     })
     .catch((error) => {
@@ -73,13 +75,15 @@ export const refreshAuthToken = (refreshToken) => async (dispatch) => {
     })
     .then(resp => {
       var respStatus = resp.status;
-      if (respStatus != 200) {
+      if (respStatus == 403) {
         dispatch(apiLogout());
       }
       return resp.json();
     })
     .then(data => {
-      dispatch(storeAuthToken(data.access_token));
+      // Set expected token refresh date to now + 15 minutes
+      let expires = Date.now() + 15 * 60 * 1000;
+      dispatch(storeAuthToken(data.access_token, expires));
     })
     .catch((error) => {
       console.log(error);
@@ -125,17 +129,19 @@ export const loadTree = (token, refreshToken) => async (dispatch) => {
 };
 
 
-const storeAuthToken = (data) => {
+const storeAuthToken = (data, expires) => {
   return {
     type: TOKEN,
-    token: data
+    token: data,
+    expires: expires
   };
 };
 
-const storeRefreshToken = (data) => {
+const storeRefreshToken = (data, expires) => {
   return {
     type: REFRESH_TOKEN,
-    token: data
+    token: data,
+    expires: expires
   };
 };
 

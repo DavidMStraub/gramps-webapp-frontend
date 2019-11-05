@@ -420,7 +420,6 @@ class MyApp extends connect(store)(LitElement) {
     let state = store.getState();
     let refreshToken = state.api.refresh_token;
     if (refreshToken) {
-      console.log("Refreshing token");
       store.dispatch(refreshAuthToken(refreshToken));
     }
   }
@@ -480,6 +479,13 @@ class MyApp extends connect(store)(LitElement) {
   stateChanged(state) {
     if (this._token && !this._loaded  && !this._loadDispatched) {
       this._loadData(state.api.token, state.api.refresh_token);
+    }
+    if (state.api.expires) {
+      let tokenExpiresIn = (state.api.expires - Date.now());
+      if (tokenExpiresIn < 30 * 1000) {
+        // If we have less than half a minute left, refresh the token
+        throttle(this._refreshToken, 5000)();
+      }
     }
     else if (this._token != state.api.token && !this._loaded) {
       this._loadDispatched = false;

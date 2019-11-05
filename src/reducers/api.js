@@ -24,7 +24,8 @@ const INITIAL_STATE = {
   dbinfo: {},
   notes: {},
   token: '',
-  refresh_token: ''
+  refresh_token: '',
+  expires: 0
 };
 
 const api = (state = INITIAL_STATE, action) => {
@@ -32,7 +33,8 @@ const api = (state = INITIAL_STATE, action) => {
     case TOKEN:
       return {
         ...state,
-        token: action.token
+        token: action.token,
+        expires: action.expires
       };
       case REFRESH_TOKEN:
         return {
