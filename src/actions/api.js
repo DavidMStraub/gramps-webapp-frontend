@@ -24,7 +24,7 @@ export const loadNote = (token, refreshToken, id) => async (dispatch) => {
         dispatch(refreshAuthToken(refreshToken));
         return {};
       } else if (respStatus == 403) {
-        dispatch(logout());
+        dispatch(apiLogout());
       }
       if (respStatus != 200) {
         return {"gramps_id": id, "content": "error"};
@@ -74,7 +74,7 @@ export const refreshAuthToken = (refreshToken) => async (dispatch) => {
     .then(resp => {
       var respStatus = resp.status;
       if (respStatus != 200) {
-        dispatch(logout());
+        dispatch(apiLogout());
       }
       return resp.json();
     })
@@ -101,7 +101,7 @@ export const loadTree = (token, refreshToken) => async (dispatch) => {
         dispatch(refreshAuthToken(refreshToken));
         return null;
       } else if (respStatus == 403) {
-        dispatch(logout());
+        dispatch(apiLogout());
       }
       return resp.json();
     })
