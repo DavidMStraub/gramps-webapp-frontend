@@ -114,17 +114,20 @@ class MyNoteElement extends connect(store)(LitElement) {
 
   _reloadNote() {
     this._note = undefined;
-    store.dispatch(loadNote(this._token, this.grampsid));
+    store.dispatch(loadNote(this._token, this._refresh_token, this.grampsid));
   }
 
   getNote() {
     let state = store.getState();
     this._token = state.api.token;
-    store.dispatch(loadNote(this._token, this.grampsid));
+    this._refresh_token = state.api.refresh_token;
+    store.dispatch(loadNote(this._token, this._refresh_token, this.grampsid));
   }
 
   stateChanged(state) {
     if (this._token == undefined) {
+      this.getNote();
+    } else if (this._token != state.api.token) {
       this.getNote();
     }
     if (state.api.notes != undefined && state.api.notes[this.grampsid] != undefined) {

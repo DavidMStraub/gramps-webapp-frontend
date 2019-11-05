@@ -73,7 +73,7 @@ import { SharedStyles } from './shared-styles.js';
 class MyApp extends connect(store)(LitElement) {
   render() {
     // Anything that's related to rendering should be done in here.
-    if (!this._token) {
+    if (!this._token && !this._refresh_token) {
       return html`
       <style>
       div#outer {
@@ -409,9 +409,9 @@ class MyApp extends connect(store)(LitElement) {
     store.dispatch(activePerson(this._mainPerson));
   }
 
-  _loadData(token) {
+  _loadData(token, refreshToken) {
     this._loadDispatched = true;
-    store.dispatch(loadTree(token));
+    store.dispatch(loadTree(token, refreshToken));
     store.dispatch(loadStrings());
   }
 
@@ -468,10 +468,14 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._token = state.api.token;
     if (this._token && !this._loaded  && !this._loadDispatched) {
-      this._loadData(state.api.token);
+      this._loadData(state.api.token, state.api.refresh_token);
     }
+    else if (this._token != state.api.token) {
+      this._loadDispatched = false;
+      this._loadData(state.api.token, state.api.refresh_token);
+    }
+    this._token = state.api.token;
     if (!this._loaded) {
       if ('api' in state
           && 'people' in state.api
@@ -487,6 +491,7 @@ class MyApp extends connect(store)(LitElement) {
     }
     if (this._loaded) {
       this._token = state.api.token;
+      this._refresh_token = state.api.refresh_token;
       this._page = state.app.page;
       this._offline = state.app.offline;
       this._snackbarOpened = state.app.snackbarOpened;

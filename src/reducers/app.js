@@ -108,7 +108,8 @@ const app = (state = INITIAL_STATE, action) => {
     case LOGOUT:
         return {
           ...state,
-          token: null
+          token: null,
+          refresh_token: null
         };
           default:
       return state;

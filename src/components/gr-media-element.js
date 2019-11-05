@@ -347,11 +347,11 @@ class MyMediaElement extends connect(store)(LitElement) {
         this.handle = state.app.activeMedia.selected;
         if (this.handle in state.api.media) {
           this._mime = state.api.media[this.handle].mime;
+          this._desc = state.api.media[this.handle].desc;
+          this._citations = state.api.media[this.handle].citations;
+          this._notes = state.api.media[this.handle].notes;
+          this._date = state.api.media[this.handle].date;
         }
-        this._desc = state.api.media[this.handle].desc;
-        this._citations = state.api.media[this.handle].citations;
-        this._notes = state.api.media[this.handle].notes;
-        this._date = state.api.media[this.handle].date;
         var _prev = '';
         var _next = '';
         var _handle = this.handle

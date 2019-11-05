@@ -11,18 +11,19 @@ import { activePersonIfEmpty } from './app.js'
 
 
 
-export const loadNote = (token, id) => async (dispatch) => {
+export const loadNote = (token, refreshToken, id) => async (dispatch) => {
   fetch(window.APIHOST + `/api/note/` + id, {
         method: 'GET',
         headers: {
-          //'Accept': 'application/json',
-          //'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + token
         }
       })
     .then(resp => {
       var respStatus = resp.status;
       if (respStatus == 401) {
+        dispatch(refreshAuthToken(refreshToken));
+        return {};
+      } else if (respStatus == 403) {
         dispatch(logout());
       }
       if (respStatus != 200) {
@@ -61,7 +62,25 @@ export const getAuthToken = (password) => async (dispatch) => {
     });
 };
 
-export const loadTree = (token) => async (dispatch) => {
+export const refreshAuthToken = (refreshToken) => async (dispatch) => {
+  fetch(window.APIHOST + `/api/refresh`, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + refreshToken,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      dispatch(storeAuthToken(data.access_token));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const loadTree = (token, refreshToken) => async (dispatch) => {
   fetch(window.APIHOST + `/api/tree`, {
         method: 'GET',
         headers: {
@@ -73,6 +92,9 @@ export const loadTree = (token) => async (dispatch) => {
     .then(resp => {
       var respStatus = resp.status;
       if (respStatus == 401) {
+        dispatch(refreshAuthToken(refreshToken));
+        return null;
+      } else if (respStatus == 403) {
         dispatch(logout());
       }
       return resp.json();
@@ -81,12 +103,14 @@ export const loadTree = (token) => async (dispatch) => {
       return data;
     })
     .then(data => {
-      dispatch(getTree(data));
-      if (data.dbinfo.default_person != '') {
-        dispatch(activePersonIfEmpty(data.dbinfo.default_person));
-      } else {
-        let first_person = Object.keys(data.people)[0];
-        dispatch(activePersonIfEmpty(data.people[first_person].gramps_id));
+      if (data) {
+        dispatch(getTree(data));
+        if (data.dbinfo.default_person != '') {
+          dispatch(activePersonIfEmpty(data.dbinfo.default_person));
+        } else {
+          let first_person = Object.keys(data.people)[0];
+          dispatch(activePersonIfEmpty(data.people[first_person].gramps_id));
+        }
       }
     })
     .catch((error) => {
