@@ -23,7 +23,7 @@ export const loadNote = (token, refreshToken, id) => async (dispatch) => {
       if (respStatus == 401) {
         dispatch(refreshAuthToken(refreshToken));
         return {};
-      } else if (respStatus == 403) {
+      } else if (respStatus == 403 || respStatus == 422) {
         dispatch(apiLogout());
       }
       if (respStatus != 200) {
@@ -75,7 +75,7 @@ export const refreshAuthToken = (refreshToken) => async (dispatch) => {
     })
     .then(resp => {
       var respStatus = resp.status;
-      if (respStatus == 403) {
+      if (respStatus == 403 || respStatus == 422) {
         dispatch(apiLogout());
       }
       return resp.json();
@@ -104,7 +104,7 @@ export const loadTree = (token, refreshToken) => async (dispatch) => {
       if (respStatus == 401) {
         dispatch(refreshAuthToken(refreshToken));
         return null;
-      } else if (respStatus == 403) {
+      } else if (respStatus == 403 || respStatus == 422) {
         dispatch(apiLogout());
       }
       return resp.json();
