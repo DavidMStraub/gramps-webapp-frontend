@@ -237,7 +237,7 @@ class MyViewPerson extends connect(store)(PageViewElement) {
       if (this._person != undefined) {
         this._parents = this._person.parents;
         this._events = this._person.events.map(function (r) {
-          let obj = state.api.events[r.ref];
+          let obj = state.api.events[r.gramps_id];
           if (r.role == _('Primary')) {
             obj.role = '';
           } else {

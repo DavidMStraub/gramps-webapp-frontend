@@ -165,8 +165,8 @@ class MyViewEvent extends connect(store)(PageViewElement) {
 
     stateChanged(state) {
       this._token = state.api.token;
-      this._handle = state.app.activeEvent;
-      this._event = state.api.events[this._handle];
+      this._gramps_id = state.app.activeEvent;
+      this._event = state.api.events[this._gramps_id];
 
       if (this._event != undefined) {
         if (this._event.place != '' && state.api.places[this._event.place] != undefined) {
