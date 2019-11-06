@@ -441,6 +441,7 @@ class MyApp extends connect(store)(LitElement) {
 
   _logout() {
     this._token = null;
+    this._refresh_token = null;
     this._loaded = false;
     store.dispatch(apiLogout());
     store.dispatch(appLogout());
