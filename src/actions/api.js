@@ -43,14 +43,14 @@ export const loadNote = (token, refreshToken, id) => async (dispatch) => {
 };
 
 
-export const getAuthToken = (password) => async (dispatch) => {
+export const getAuthToken = (username, password) => async (dispatch) => {
   fetch(window.APIHOST + `/api/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({'password': password})
+      body: JSON.stringify({'username': username, 'password': password})
     })
     .then(resp => resp.json())
     .then(data => {

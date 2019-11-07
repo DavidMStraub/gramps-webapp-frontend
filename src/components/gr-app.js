@@ -90,7 +90,8 @@ class MyApp extends connect(store)(LitElement) {
       <div id="outer">
       <div id="inner">
       <form id="login-form">
-      <paper-input @keypress="${this._handleInputKeypress}" label="password" type="password" id="login-input" autofocus></paper-input>
+      <paper-input @keypress="${this._handleInputKeypress}" label="username" id="login-input-user"></paper-input>
+      <paper-input @keypress="${this._handleInputKeypress}" label="password" type="password" id="login-input-pw"></paper-input>
       <paper-button raised @click="${this._submitLogin}">login</paper-button>
       </form>
       </div>
@@ -467,8 +468,9 @@ class MyApp extends connect(store)(LitElement) {
   }
 
   _submitLogin(e) {
-    const loginInput = this.shadowRoot.querySelector('#login-input');
-    store.dispatch(getAuthToken(loginInput.value));
+    const loginInputUser = this.shadowRoot.querySelector('#login-input-user');
+    const loginInputPw = this.shadowRoot.querySelector('#login-input-pw');
+    store.dispatch(getAuthToken(loginInputUser.value, loginInputPw.value));
   }
 
   _handleInputKeypress(e) {
