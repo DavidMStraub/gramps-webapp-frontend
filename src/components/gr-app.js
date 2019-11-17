@@ -89,10 +89,12 @@ class MyApp extends connect(store)(LitElement) {
       </style>
       <div id="outer">
       <div id="inner">
-      <form id="login-form" method="post" action="login">
+      <form id="login-form" method="post" action="login" @submit="${this._submitLogin}">
       <paper-input @keypress="${this._handleInputKeypress}" label="username" name="username" id="login-input-user"></paper-input>
       <paper-input @keypress="${this._handleInputKeypress}" label="password" name="password" type="password" id="login-input-pw"></paper-input>
-      <paper-button raised @click="${this._submitLogin}">login</paper-button>
+      <button style="border:none; background:none;" tabindex="-1" type="submit">
+        <paper-button raised>login</paper-button>        
+      </button>
       </form>
       </div>
       </div>
@@ -400,7 +402,6 @@ class MyApp extends connect(store)(LitElement) {
     this.addEventListener('lightbox-opened-changed', (e) => this._lightboxOpenedChanged(e));
     this.addEventListener('media-load-error', throttle(this._refreshToken, 5000));
     this.addEventListener('media-selected', (e) => this._mediaSelected(e));
-    this.shadowRoot.getElementById('login-form').addEventListener('submit', (e) => e.preventDefault());
   }
 
   _setMainPersonActive() {
