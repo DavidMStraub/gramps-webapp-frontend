@@ -74,6 +74,8 @@ class MyApp extends connect(store)(LitElement) {
   render() {
     // Anything that's related to rendering should be done in here.
     if (!this._token && !this._refresh_token) {
+      this._location = window.location.pathname;
+      window.history.pushState({}, '', '/login');
       return html`
       <style>
       div#outer {
@@ -473,6 +475,8 @@ class MyApp extends connect(store)(LitElement) {
     const loginInputUser = this.shadowRoot.querySelector('#login-input-user');
     const loginInputPw = this.shadowRoot.querySelector('#login-input-pw');
     store.dispatch(getAuthToken(loginInputUser.value, loginInputPw.value));
+    window.history.pushState({}, '', this._location);
+    store.dispatch(navigate(decodeURIComponent(this._location)));
   }
 
   _handleInputKeypress(e) {
