@@ -2,7 +2,7 @@
 
 # Gramps Web App: frontend
 
-This is a javascript frontend for the Gramps web app built on [PWA Starter Kit](https://github.com/Polymer/pwa-starter-kit).
+This is a javascript frontend for the Gramps web app built on [PWA Starter Kit](https://github.com/Polymer/pwa-starter-kit) and [open-wc](https://github.com/open-wc/open-wc).
 
 For details see the [backend repository](https://github.com/DavidMStraub/gramps-webapp).
 
@@ -16,7 +16,7 @@ npm install
 ```
 to install dependencies and then 
 ```
-npm start
+npm run start
 ```
 to run the frontend locally.
 
