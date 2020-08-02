@@ -125,7 +125,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <noscript>
       Please enable JavaScript to view this website.
     </noscript>
-    <script type="module" src="./env.js"></script>
+    <script>
+    window.APIHOST = 'http://localhost:5000';
+    </script>
     <script type="module" src="./src/components/gr-app.js"></script>
   </body>
 </html>
