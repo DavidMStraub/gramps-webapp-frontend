@@ -20,7 +20,14 @@ npm run start
 ```
 to run the frontend locally.
 
-For details, see the [PWA Starter Kit docs](https://pwa-starter-kit.polymer-project.org/setup).
+
+## Build the frontend
+
+To build the frontend, run
+```
+npm run build
+```
+The content of the `dist` directory can then be copied to the backend's `js` directory.
 
 ## Disclaimer
 

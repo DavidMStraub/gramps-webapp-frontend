@@ -74,29 +74,8 @@ class MyApp extends connect(store)(LitElement) {
   render() {
     // Anything that's related to rendering should be done in here.
     if (!this._token && !this._refresh_token) {
-      return html`
-      <style>
-      div#outer {
-        display: grid;
-        height: 100vh;
-        margin: 0;
-        place-items: center center;
-      }
-
-      div#inner {
-        /* text-align: center; */
-      }
-      </style>
-      <div id="outer">
-      <div id="inner">
-      <form id="login-form">
-      <paper-input @keypress="${this._handleInputKeypress}" label="username" id="login-input-user"></paper-input>
-      <paper-input @keypress="${this._handleInputKeypress}" label="password" type="password" id="login-input-pw"></paper-input>
-      <paper-button raised @click="${this._submitLogin}">login</paper-button>
-      </form>
-      </div>
-      </div>
-      `
+      window.location.href = "login.html";
+      return html``;
     }
     if (!this._loaded) {
       return html`
@@ -289,7 +268,7 @@ class MyApp extends connect(store)(LitElement) {
         .main-content {
           padding-top: 0;
         }
-  
+
         [main-title] {
           margin-right: 0;
         }
@@ -530,13 +509,13 @@ window.customElements.define('gr-app', MyApp);
 
 
 function throttle (callback, limit) {
-  var wait = false; 
-  return function () { 
+  var wait = false;
+  return function () {
       if (!wait) {
           callback.call();
-          wait = true;              
-          setTimeout(function () {   
-              wait = false;         
+          wait = true;
+          setTimeout(function () {
+              wait = false;
           }, limit);
       } else {
       }
