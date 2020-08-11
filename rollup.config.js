@@ -19,7 +19,7 @@ const baseConfig = createSpaConfig({
   developmentMode: process.env.ROLLUP_WATCH === 'true',
 
   // set to true to inject the service worker registration into your index.html
-  injectServiceWorker: false,
+  injectServiceWorker: true,
 });
 
 export default merge(baseConfig, {
