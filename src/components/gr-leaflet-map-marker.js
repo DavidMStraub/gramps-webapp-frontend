@@ -14,7 +14,7 @@ import { Marker, Icon } from '../../node_modules/leaflet/dist/leaflet-src.esm.js
 class MyLeafletMapMarker extends LitElement {
   render() {
     return html`
-      <link rel="stylesheet" href="/src/components/leaflet.css">
+      <link rel="stylesheet" href="/leaflet.css">
       `
     }
 

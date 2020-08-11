@@ -14,7 +14,7 @@ import { Map,  TileLayer, LatLng, control } from '../../node_modules/leaflet/dis
 class MyLeafletMap extends LitElement {
   render() {
     return html`
-      <link rel="stylesheet" href="/src/components/leaflet.css">
+      <link rel="stylesheet" href="/leaflet.css">
 
 
       <div class="mapcontainer" style="width:${this.width}; height:${this.height};">
